@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
 }
 
 /* Suppression des styles de liste */
@@ -18,9 +19,11 @@ a {
 
 /* Correction des polices par défaut */
 body {
-    font-family: sans-serif; /* On changera après avec ta police */
+    font-family: var(--bodyFont);
     line-height: 1.5;
     text-rendering: optimizeLegibility;
+    background-color: var(--color-bg);
+    min-height: 100vh;
 }
 
 /* Suppression des bordures et des styles par défaut des boutons et inputs */

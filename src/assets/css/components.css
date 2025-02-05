@@ -1,22 +1,112 @@
+@import "navbar.css";
 
-body{
-    background-color: var(--color-bg);
-    min-height: 100vh;
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 section{
-
+    max-width: 90%;
+    text-align: center;
+    transition-duration: var(--curve-timing);
+}
+section#title{
+    max-width: 80%;
+    height: 75dvh;
+    padding: 8rem 0 3rem;
 }
 
 h1{
-    font-family: var(--font-title);
-    font-size: 3rem;
+    font-size: var(--h1-size);
     color: var(--color-title);
+    text-align: center;
+    line-height: 100%;
+    letter-spacing: -2px;
 }
 
-h2{
-    font-family: var(--font-subtitle);
-    font-size: 2rem;
-    color: var(--color-text);
+h1,h2,h3,h4,h5,h6{
+    font-family: var(--font-title);
+    font-weight: 720;
+}
+
+p{
+    font-family: var(--font-text);
+    font-size: var(--font-body);
+    color: var(--color-text-secondary);
+}
+
+span.title-container{
+    display: flex;
+    flex-direction: column;
+}
+
+span.title {
+    position: relative;
+    z-index: 10;
+}
+
+#colorCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70dvh;
+    z-index: -1;
+}
+
+/*Grid project*/
+#grid {
+    display: grid;
+    gap: 20px; /* Espacement entre les projets */
+    grid-template-columns: 33% 33% 33%;
+    width: 100%;
+}
+
+.large {
+    grid-column: span 2;
+}
+
+
+.project-card {
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: all .5s var(--transition-bounce);
+}
+
+.project-card:hover {
+
+    .project-illustration {
+        transform: translateX(5%) translateY(5%);
+    }
+}
+
+.project-header {
+    padding: 15px;
+    background: var(); /* Couleur de fond du header */
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+
+.project-illustration {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(10%) translateY(10%);
+}
+
+.project-illustration img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 

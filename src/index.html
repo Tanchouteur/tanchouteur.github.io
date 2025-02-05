@@ -1,35 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
     <title>Louis Tanchou</title>
 
+    <meta name="robots" content="index,follow">
+    <meta name="description" content="The portfolio of Louis Tanchou, Software Developper.">
+    <meta property="og:description" content="The portfolio of Louis Tanchou, Software Developper.">
+    <meta property="og:url" content="https://tanchou.fr">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Louis Tanchou">
+
     <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="assets/css/reset.css">
 
 </head>
 <body>
 
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/animations.js" defer></script>
 
-    <header id="navbar">
+    <header id="navbar-container">
 
     </header>
+    <canvas id="colorCanvas"></canvas>
     <main>
-        <div id="intro" class="animated-light">
-            <div class="light-layer"></div>
-            <div class="light-layer"></div>
-            <div class="light-layer"></div>
-        </div>
 
         <section id="title">
-            <h1>Louis Tanchou</h1>
-            <h2>Web Developer</h2>
+            <h1>
+                <span class="title-container">
+                    <span class="title">Hi. I'm Louis.</span>
+                    <span class="title">A Develloper.</span>
+                </span>
+            </h1>
+            <p>Second-year student in a Bachelor's in Computer Science</p>
         </section>
-        <section id="work">
 
+        <section id="subject">
+            <div id="grid">
+                <div class="project-card"><div class="project-header"></div>
+                    <div class="project-illustration">
+                        <img src="assets/images/Projects/MenuSemaine/menu.png" alt="menu">
+                    </div>
+                </div>
+                <div class="project-card large"><div class="project-header"></div>
+                    <div class="project-illustration">
+                        <img src="assets/images/Projects/PVZ/game.jpg" alt="pvz">
+                    </div>
+                </div>
+                <div class="project-card large"><div class="project-header"></div>
+                    <div class="project-illustration">
+                        <img src="assets/images/Projects/DorfRomantique/InGame.jpg" alt="dorfromantique">
+                    </div>
+                </div>
+                <div class="project-card"><div class="project-header"></div>
+                    <div class="project-illustration">
+                        <img src="assets/images/Projects/Bakefile/BakeExemple.png" alt="bake">
+                    </div>
+                </div>
+                <div class="project-card"><div class="project-header"></div>
+                    <div class="project-illustration">
+                        <img src="assets/images/Projects/CPU/diagram.jpg" alt="cpu">
+                    </div>
+                </div>
+                <div class="project-card"><div class="project-header"></div>
+                    <div class="project-illustration">
+                        <img src="assets/images/Projects/SpotifAssoc/Sport.jpg" alt="sport">
+                    </div>
+                </div>
+                <div class="project-card"><div class="project-header"></div>
+                    <div class="project-illustration">
+                        <img src="assets/images/Projects/TanchouDB/diagram.jpg" alt="tanchouDb">
+                    </div>
+                </div>
+            </div>
         </section>
+
     </main>
     <footer id="footer">
 

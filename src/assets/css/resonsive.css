@@ -1,0 +1,40 @@
+@media (min-width: 992px) {
+    h1 {
+        letter-spacing: -4px;
+    }
+}
+@media (min-width: 768px) {
+    section#title{
+        padding: 12rem 0 3rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .container {
+        grid-template-columns: 1fr; /* 1 seule colonne en dessous de 900px */
+    }
+}
+
+@media (min-width: 768px) {
+    span.title {
+        display: block;
+    }
+}
+
+/*NavBar*/
+
+@media (min-width: 768px) {
+    a.nav-link {
+        margin: 0 5px;
+        padding: calc(var(--16px) - 10px) var(--20px);
+    }
+}
+
+/*Grid*/
+
+@media (min-width: 992px) {
+    .project-card {
+        max-height: 550px;
+        border-radius: var(--64px);
+    }
+}
