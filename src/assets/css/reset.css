@@ -1,0 +1,38 @@
+/* Reset général */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Suppression des styles de liste */
+ul, ol {
+    list-style: none;
+}
+
+/* Suppression des styles des liens */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Correction des polices par défaut */
+body {
+    font-family: sans-serif; /* On changera après avec ta police */
+    line-height: 1.5;
+    text-rendering: optimizeLegibility;
+}
+
+/* Suppression des bordures et des styles par défaut des boutons et inputs */
+button, input, textarea {
+    background: none;
+    border: none;
+    outline: none;
+    font: inherit;
+}
+
+/* Pour que les images ne débordent pas */
+img {
+    max-width: 100%;
+    display: block;
+}

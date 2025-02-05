@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lily+Script+One&display=swap');
+
+:root {
+    --color-bg: #efe3dc;
+    --color-white: #f7f7f7;
+    --color-dark-grey: #3d3d3d;
+    --color-light-green: #78a39b;
+    --color-light-blue: #c0dffc;
+    --color-light-orange: #f7d0ad;
+    --color-pink: #f3afe4;
+
+    --font-title: "Acorn", sans-serif;
+    --font-subtitle: "Poppins", sans-serif;
+    --font-text: "Barlow Semi Condensed", sans-serif;
+}
+
+@font-face {
+    font-family: "Acorn";
+    src: url("../fonts/acorn/Acorn-regular.woff2") format("woff2"),
+    url("../fonts/acorn/Acorn-regular.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Acorn SemiBold";
+    src: url("../fonts/acorn/Acorn-SemiBold.woff2") format("woff2"),
+    url("../fonts/acorn/Acorn-SemiBold.woff") format("woff");
+    font-weight: 550;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Acorn Bold";
+    src: url("../fonts/acorn/Acorn-Bold.woff2") format("woff2"),
+    url("../fonts/acorn/Acorn-Bold.woff") format("woff");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Acorn Light";
+    src: url("../fonts/acorn/Acorn-Light.woff2") format("woff2"),
+    url("../fonts/acorn/Acorn-Light.woff") format("woff");
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Acorn Medium";
+    src: url("../fonts/acorn/Acorn-Medium.woff2") format("woff2"),
+    url("../fonts/acorn/Acorn-Medium.woff") format("woff");
+    font-weight: 500;
+    font-style: normal;
+}
