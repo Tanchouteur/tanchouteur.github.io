@@ -9,6 +9,9 @@
     --color-light-orange: #f7d0ad;
     --color-pink: #f3afe4;
 
+    --color-title: #1f5c1f;
+    --color-text: #303730;
+
     --font-title: "Acorn", sans-serif;
     --font-subtitle: "Poppins", sans-serif;
     --font-text: "Barlow Semi Condensed", sans-serif;
@@ -16,8 +19,8 @@
 
 @font-face {
     font-family: "Acorn";
-    src: url("../fonts/acorn/Acorn-regular.woff2") format("woff2"),
-    url("../fonts/acorn/Acorn-regular.woff") format("woff");
+    src: url("../fonts/acorn/Acorn-Regular.woff2") format("woff2"),
+    url("../fonts/acorn/Acorn-Regular.woff") format("woff");
     font-weight: 400;
     font-style: normal;
 }

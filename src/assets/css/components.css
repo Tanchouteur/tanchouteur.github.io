@@ -1,0 +1,22 @@
+
+body{
+    background-color: var(--color-bg);
+    min-height: 100vh;
+}
+
+section{
+
+}
+
+h1{
+    font-family: var(--font-title);
+    font-size: 3rem;
+    color: var(--color-title);
+}
+
+h2{
+    font-family: var(--font-subtitle);
+    font-size: 2rem;
+    color: var(--color-text);
+}
+

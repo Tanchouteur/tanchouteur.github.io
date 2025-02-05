@@ -1,0 +1,46 @@
+
+:root{
+    --color1: rgba(195, 66, 157, 0.5);
+    --color2: rgba(30, 135, 221, 0.5);
+    --color3: rgba(232, 181, 31, 0.5);
+}
+
+.animated-light{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height:100vh;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.light-layer{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: radial-gradient(circle, var(--color1), transparent 50%);
+    animation: moveLight 12s linear infinite alternate;
+}
+
+.light-layer:nth-child(2){
+    background: radial-gradient(circle, var(--color2), transparent 50%);
+    animation-duration: 19s;
+}
+
+.light-layer:nth-child(3){
+    background: radial-gradient(circle, var(--color3), transparent 50%);
+    animation-duration: 25s;
+}
+
+@keyframes moveLight{
+    0%{
+        transform: translate(-50%, -50%);
+    }
+    100%{
+        transform: translate(50%, 50%);
+    }
+}
