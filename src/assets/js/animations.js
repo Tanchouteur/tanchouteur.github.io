@@ -44,3 +44,15 @@ window.addEventListener("resize", () => {
 });
 
 animateWave();
+
+
+const nav = document.querySelector("nav");
+window.addEventListener("scroll" , (e) => {
+    console.log(e.target);
+    if (e.target.scrollTop > 0 && !nav.classList.contains("nav-opaque")) {
+        nav.classList.add("nav-opaque");
+    }else if (e.target.scrollTop === 0 && nav.classList.contains("nav-opaque")){
+        nav.classList.remove("nav-opaque");
+    }
+});
+

@@ -78,11 +78,8 @@ span.title {
     transition: all .5s var(--transition-bounce);
 }
 
-.project-card:hover {
-
-    .project-illustration {
-        transform: translateX(5%) translateY(5%);
-    }
+.project-card:hover .project-illustration {
+    transform: translateX(5%) translateY(5%);
 }
 
 .project-header {
@@ -111,3 +108,9 @@ span.title {
     border-radius: 15px;
 }
 
+.nav-opaque{
+    background-color: #fffa;
+    transition: background-color var(--curve-timing);
+    border-radius: var(--16px);
+    backdrop-filter: blur(5px);
+}
