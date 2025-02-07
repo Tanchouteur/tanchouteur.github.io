@@ -1,3 +1,3 @@
 # Portfolio
 My Portfolio's code
-![Design]()
+![Design](./design_portfolio.jpg)
