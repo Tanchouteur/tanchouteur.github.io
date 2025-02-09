@@ -35,6 +35,6 @@
 @media (min-width: 992px) {
     .project-card {
         max-height: 550px;
-        border-radius: var(--64px);
+        border-radius: var(--42px);
     }
 }

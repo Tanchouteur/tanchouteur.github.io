@@ -42,3 +42,14 @@ a.nav-link{
     display: flex;
     align-items: center;
 }
+
+nav#navbar{
+    border-radius: var(--42px);
+    padding: var(--10px);
+    transition: background-color var(--curve-timing);
+}
+
+.nav-opaque{
+    background-color: rgba(218, 218, 218, 0.6);
+    backdrop-filter: blur(10px);
+}

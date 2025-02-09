@@ -36,6 +36,5 @@ button, input, textarea {
 
 /* Pour que les images ne débordent pas */
 img {
-    max-width: 100%;
     display: block;
 }
