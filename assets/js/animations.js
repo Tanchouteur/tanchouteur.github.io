@@ -12,9 +12,9 @@ function drawWave() {
 
     const gradient = ctx.createLinearGradient(gradientOffset, 0, gradientOffset + width*2.1, 0);
 
-    gradient.addColorStop(0, "rgba(250,119,12,0.15)");
+    gradient.addColorStop(0, "rgba(236,125,34,0.15)");
     gradient.addColorStop(0.125, "rgba(221,193,9,0.15)");
-    gradient.addColorStop(0.25, "rgba(31,232,34,0.15)");
+    gradient.addColorStop(0.25, "rgba(31,232,34,0.11)");
     gradient.addColorStop(0.5, "rgba(250,119,12,0.15)");
     gradient.addColorStop(0.625, "rgba(221,193,9,0.15)");
     gradient.addColorStop(0.75, "rgba(31,232,34,0.15)");
@@ -35,7 +35,7 @@ function animateWave() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawWave();
 
-    gradientOffset -= 2;
+    gradientOffset -= 1;
     if (gradientOffset < -canvas.width) {
         gradientOffset = 0;
     }
