@@ -1,7 +1,7 @@
 // navbar.js
 let nav = null;
 window.onload = function() {
-    fetch('/src/assets/html/nav.html')
+    fetch('/assets/html/nav.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('navbar-container').innerHTML = data;
@@ -12,7 +12,7 @@ window.onload = function() {
 
 
 
-    fetch('/src/assets/html/footer.html')
+    fetch('/assets/html/footer.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('footer').innerHTML = data;
