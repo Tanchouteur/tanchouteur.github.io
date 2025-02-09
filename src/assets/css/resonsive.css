@@ -11,7 +11,7 @@
 
 @media (max-width: 900px) {
     #grid {
-        grid-template-columns: 1fr; /* 1 seule colonne en dessous de 900px */
+        grid-template-columns: 100%; /* 1 seule colonne en dessous de 900px */
     }
 }
 

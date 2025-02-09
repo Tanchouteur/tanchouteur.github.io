@@ -25,7 +25,7 @@
     --font-mini: clamp(.875rem, .8367rem + .1633vw, 1rem);
     --font-h2-display: clamp(1.875rem, 1.301rem + 2.449vw, 3.95rem);
 
-
+    --10px: .575rem;
     --14px: .875rem;
     --15px: .9375rem;
     --16px: 1rem;
@@ -37,6 +37,7 @@
     --24px: 1.5rem;
     --42px: 2.652rem;
     --64px: 4rem;
+    --128px: 8rem;
 
     --color-green600: hsla(171, 15%, 35%, 1);
 

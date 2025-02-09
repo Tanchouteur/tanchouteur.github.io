@@ -1,0 +1,11 @@
+/*Grid project*/
+#grid {
+    display: grid;
+    gap: 20px; /* Espacement entre les projets */
+    grid-template-columns: 33% 33% 33%;
+    width: 100%;
+}
+
+.large {
+    grid-column: span 2;
+}
