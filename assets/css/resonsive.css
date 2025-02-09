@@ -38,3 +38,9 @@
         border-radius: var(--42px);
     }
 }
+
+@media (max-width: 1255px) {
+    section.skills{
+        flex-direction: column;
+    }
+}

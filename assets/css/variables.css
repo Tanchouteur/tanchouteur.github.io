@@ -39,7 +39,7 @@
     --64px: 4rem;
     --128px: 8rem;
 
-    --color-green600: hsla(171, 15%, 35%, 1);
+    --color-green600: hsla(171, 15%, 35%, 0.71);
 
     --transition-bounce: cubic-bezier(.175,.885,.32,1.275);
     --transition-ease: ease-in-out;
