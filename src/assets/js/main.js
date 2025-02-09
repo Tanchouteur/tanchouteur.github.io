@@ -9,7 +9,6 @@ window.onload = function() {
         })
         .catch(err => console.error('Erreur de chargement de la navbar:', err));
     manageNav();
-};
 
     fetch('/src/assets/html/footer.html')
         .then(response => response.text())
