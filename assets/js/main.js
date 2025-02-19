@@ -1,6 +1,9 @@
+
 // navbar.js
 let nav = null;
-window.onload = function() {
+
+
+function addNav(){
     fetch('/assets/html/nav.html')
         .then(response => response.text())
         .then(data => {
@@ -9,13 +12,13 @@ window.onload = function() {
 
         })
         .catch(err => console.error('Erreur de chargement de la navbar:', err));
+}
 
-
-
+function addFooter(){
     fetch('/assets/html/footer.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('footer').innerHTML = data;
         })
         .catch(err => console.error('Erreur de chargement du footer:', err));
-};
+}

@@ -6,6 +6,3 @@ function manageNav() {
     }
 }
 
-window.addEventListener("scroll", () => {
-    manageNav();
-});
