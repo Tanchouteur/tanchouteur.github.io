@@ -10,6 +10,7 @@ section{
     max-width: 90%;
     text-align: center;
     transition-duration: var(--curve-timing);
+
 }
 section#title{
     max-width: 80%;
@@ -54,7 +55,6 @@ span.title {
     height: 70dvh;
     z-index: -1;
 }
-
 
 .project-card {
     border-radius: 30px;
@@ -238,4 +238,25 @@ div.skills-box:nth-child(2) {
     }
 }
 
+/* ME */
 
+img.pp {
+    width: 20%;
+    height: auto;
+    border-radius: 25%;
+    margin: var(--20px);
+    box-shadow: var(--shadow-lg);
+}
+
+div.letter{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: var(--20px);
+    max-width: 80%;
+    text-align: justify;
+    background-color: var(--color-white);
+    padding: var(--42px);
+    border-radius: var(--42px);
+    box-shadow: var(--shadow-lg);
+}

@@ -2,9 +2,63 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width">
+    <title>Louis Tanchou - Me</title>
+
+    <meta name="robots" content="skills,follow">
+    <meta name="description" content="The portfolio of Louis Tanchou, Software Developper.">
+    <meta property="og:description" content="The portfolio of Louis Tanchou, Software Developper.">
+    <meta property="og:url" content="https://tanchou.fr">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Louis Tanchou">
+
+    <link rel="stylesheet" href="./assets/css/main.css">
 </head>
 <body>
+<header id="navbar-container">
+</header>
 
+<canvas id="colorCanvas"></canvas>
+<main>
+    <section id="title" style="line-height: 0; height: 40dvh;">
+        <h1>
+            <span class="title-container">
+                <span class="title">Me</span>
+            </span>
+        </h1>
+        <p>Let's talk about me</p>
+    </section>
+
+    <section id="subject" class="me" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <div class="intro-box" style="margin-top: 0; display: flex; justify-content: center; align-items: center;">
+            <img src="assets/images/pp.jpeg" class="pp" alt="Louis Tanchou">
+            <div>
+                <h2>I'm  actually Second-year student in a University Bachelor's of Technology (BUT) in Computer Science</h2>
+                <p>I am looking for an IT internship for April 2025</p>
+            </div>
+        </div>
+
+        <!--Cover letter ah importer en js depuis un fichier-->
+        <div class="letter">
+        </div>
+
+    </section>
+</main>
+
+<footer id="footer"></footer>
+
+<script type="text/javascript">
+    let coverLetter = document.querySelector('.letter');
+    fetch('assets/html/cover-letter.html')
+        .then(response => response.text())
+        .then(data => {
+            coverLetter.innerHTML = data;
+        });
+</script>
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/events.js" defer></script>
+<script src="assets/js/animations.js" defer></script>
+<script src="assets/js/scroll.js" defer></script>
 </body>
 </html>

@@ -10,6 +10,7 @@ function addNav(){
             document.getElementById('navbar-container').innerHTML = data;
             nav = document.getElementById("navbar");
 
+            navLinkNav();
         })
         .catch(err => console.error('Erreur de chargement de la navbar:', err));
 }
@@ -21,4 +22,20 @@ function addFooter(){
             document.getElementById('footer').innerHTML = data;
         })
         .catch(err => console.error('Erreur de chargement du footer:', err));
+}
+
+function navLinkNav() {
+
+    let current = window.location.pathname.split("/").pop();
+    let links = document.querySelectorAll("#navbar a");
+
+    links.forEach(link => {
+        let linkHref = link.getAttribute("href").split("/").pop();
+
+        if (linkHref === current || (linkHref === "" && current === "index.html")) {
+            link.classList.add("active");
+        } else {
+            link.classList.remove("active");
+        }
+    });
 }

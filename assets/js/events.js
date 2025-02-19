@@ -1,8 +1,9 @@
 window.onload = function() {
     addNav();
     addFooter();
+
+    window.addEventListener("scroll", () => {
+        manageNav();
+    });
 };
 
-window.addEventListener("scroll", () => {
-    manageNav();
-});
