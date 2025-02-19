@@ -42,9 +42,4 @@ function animateWave() {
     requestAnimationFrame(animateWave);
 }
 
-window.addEventListener("resize", () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight * 0.7;
-});
-
 animateWave();

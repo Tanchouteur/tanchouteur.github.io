@@ -9,3 +9,12 @@
 .large {
     grid-column: span 2;
 }
+
+/* Hardware */
+
+div.computer{
+    display: grid;
+
+    grid-template-columns: 50% 50%;
+    width: 100%;
+}

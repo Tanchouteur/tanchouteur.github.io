@@ -33,6 +33,10 @@ body {
 
 }
 
+body.hardware {
+    background-color: var(--color-dark-grey);
+}
+
 /* Suppression des bordures et des styles par défaut des boutons et inputs */
 button, input, textarea {
     background: none;

@@ -10,6 +10,10 @@
     --color-light-orange: #f7d0ad;
     --color-pink: #f3afe4;
 
+    --color-bg-gradient: linear-gradient(180deg, #c5d1d9 0%, #dabecd 100%);
+    /*Radial centre :#2d3238  tour : #262626*/
+    --color-card-gradient: radial-gradient(circle, #2d3238 0%, #262626 100%);
+
     --color-title: #02594d;
     --color-text: #3e4e4c;
     --color-text-secondary: var(--color-green600);
@@ -35,6 +39,7 @@
     --20px: 1.25rem;
     --21px: 1.3125rem;
     --24px: 1.5rem;
+    --34px: 2.125rem;
     --42px: 2.652rem;
     --64px: 4rem;
     --128px: 8rem;
