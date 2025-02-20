@@ -266,7 +266,13 @@ header#navbar-container.dark{
     a{
         color: var(--color-light-blue);
     }
+
+    a.active{
+        background: var(--color-text-gradient);
+    }
 }
+
+
 
 section#title.dark{
     h1, p{
@@ -274,6 +280,13 @@ section#title.dark{
     }
 }
 
+.dark{
+    color: var(--color-light-blue);
+
+    p{
+        color: var(--color-light-blue);
+    }
+}
 
 section#subject.hardware{
     min-width: 80%;
@@ -365,4 +378,47 @@ div.hardware-card.double img{
 
 div.componnent-description.double{
     width: 50%;
+}
+
+/*Contact*/
+
+div.social{
+    display: grid;
+    grid-template-columns: 50% 50%;
+
+
+    div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: var(--20px);
+        margin: var(--20px);
+        background-color: var(--color-white);
+
+        a{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        img{
+            width: 80%;
+            height: auto;
+            margin: var(--20px);
+        }
+    }
+}
+
+div.cv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+
+    }
 }
