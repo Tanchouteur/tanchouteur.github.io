@@ -11,8 +11,9 @@
     --color-pink: #f3afe4;
 
     --color-bg-gradient: linear-gradient(180deg, #c5d1d9 0%, #dabecd 100%);
-    /*Radial centre :#2d3238  tour : #262626*/
     --color-card-gradient: radial-gradient(circle, #2d3238 0%, #262626 100%);
+
+    --color-text-gradient: linear-gradient(90deg, #99b1d3 0%, #ddb2c7 100%);
 
     --color-title: #02594d;
     --color-text: #3e4e4c;

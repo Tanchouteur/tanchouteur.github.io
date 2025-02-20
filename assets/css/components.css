@@ -262,6 +262,19 @@ div.letter{
 }
 
 /* Hardware */
+header#navbar-container.dark{
+    a{
+        color: var(--color-light-blue);
+    }
+}
+
+section#title.dark{
+    h1, p{
+        color: var(--color-light-blue);
+    }
+}
+
+
 section#subject.hardware{
     min-width: 80%;
     max-width: 95%;
@@ -273,6 +286,17 @@ section#subject.hardware{
     transition-duration: var(--curve-timing);
     background: var(--color-bg-gradient);
     border-radius: var(--42px);
+
+    div.title{
+        width: 80%;
+        text-align: left;
+        h2{
+            color: var(--color-dark-grey);
+            font-size: var(--64px);
+            padding: var(--20px);
+
+        }
+    }
 }
 
 div.computer{
@@ -292,23 +316,31 @@ div.hardware-card{
 
     h3{
         font-size: var(--64px);
-        line-height: 0.5;
+        line-height: 1;
         color: var(--color-light-blue);
         font-weight: 700;
         margin: var(--20px);
+
+        background:var(--color-text-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
     h4{
         font-size: var(--34px);
         color: var(--color-light-blue);
         font-weight: 500;
         margin: var(--20px);
+
+        background:var(--color-text-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
     p{
         font-size: var(--24px);
         color: var(--color-white);
         font-weight: 300;
         margin: var(--20px);
-        line-height: 0.2;
+        line-height: 1;
     }
 }
 div.hardware-card img{
