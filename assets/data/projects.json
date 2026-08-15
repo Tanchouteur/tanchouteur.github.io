@@ -1,5 +1,47 @@
 [
   {
+    "id": "Lapins-du-Gapeau",
+    "title": "Lapins du Gapeau",
+    "description": "Site vitrine et e-commerce local haute performance pour un élevage familial dans le Var. Développé avec Astro, Decap CMS et Cloudflare, optimisé pour le SEO local et la gestion autonome de contenu.",
+    "longDescription": "# Lapins du Gapeau — Élevage & Vente de lapins de race dans le Var\n\n[Lapins du Gapeau](https://lapinsdugapeau.fr) est le site officiel d'un élevage familial de lapins de race situé à Solliès-Ville dans le Var (83). L'élevage propose quatre races sélectionnées (*Béliers nains*, *Rex*, *Fauves de Bourgogne*, *Géants Papillons*) ainsi que la vente d'aliments complets (*granulés professionnels*).\n\nActuellement en **production réelle**, ce projet répond aux besoins opérationnels quotidiens de l'exploitation : mise en avant des nouvelles naissances, suivi des lapereaux prêts à l'adoption, gestion en temps réel des disponibilités et fiches conseils pour les familles adoptantes.\n\n---\n\n## 🎯 Objectifs & Enjeux Métiers\n\n1. **Valorisation commerciale & adoption responsable** : Proposer une vitrine moderne, chaleureuse et transparente sur les conditions de vie, l'alimentation et la santé des animaux (vaccination VHD 1 et 2).\n2. **Autonomie totale du client (No-Code au quotidien)** : Permettre à l'éleveur de créer de nouvelles portées, mettre à jour le nombre de lapins disponibles, modifier les tarifs et téléverser des photos sans jamais toucher au code source.\n3. **Zéro coût d'infrastructure & sécurité maximale** : Éviter les CMS traditionnels lourds (WordPress, bases de données MySQL vulnérables et coûteuses) au profit d'une architecture Jamstack serverless ultra-sécurisée et économique.\n4. **Référencement local stratégique (SEO / Google Maps)** : Capter les adoptants de la région PACA (Var, Toulon, Hyères, Solliès-Pont, La Crau) sur Google Search et Google Maps, en synergie avec les canaux d'annonces comme LeBonCoin.\n\n---\n\n## 🛠️ Architecture & Choix Technologiques\n\n### ⚡ Astro (Static Site Generation — SSG)\nDécouverte et prise en main d'**Astro** pour concevoir une application web ultra-légère et rapide :\n- **Zero JS by default** : Rendu statique précompilé offrant des temps de chargement quasi-instantanés et d'excellentes performances Core Web Vitals.\n- **Content Collections & Markdown** : Typage strict TypeScript pour les données des portées, granulés et pages informatives.\n- **Design Mobile-First & Responsive** : Interface soignée utilisant un système de design tokens en CSS moderne et la librairie interactive **PhotoSwipe 5** pour les galeries photos HD.\n\n### 📝 Decap CMS & Cloudflare Workers (Headless Git-based CMS)\nMise en place d'un flux de gestion de contenu sans serveur ni base de données :\n- **Administration sur-mesure (`/admin/`)** : Formulaires ergonomiques pour gérer les portées (statuts *nouveaux-nés* ou *prêts à partir*, masquage sans suppression, calcul des disponibilités).\n- **Upload et normalisation automatique des médias** : Script personnalisé pour assainir, renommer et horodater automatiquement les images téléversées.\n- **OAuth Proxy Serverless** : Microservice développé et déployé sur **Cloudflare Workers** (`lapins-du-gapeau-auth.louis-tanchou.workers.dev`) pour gérer l'authentification GitHub sécurisée de l'administration sans backend serveur dédié.\n\n### 🚀 Déploiement Continu (CI/CD) sur Cloudflare Pages\n- Pipeline de déploiement automatique déclenché à chaque publication dans l'administration ou modification sur la branche `latest`.\n- Build Astro exécuté en moins d'une seconde et distribué instantanément sur le réseau Edge CDN mondial de Cloudflare.\n\n---\n\n## 📍 Stratégie SEO & Visibilité Locale\n\nPour maximiser la visibilité de l'élevage sur les requêtes géolocalisées :\n- **Données structurées Schema.org** : Intégration JSON-LD complète (`LocalBusiness`, `PostalAddress`, `Product`, `WebSite`) avec SIRET, localisation et informations de contact conformes aux standards de Google Search et Google Maps.\n- **Sitemap XML dynamique** : Générateur sur-mesure (`sitemap.xml.ts`) cartographiant automatiquement toutes les fiches de portées actives et les pages du site.\n- **Métadonnées sociales & OpenGraph** : Balises OpenGraph et Twitter Cards optimisées avec aperçus d'images dynamiques pour les partages.\n- **Structure sémantique HTML5** : Arborescence de titres (H1-H3), balises d'accessibilité, textes alternatifs descriptifs et balisage d'indexation (`robots.txt`, `canonical`).\n\n---\n\n## 📚 Accompagnement & Documentation Client\n\nPour garantir l'indépendance de l'éleveur, deux manuels d'utilisation complets et illustrés ont été rédigés et livrés au format PDF :\n- **Manuel de gestion du site** : Guide pas-à-pas pour l'utilisation de l'interface Decap CMS (création/modification de portées, gestion des photos, alimentation).\n- **Guide des textes fixes via GitHub** : Procédure simplifiée permettant d'éditer facilement certains textes fixes directement depuis l'interface web de GitHub en toute sécurité.\n\n---\n\n## ✨ Points Forts & Résultats\n\n- 🌐 **Site en exploitation active** avec trafic et conversions régulières d'adoptants.\n- ⚡ **Performances de premier plan** (scores Lighthouse 100/100 en Performance, SEO et Accessibilité).\n- 💶 **0 € de frais d'hébergement** grâce à l'écosystème Cloudflare Pages & Workers.\n- 🤝 **Autonomie complète** de l'exploitant dans la gestion quotidienne de son élevage.",
+    "category": "Professional",
+    "status": "Completed",
+    "date": "2026-08",
+    "tags": [
+      "Astro",
+      "TypeScript",
+      "Decap CMS",
+      "Cloudflare Pages",
+      "Cloudflare Workers",
+      "SEO",
+      "CSS"
+    ],
+    "featured": true,
+    "order": 1,
+    "cover": "assets/images/projects/Lapins-du-Gapeau/cover.png",
+    "images": [
+      "assets/images/projects/Lapins-du-Gapeau/screenshot-a-propos.png",
+      "assets/images/projects/Lapins-du-Gapeau/screenshot-detail.png",
+      "assets/images/projects/Lapins-du-Gapeau/screenshot-granules.png",
+      "assets/images/projects/Lapins-du-Gapeau/screenshot-home.png",
+      "assets/images/projects/Lapins-du-Gapeau/screenshot-mobile.png",
+      "assets/images/projects/Lapins-du-Gapeau/screenshot-portees.png"
+    ],
+    "links": {
+      "github": "https://github.com/Tanchouteur/Lapins-du-Gapeau",
+      "website": "https://lapinsdugapeau.fr",
+      "demo": "https://lapinsdugapeau.fr"
+    },
+    "repoData": {
+      "stars": 0,
+      "forks": 0,
+      "language": "Astro",
+      "isPrivate": true,
+      "updatedAt": "2026-08-15T12:17:38Z",
+      "createdAt": "2026-08-06T13:17:44Z"
+    }
+  },
+  {
     "id": "SpotifySort",
     "title": "SpotiSort v4",
     "description": "Triez automatiquement vos playlists Spotify avec Google Gemini AI. Chaque utilisateur configure ses propres clés et règles de classification.",
