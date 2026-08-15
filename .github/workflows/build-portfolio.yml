@@ -1,0 +1,61 @@
+name: Build Portfolio Projects
+
+on:
+  # Déclenche sur chaque push sur main
+  push:
+    branches: ["main"]
+    paths-ignore:
+      # Évite la boucle infinie quand le workflow commit lui-même
+      - 'assets/data/projects.json'
+      - 'assets/images/projects/**'
+  # Cron : toutes les 6 heures
+  schedule:
+    - cron: '0 */6 * * *'
+  # Déclenchement manuel depuis GitHub Actions
+  workflow_dispatch:
+
+permissions:
+  contents: write   # Pour committer les fichiers générés
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Scan repos & generate projects.json
+
+    steps:
+      - name: Checkout portfolio
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run build script
+        env:
+          # Le GITHUB_TOKEN donne accès aux repos publics sans exposer de token personnel
+          GITHUB_TOKEN: ${{ secrets.PORTFOLIO_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
+        run: node scripts/build-projects.js
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          git add assets/data/projects.json assets/images/projects/ 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "No changes detected."
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "Changes detected!"
+          fi
+
+      - name: Commit & push generated files
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          git config user.name "Portfolio Bot"
+          git config user.email "bot@tanchou.fr"
+          git commit -m "chore: update projects data [skip ci]"
+          git push
