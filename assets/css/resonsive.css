@@ -1,101 +1,137 @@
-/* Mobile (<600px) */
-@media screen and (max-width: 599px) {
-    #grid, div.computer {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 15px;
+/* ─────────────────────────────────────────────────────────────────────────────
+   resonsive.css — Responsive Adjustments & Breakpoints
+───────────────────────────────────────────────────────────────────────────── */
+
+/* ─── Mobile Devices (< 640px) ───────────────────────────────────────────────── */
+@media screen and (max-width: 640px) {
+    .hero-title-main {
+        font-size: 2.8rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.25rem;
+    }
+
+    .hero-desc {
+        font-size: 0.98rem;
+        line-height: 1.5;
+        margin-bottom: 24px;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .hero-actions .btn {
         width: 100%;
     }
 
-    .large {
-        grid-column: auto;
+    .hero-tech-pills {
+        gap: 6px;
     }
 
-    section#title {
-        height: auto;
-        padding: 4rem 0 2rem;
+    .tech-pill {
+        font-size: 0.76rem;
+        padding: 4px 10px;
     }
 
-    #colorCanvas {
-        height: 100%;
+    .section-header {
+        margin-bottom: 24px;
     }
 
-    h1 {
-        font-size: calc(var(--h1-size) * 0.6);
+    .section-title {
+        font-size: 1.8rem;
     }
 
-    .project-card {
-        border-radius: 20px;
+    .filter-segmented-control {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
     }
 
-    .project-illustration {
-        margin: 0 !important;
+    .filter-tab {
+        flex: 1;
+        justify-content: center;
+        padding: 6px 10px;
+        font-size: 0.85rem;
     }
 
-    .project-header {
-        font-size: 1.1em;
-        padding: 8px;
-        margin: 10px;
+    .modern-project-card {
+        border-radius: 16px;
+    }
+
+    .card-content {
+        padding: 16px;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+    }
+
+    .card-description {
+        font-size: 0.9rem;
     }
 
     footer {
         flex-direction: column;
-        align-items: center;
-        gap: 15px;
-        padding: 20px 0;
+        gap: 14px;
+        padding: 24px 16px;
     }
 
-    #project-filters .filter-tags {
-        overflow-x: auto;
-        flex-wrap: nowrap;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        justify-content: flex-start;
-        padding-bottom: 5px;
+    footer div {
+        flex-direction: column;
+        gap: 8px;
     }
 
-    #project-filters .filter-tags::-webkit-scrollbar {
-        display: none;
+    /* Skills on Mobile */
+    section.skills {
+        flex-direction: column;
     }
-}
 
-/* Tablet (600px - 900px) */
-@media screen and (min-width: 600px) and (max-width: 900px) {
-    #grid, div.computer {
-        display: grid;
+    div.skills-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
+        gap: 12px;
+        padding: 14px;
+    }
+
+    /* Me on Mobile */
+    img.pp {
+        width: 130px;
+        height: 130px;
+    }
+
+    div.letter {
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    /* Hardware on Mobile */
+    div.hardware-card.double {
+        flex-direction: column;
+    }
+
+    div.hardware-card.double img {
+        max-width: 100%;
+    }
+
+    div.componnent-description.double {
         width: 100%;
-    }
-
-    .large {
-        grid-column: span 2;
-    }
-
-    section#title {
-        height: 50dvh;
-        padding: 6rem 0 2rem;
-    }
-
-    #colorCanvas {
-        height: 50dvh;
-    }
-    
-    h1 {
-        font-size: calc(var(--h1-size) * 0.8);
     }
 }
 
-/* Desktop (>900px) */
-@media screen and (min-width: 901px) {
-    #grid, div.computer {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 20px;
-        width: 100%;
+/* ─── Tablets (641px - 1024px) ──────────────────────────────────────────────── */
+@media screen and (min-width: 641px) and (max-width: 1024px) {
+    .hero-title-main {
+        font-size: 4.2rem;
     }
 
-    .large {
-        grid-column: span 2;
+    .hero-subtitle {
+        font-size: 1.6rem;
+    }
+
+    section.skills {
+        flex-direction: column;
     }
 }

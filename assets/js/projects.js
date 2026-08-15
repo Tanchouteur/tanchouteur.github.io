@@ -1,34 +1,19 @@
 // assets/js/projects.js
-// Moteur de rendu dynamique de la grille de projets
-// Lit assets/data/projects.json et génère les cartes HTML
+// Moteur de rendu dynamique et moderne de la grille de projets
 
 (function () {
   'use strict';
 
-  // Palette de couleurs cyclique pour les cartes (reprend les couleurs actuelles du design)
-  const CARD_COLORS = [
-    'var(--color-light-blue)',
-    'var(--color-light-green)',
-    'var(--color-light-orange)',
-    'var(--color-pink)',
-    'var(--color-light-green)',
-    'var(--color-light-blue)',
-  ];
-
   // ─── State ──────────────────────────────────────────────────────────────────
-
   let allProjects = [];
   let activeCategory = 'All';
-  let activeTag = null;
 
-  // ─── Fetch & Init ────────────────────────────────────────────────────────────
-
+  // ─── Initialisation ──────────────────────────────────────────────────────────
   async function init() {
     const grid = document.getElementById('grid');
     if (!grid) return;
 
-    // Afficher les skeletons pendant le chargement
-    renderSkeletons(grid, 6);
+    renderSkeletons(grid, 4);
 
     try {
       let res = await fetch('assets/data/projects.json');
@@ -37,141 +22,127 @@
       allProjects = await res.json();
     } catch (err) {
       console.error('Portfolio: could not load projects.json', err);
-      grid.innerHTML = `<p class="projects-error">Impossible de charger les projets.</p>`;
+      grid.innerHTML = `
+        <div class="projects-error-box">
+          <p class="projects-error-title">Impossible de charger les projets pour le moment.</p>
+          <p class="projects-error-subtitle">Vérifiez votre connexion ou réessayez dans quelques instants.</p>
+        </div>
+      `;
       return;
     }
 
-    // Construire les filtres
     renderFilters();
-
-    // Rendre la grille initiale
     renderGrid();
   }
 
-  // ─── Skeletons ───────────────────────────────────────────────────────────────
-
+  // ─── Skeleton Loading ────────────────────────────────────────────────────────
   function renderSkeletons(grid, count) {
     grid.innerHTML = '';
     for (let i = 0; i < count; i++) {
       const card = document.createElement('div');
       card.className = 'project-card skeleton';
       card.innerHTML = `
-        <div class="project-header skeleton-header">
-          <div class="skeleton-line short"></div>
-          <div class="skeleton-line medium"></div>
+        <div class="skeleton-image"></div>
+        <div class="skeleton-body">
+          <div class="skeleton-meta">
+            <div class="skeleton-pill short"></div>
+            <div class="skeleton-pill tiny"></div>
+          </div>
+          <div class="skeleton-line title"></div>
+          <div class="skeleton-line desc"></div>
+          <div class="skeleton-line desc-short"></div>
+          <div class="skeleton-tags">
+            <div class="skeleton-tag"></div>
+            <div class="skeleton-tag"></div>
+            <div class="skeleton-tag"></div>
+          </div>
         </div>
-        <div class="project-illustration skeleton-illustration"></div>
       `;
       grid.appendChild(card);
     }
   }
 
-  // ─── Filters ─────────────────────────────────────────────────────────────────
-
+  // ─── Filtres (Segmented Control) ─────────────────────────────────────────────
   function renderFilters() {
-    // Collect categories
-    const categories = ['All', ...new Set(allProjects.map(p => p.category).filter(Boolean))];
+    const container = document.getElementById('project-filters-container');
+    if (!container) return;
 
-    // Collect all unique tags
-    const tagCounts = {};
-    allProjects.forEach(p => {
-      (p.tags || []).forEach(tag => {
-        tagCounts[tag] = (tagCounts[tag] || 0) + 1;
-      });
-    });
-    // Top tags (appearing in more than 1 project, sorted by count)
-    const topTags = Object.entries(tagCounts)
-      .filter(([, count]) => count >= 1)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 10)
-      .map(([tag]) => tag);
+    // Compter les projets par catégorie
+    const counts = {
+      All: allProjects.length,
+      Personal: allProjects.filter(p => p.category === 'Personal').length,
+      Academic: allProjects.filter(p => p.category === 'Academic').length,
+    };
 
-    // Build filter bar
-    const filterBar = document.createElement('div');
-    filterBar.id = 'project-filters';
-    filterBar.innerHTML = `
-      <div class="filter-group" id="filter-categories">
+    const categories = [
+      { key: 'All', label: 'Tous', count: counts.All },
+      { key: 'Personal', label: 'Personnels', count: counts.Personal },
+      { key: 'Academic', label: 'Académiques', count: counts.Academic },
+    ].filter(cat => cat.key === 'All' || cat.count > 0);
+
+    // Si on a qu'une seule catégorie ou aucun projet, pas besoin de filtres complexes
+    if (categories.length <= 1) {
+      container.innerHTML = '';
+      return;
+    }
+
+    container.innerHTML = `
+      <div class="filter-segmented-control" role="tablist" aria-label="Filtrer les projets">
         ${categories.map(cat => `
-          <button class="filter-btn${cat === activeCategory ? ' active' : ''}" 
-                  data-filter-type="category" 
-                  data-filter-value="${cat}"
-                  id="filter-cat-${cat.toLowerCase()}">
-            ${cat}
+          <button class="filter-tab ${cat.key === activeCategory ? 'active' : ''}" 
+                  data-category="${cat.key}"
+                  role="tab"
+                  aria-selected="${cat.key === activeCategory}">
+            <span>${cat.label}</span>
+            <span class="filter-count">${cat.count}</span>
           </button>
         `).join('')}
       </div>
-      ${topTags.length > 0 ? `
-        <div class="filter-group filter-tags" id="filter-tags">
-          ${topTags.map(tag => `
-            <button class="filter-btn filter-tag${activeTag === tag ? ' active' : ''}" 
-                    data-filter-type="tag" 
-                    data-filter-value="${tag}"
-                    id="filter-tag-${tag.replace(/\s+/g, '-').toLowerCase()}">
-              ${tag}
-            </button>
-          `).join('')}
-        </div>
-      ` : ''}
     `;
 
-    // Attach event listeners
-    filterBar.querySelectorAll('.filter-btn').forEach(btn => {
+    container.querySelectorAll('.filter-tab').forEach(btn => {
       btn.addEventListener('click', () => {
-        const type = btn.dataset.filterType;
-        const value = btn.dataset.filterValue;
+        const cat = btn.dataset.category;
+        if (activeCategory === cat) return;
+        activeCategory = cat;
 
-        if (type === 'category') {
-          activeCategory = value;
-          activeTag = null;
-        } else if (type === 'tag') {
-          activeTag = activeTag === value ? null : value;
-        }
+        container.querySelectorAll('.filter-tab').forEach(b => {
+          const isActive = b.dataset.category === activeCategory;
+          b.classList.toggle('active', isActive);
+          b.setAttribute('aria-selected', isActive);
+        });
 
-        updateFilterUI(filterBar);
         renderGrid();
       });
     });
-
-    // Insert before the grid
-    const grid = document.getElementById('grid');
-    const section = grid.closest('section') || grid.parentNode;
-    section.insertBefore(filterBar, grid);
   }
 
-  function updateFilterUI(filterBar) {
-    filterBar.querySelectorAll('.filter-btn').forEach(btn => {
-      const type = btn.dataset.filterType;
-      const value = btn.dataset.filterValue;
-      const isActive =
-        (type === 'category' && value === activeCategory) ||
-        (type === 'tag' && value === activeTag);
-      btn.classList.toggle('active', isActive);
-    });
-  }
-
-  // ─── Grid ────────────────────────────────────────────────────────────────────
-
+  // ─── Rendu Grille ────────────────────────────────────────────────────────────
   function getFilteredProjects() {
-    return allProjects.filter(p => {
-      const catMatch = activeCategory === 'All' || p.category === activeCategory;
-      const tagMatch = !activeTag || (p.tags && p.tags.includes(activeTag));
-      return catMatch && tagMatch;
-    });
+    if (activeCategory === 'All') return allProjects;
+    return allProjects.filter(p => p.category === activeCategory);
   }
 
   function renderGrid() {
     const grid = document.getElementById('grid');
+    if (!grid) return;
+
     const projects = getFilteredProjects();
 
-    // Animate out
-    grid.classList.add('grid-transitioning');
+    grid.classList.add('grid-fading');
 
     setTimeout(() => {
       grid.innerHTML = '';
 
       if (projects.length === 0) {
-        grid.innerHTML = `<p class="projects-empty">Aucun projet ne correspond à ce filtre.</p>`;
-        grid.classList.remove('grid-transitioning');
+        grid.innerHTML = `
+          <div class="projects-empty-state">
+            <span class="empty-icon">📂</span>
+            <h3>Aucun projet dans cette catégorie</h3>
+            <p>Revenez bientôt pour découvrir de nouvelles réalisations !</p>
+          </div>
+        `;
+        grid.classList.remove('grid-fading');
         return;
       }
 
@@ -180,20 +151,12 @@
         grid.appendChild(card);
       });
 
-      grid.classList.remove('grid-transitioning');
-
-      // Re-init scroll animations for dynamically inserted cards
-      if (typeof initScrollAnimations === 'function') {
-        initScrollAnimations();
-      } else {
-        // Fallback: observe all cards
-        observeCards();
-      }
-    }, 150);
+      grid.classList.remove('grid-fading');
+      observeCards();
+    }, 120);
   }
 
-  // ─── Card ─────────────────────────────────────────────────────────────────────
-
+  // ─── Format Date ─────────────────────────────────────────────────────────────
   function formatDate(dateStr) {
     if (!dateStr) return '';
     const parts = dateStr.split('-');
@@ -206,107 +169,129 @@
     return year;
   }
 
-  function getStatusLabel(status) {
-    const labels = {
-      'In Progress': 'En cours',
-      'Completed': 'Terminé',
-      'Archived': 'Archivé',
-    };
-    return labels[status] || status;
-  }
-
+  // ─── Construction Carte Projet ───────────────────────────────────────────────
   function createProjectCard(project, index) {
-    const card = document.createElement('div');
-    const colorIndex = index % CARD_COLORS.length;
-    const bgColor = CARD_COLORS[colorIndex];
-
-    // Dark card for every 7th item (like the original)
-    const isDark = index % 7 === 6;
-
-    card.className = 'project-card' + (project.featured ? ' large' : '') + (isDark ? ' dark-card' : '');
-    card.style.setProperty('--card-bg', isDark ? 'var(--color-dark-grey)' : bgColor);
+    const card = document.createElement('article');
+    card.className = 'modern-project-card';
     card.dataset.projectId = project.id;
 
-    // Build tags HTML (show first 3 tags)
-    const visibleTags = (project.tags || []).slice(0, 3);
-    const tagsHtml = visibleTags.length > 0
-      ? `<div class="card-tags">${visibleTags.map(t => `<span class="card-tag">${t}</span>`).join('')}</div>`
-      : '';
+    // Statut
+    const isInProgress = project.status === 'In Progress';
+    const statusHtml = isInProgress
+      ? `<span class="card-status-badge status-progress"><span class="status-dot"></span>En cours</span>`
+      : `<span class="card-status-badge status-completed">${formatDate(project.date) || 'Terminé'}</span>`;
 
-    // Date or status display
-    const dateDisplay = project.status === 'In Progress'
-      ? `<span class="card-status status-progress">En cours</span>`
-      : `<span class="card-status">${formatDate(project.date)}</span>`;
+    // Catégorie
+    const categoryLabel = project.category === 'Academic' ? 'Académique' : (project.category === 'Personal' ? 'Personnel' : (project.category || 'Projet'));
+    const categoryHtml = `<span class="card-category-badge">${categoryLabel}</span>`;
 
-    const illustrationHtml = project.cover
-      ? `<div class="project-illustration">
-           <img src="${project.cover}" alt="${project.title}" loading="lazy">
+    // Illustration Cover
+    const coverHtml = project.cover
+      ? `<div class="card-media">
+           <img src="${project.cover}" alt="${project.title}" loading="lazy" class="card-cover-img">
+           <div class="card-media-overlay"></div>
          </div>`
-      : `<div class="project-illustration no-cover">
-           <div class="no-cover-placeholder"><span>${project.title.charAt(0)}</span></div>
+      : `<div class="card-media card-media-placeholder">
+           <div class="placeholder-monogram">${project.title.charAt(0)}</div>
          </div>`;
 
+    // Tags (limité à 4 pour garder la carte propre)
+    const visibleTags = (project.tags || []).slice(0, 4);
+    const tagsHtml = visibleTags.length > 0
+      ? `<div class="card-tech-stack">
+           ${visibleTags.map(tag => `<span class="tech-chip">${tag}</span>`).join('')}
+           ${(project.tags || []).length > 4 ? `<span class="tech-chip tech-chip-more">+${project.tags.length - 4}</span>` : ''}
+         </div>`
+      : '';
+
+    // Liens
+    const githubLink = project.links && project.links.github ? project.links.github : `https://github.com/Tanchouteur/${project.id}`;
+
     card.innerHTML = `
-      <div class="project-header">
-        ${dateDisplay}
-        <div class="project-header-info">
-          <h3>${project.category || ''}</h3>
-          <h2>${project.title}</h2>
+      <div class="card-media-wrapper">
+        ${coverHtml}
+        <div class="card-badges-floating">
+          ${statusHtml}
+          ${categoryHtml}
         </div>
       </div>
-      ${illustrationHtml}
-      ${tagsHtml}
+
+      <div class="card-content">
+        <div class="card-header">
+          <h3 class="card-title">
+            <span>${project.title}</span>
+            <svg class="arrow-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+          </h3>
+        </div>
+
+        <p class="card-description">${project.description || 'Projet open source développé par Louis Tanchou.'}</p>
+
+        ${tagsHtml}
+
+        <div class="card-footer">
+          <a href="project.html?id=${encodeURIComponent(project.id)}" class="card-btn card-btn-primary" aria-label="Voir les détails de ${project.title}">
+            <span>Voir le projet</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          ${githubLink ? `
+            <a href="${githubLink}" target="_blank" rel="noopener" class="card-btn card-btn-ghost" aria-label="Code source GitHub de ${project.title}" onclick="event.stopPropagation()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            </a>
+          ` : ''}
+        </div>
+      </div>
     `;
 
-    // Click → page de détail
-    card.addEventListener('click', () => {
+    // Clic sur toute la carte ouvre les détails
+    card.addEventListener('click', (e) => {
+      // Si l'utilisateur clique directement sur un lien <a> avec un onclick, laisser faire
+      if (e.target.closest('a') && e.target.closest('a').getAttribute('target') === '_blank') {
+        return;
+      }
       window.location.href = `project.html?id=${encodeURIComponent(project.id)}`;
     });
 
-    // Tilt on hover (subtle parallax)
     attachTiltEffect(card);
-
     return card;
   }
 
-  // ─── Tilt Effect ─────────────────────────────────────────────────────────────
-
+  // ─── Effet Parallaxe 3D Subtil ───────────────────────────────────────────────
   function attachTiltEffect(card) {
+    // Désactiver l'effet sur mobile tactile pour la fluidité
+    if (window.matchMedia('(hover: none)').matches) return;
+
     card.addEventListener('mousemove', (e) => {
       const rect = card.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width - 0.5;
       const y = (e.clientY - rect.top) / rect.height - 0.5;
-      card.style.transform = `perspective(800px) rotateY(${x * 6}deg) rotateX(${-y * 4}deg) translateZ(4px)`;
+      card.style.transform = `perspective(1000px) rotateY(${x * 4}deg) rotateX(${-y * 4}deg) translateY(-4px)`;
     });
+
     card.addEventListener('mouseleave', () => {
       card.style.transform = '';
     });
   }
 
-  // ─── Scroll Animations ───────────────────────────────────────────────────────
-
+  // ─── Animations d'apparition ─────────────────────────────────────────────────
   function observeCards() {
-    const cards = document.querySelectorAll('.project-card:not(.skeleton)');
+    const cards = document.querySelectorAll('.modern-project-card:not(.skeleton)');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const card = entry.target;
-          const index = [...card.parentNode.children].indexOf(card);
-          card.style.transitionDelay = `${index * 60}ms`;
           card.classList.add('visible');
           observer.unobserve(card);
         }
       });
-    }, { threshold: 0.08 });
+    }, { threshold: 0.05 });
 
-    cards.forEach(card => {
-      card.classList.add('card-hidden');
+    cards.forEach((card, idx) => {
+      card.style.animationDelay = `${idx * 80}ms`;
       observer.observe(card);
     });
   }
 
-  // ─── Boot ─────────────────────────────────────────────────────────────────────
-
+  // ─── Lancement ───────────────────────────────────────────────────────────────
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
