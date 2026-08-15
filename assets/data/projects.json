@@ -153,5 +153,126 @@
       "updatedAt": "2026-08-15T12:27:57Z",
       "createdAt": "2026-05-11T13:08:15Z"
     }
+  },
+  {
+    "id": "BUT2-SAE-DorfRomantik",
+    "title": "Dorfjavatik",
+    "description": "Jeu de stratégie et de puzzle hexagonal inspiré de Dorfromantik, conçu en Java Vanilla (Swing/Graphics2D) avec génération procédurale, algorithmique de graphes et classement MariaDB.",
+    "longDescription": "# Dorfjavatik — Jeu de Stratégie Hexagonale en Java Vanilla\n\n**Dorfjavatik** est une réimplémentation complète et optimisée du célèbre jeu de réflexion et de construction de paysages *Dorfromantik*. Développé de zéro en **Java pur (Swing & Graphics2D)** sans aucun moteur de jeu tiers, ce projet met en œuvre des algorithmes avancés de théorie des graphes, un moteur de rendu vectoriel avec relief pseudo-3D, une gestion audio multi-pistes et une synchronisation en ligne avec une base de données MariaDB.\n\n---\n\n## 📌 Contexte & Enjeux du Projet\n\nRéalisé dans le cadre de la **SAE 3.1 en BUT 2 Informatique** (IUT de Fontainebleau) par une équipe de 3 développeurs sur une période de 3 semaines, ce projet avait pour objectif d'explorer les fondamentaux du développement de jeux vidéo et de l'architecture logicielle sous de fortes contraintes techniques :\n- **100% Java Vanilla** : interdiction d'utiliser des moteurs ou frameworks de haut niveau (tels que Unity, Godot, LibGDX ou JavaFX). Seul le JDK standard et le driver JDBC MariaDB étaient autorisés.\n- **Rendu graphique bas niveau** : conception de tous les éléments visuels, polygones hexagonaux, transformations matricielles et shaders de relief directement avec l'API `java.awt.Graphics2D`.\n- **Architecture logicielle pérenne** : application stricte du patron de conception **Modèle-Vue-Contrôleur (MVC)** pour découpler proprement la logique algorithmique, la restitution graphique et la gestion des événements.\n\n---\n\n## 🎮 Concept & Mécaniques de Jeu\n\nLe joueur est invité à assembler progressivement un paysage harmonieux à partir d'une pioche de tuiles hexagonales :\n\n- **5 biomes distincts** : Mer (Eau), Montagne, Champ, Pré / Plaine et Forêt. Chaque tuile est découpée en 6 secteurs triangulaires pouvant combiner jusqu'à deux biomes différents.\n- **Placement & Adjacence** : Chaque nouvelle tuile tirée doit être connectée à au moins un côté d'une tuile déjà posée sur le plateau.\n- **Système de Poches & Score Quadratique** :\n  - Lorsque deux tuiles adjacentes partagent le même biome sur leur arête commune, elles fusionnent au sein d'une même **poche** de terrain.\n  - Le score d'une poche est calculé selon une formule quadratique : **Score = N²**, où N représente le nombre total de tuiles constituant la poche.\n  - Cette mécanique encourage une planification stratégique à long terme pour bâtir d'immenses territoires continus.\n- **Génération Déterministe par Graine (Seed)** :\n  - Chaque série de 50 tuiles est générée de manière pseudo-aléatoire mais déterministe (`TuileRandomFactory`) à partir d'une graine entière.\n  - Cela garantit une équité parfaite pour comparer les scores entre joueurs sur une même série.\n\n---\n\n## 🧩 Défis Algorithmiques & Géométrie Hexagonale\n\n### 1. Détection des Composantes Connexes en Temps Réel\nÀ chaque pose de tuile, le moteur identifie ses 6 voisins immédiats (coordonnées axiales décalées) et résout la connectivité des biomes :\n- Fusion dynamique des poches distinctes devenues adjacentes.\n- Mise à jour instantanée du différentiel de points (retrait des anciens scores isolés et ajout du nouveau score combiné).\n\n### 2. Algorithme d'Annulation (Undo) et Recalcul Topologique\nPermettre l'annulation d'un coup représentait un défi algorithmique majeur : retirer une tuile peut scinder une poche unique en deux ou plusieurs sous-poches disjointes.\n- Implémentation d'un **parcours en profondeur (DFS - Depth-First Search)** pour explorer le sous-graphe restant et ré-isoler automatiquement les nouvelles composantes connexes.\n- Réajustement exact du score global sans incohérence d'état.\n\n---\n\n## 🏗️ Architecture & Fonctionnalités Techniques\n\n### 🎨 Moteur de Rendu Vectoriel & Caméra 2D\n- **Rendu Hexagonal Précis** : Calcul trigonométrique des sommets de polygones et découpage en facettes triangulaires avec couleurs thématiques.\n- **Relief Pseudo-3D** : Perspective isométrique sur les tranches des tuiles du plateau et sur la pile de prévisualisation (effet de profondeur et d'épaisseur).\n- **Anticrénelage Dynamique (Anti-Aliasing)** : Option activable à la volée via `RenderingHints.KEY_ANTIALIASING`.\n- **Navigation Fluide (Drag & Drop)** : Déplacement libre de la caméra sur le plateau infini par glisser-déposer à la souris et zoom à la molette.\n- **Bouton de Recentrage Intelligent** : Détecte l'éloignement du centre et propose un recentrage automatique de la vue.\n\n### 🎬 Moteur d'Animation (`Animator`)\n- Système d'interpolation temporelle pour animer les transitions d'écrans (glissement latéral de l'écran de fin de partie, animations de déplacement de tuiles).\n\n### 🎵 Moteur Audio Mixé (`MediaPlayerManager`)\n- Gestion multi-pistes avec boucle de musique d'ambiance et enchaînement automatique de morceaux (`ClipStopListener`).\n- Déclenchement d'effets sonores acoustiques contextuels lors de la pose d'une tuile, modulés selon le biome dominant.\n- Contrôle individuel des niveaux de volume (musique et effets) via l'interface des paramètres.\n\n### 🗄️ Backend MariaDB & Persistance\n- **Connexion Asynchrone (`BddConnectionTask`)** : Initialisation en tâche de fond dans un thread dédié pour ne pas bloquer l'Event Dispatch Thread (EDT) de Swing au démarrage.\n- **Gestion Hors-Ligne (Offline Fallback)** : Si la base est inaccessible, le jeu bascule automatiquement en mode hors-ligne sans interruption de l'expérience de jeu.\n- **Triggers SQL Automatisés** : Déclencheur `UpdateBestScoreAfterInsert` mettant à jour instantanément le meilleur score global de chaque série lors de l'enregistrement d'une partie.\n- **Historique & Recherche de Parties (`VuePartieJouer`)** : Tableau interactif permettant de parcourir les parties jouées, d'effectuer des recherches par joueur et d'analyser les classements.\n\n---\n\n## 🛠️ Stack Technique\n\n- **Langage** : Java (JDK 18+)\n- **Interface Graphique** : Java Swing, AWT, `Graphics2D`, `JLayeredPane`\n- **Base de Données** : MariaDB, JDBC Driver (`mariadb-java-client`)\n- **Modélisation & Assets** : Blender Cycles (Rendu 3D du menu principal), Inkscape / SVG (Diagrammes d'architecture et d'activités)\n- **Automatisation & Build** : Makefile / Script de compilation autonome\n\n---\n\n## 🚀 Lancement du Projet\n\n```bash\n# Compilation du projet et copie des ressources\nmake jar\n\n# Lancement du jeu\nmake run\n```\n\n---\n\n## 👥 Équipe & Rôles\n\nProjet développé avec passion par :\n- **Louis Tanchou**\n- **Alexis Hadjem-Brancher**\n- **Thomas Renault**\n",
+    "category": "Academic",
+    "status": "Completed",
+    "date": "2024-10",
+    "tags": [
+      "Java",
+      "Java Swing",
+      "Graphics2D",
+      "Game Development",
+      "Algorithmique",
+      "Théorie des Graphes",
+      "MariaDB",
+      "Architecture MVC"
+    ],
+    "featured": true,
+    "order": 1,
+    "cover": "assets/images/projects/BUT2-SAE-DorfRomantik/cover.jpg",
+    "images": [
+      "assets/images/projects/BUT2-SAE-DorfRomantik/activite_poches.svg",
+      "assets/images/projects/BUT2-SAE-DorfRomantik/architecture_bdd.svg",
+      "assets/images/projects/BUT2-SAE-DorfRomantik/architecture_endgame.svg",
+      "assets/images/projects/BUT2-SAE-DorfRomantik/architecture_jeux.svg",
+      "assets/images/projects/BUT2-SAE-DorfRomantik/architecture_menu.svg",
+      "assets/images/projects/BUT2-SAE-DorfRomantik/logo.png",
+      "assets/images/projects/BUT2-SAE-DorfRomantik/paysages.svg",
+      "assets/images/projects/BUT2-SAE-DorfRomantik/terrains.svg",
+      "assets/images/projects/BUT2-SAE-DorfRomantik/titre.png",
+      "assets/images/projects/BUT2-SAE-DorfRomantik/tuto.png"
+    ],
+    "links": {
+      "github": "https://github.com/Tanchouteur/BUT2-SAE-DorfRomantik"
+    },
+    "repoData": {
+      "stars": 0,
+      "forks": 0,
+      "language": "Java",
+      "isPrivate": false,
+      "updatedAt": "2026-08-15T12:57:51Z",
+      "createdAt": "2024-10-29T20:12:56Z"
+    }
+  },
+  {
+    "id": "MenuD-laSemaine",
+    "title": "Menu de la Semaine",
+    "description": "Générateur intelligent de menus hebdomadaires équilibrés sous contraintes multiples (saisonnalité, compatibilité, rotation et préférences familiales).",
+    "longDescription": "# Menu de la Semaine — Planification Intelligente sous Contraintes\n\n## Contexte & Genèse du Projet\n\nLa planification des repas au sein d'un foyer familial représente une charge mentale récurrente : comment concevoir **14 repas hebdomadaires variés et équilibrés** (7 déjeuners et 7 dîners) sans tourner en rond, tout en composant avec le temps disponible chaque jour et les goûts de chacun ?\n\nPour répondre concrètement à ce besoin du quotidien, j'ai conçu et développé **Menu de la Semaine**, une application fullstack complète articulée autour d'un **moteur de décision sous contraintes multiples**. L'objectif était d'automatiser la génération de menus hebdomadaires cohérents tout en laissant à la famille le contrôle total pour ajuster, régénérer ou personnaliser les propositions à la volée.\n\n---\n\n## Fonctionnalités Clés\n\n- **Génération Hebdomadaire Automatisée** : Création instantanée des 14 repas de la semaine (entrées, plats composés ou plats complets).\n- **Régénération Granulaire** : Remplacement à la demande d'un repas unitaire en un clic (ex. changement imprévu d'emploi du temps ou envie ponctuelle).\n- **Gestion des Catégories Alimentaires** : Entrées, viandes, féculents, légumes et plats complets autonomes (ex. pizzas, gratins).\n- **Catalogue & Paramétrage Fin** : Interface d'administration pour ajouter, éditer et calibrer les coefficients de chaque produit.\n- **Accès Mobile-First** : Application web pensée pour une consultation et modification rapide depuis un smartphone ou une tablette dans la cuisine.\n\n---\n\n## Moteur Algorithmique & Résolution sous Contraintes\n\nLe cœur du système repose sur un algorithme stochastique pondéré (`WeightsOperator`) appliquant une sélection par roulette cumulative conditionnée par 5 dimensions d'évaluation :\n\n1. **Saisonnalité (`PoidsSaison`)** : Chaque aliment possède un coefficient selon la saison courante (Printemps, Été, Automne, Hiver) afin de privilégier les produits frais et d'éliminer les plats inadaptés (ex. plats d'hiver en plein été).\n2. **Temporalité & Rythme de Vie (`PoidsMoment`)** : Pondération spécifique distinguant le **midi en semaine** (recettes rapides), le **soir en semaine** et le **week-end** (préparations plus élaborées). Un poids de 0 agit comme un filtre éliminatoire strict.\n3. **Historique d'Utilisation & Rotation (`LastUsed`)** : Calcul dynamique d'un facteur de récence :\n   - *Moins de 4 jours* : Poids = 0 (exclusion stricte pour bannir les doublons rapprochés).\n   - *Entre 4 et 21 jours* : Augmentation linéaire normalisée de l'attractivité.\n   - *Plus de 21 jours* : Attractivité maximale rétablie.\n4. **Matrice d'Incompatibilité Relationnelle** : Vérification des règles d'exclusion entre ingrédients pour éviter les associations culinaires discordantes (ex. certains féculents avec certaines viandes ou légumes).\n5. **Score d'Appréciation Familiale (`PoidsArbitraire`)** : Valeur personnalisée reflétant le plaisir et les préférences gustatives de la famille.\n\n$$\\text{PoidsFinal} = \\text{PoidsMoment} \\times \\text{PoidsSaison} \\times \\text{PoidsArbitraire} \\times \\text{PoidsLastUsed}$$\n\n---\n\n## Architecture & Choix Techniques\n\nLe projet a été développé en adoptant une approche sans dépendances superflues (*vanilla & lightweight*), garantissant une maîtrise complète de chaque couche :\n\n### Backend (Java)\n- **Serveur HTTPS Natif** : Implémentation via `com.sun.net.httpserver` sécurisée par `SSLContext` et keystore PKCS12 avec certificat TLS dédié.\n- **Architecture Modulaire** : Handlers HTTP REST (`/menu/*`, `/products/*`, `/info/*`) avec filtres CORS intégrés.\n- **Patrons de Conception** :\n  - *DAO Pattern* avec cache mémoire local et mécanisme de **dirty bit** pour minimiser la latence et les requêtes répétitives vers la base de données.\n  - *Factory Pattern* pour instancier et combiner de manière découplée les composants d'un repas (`PlatCompose`, `Accompagnement`, `PlatComplet`).\n- **Connexion Base de Données** : Pool de connexions JDBC optimisé.\n\n### Base de Données (MariaDB / MySQL)\n- Modèle relationnel normalisé avec intégrité référentielle : tables `Produits`, `PoidsSaison`, `PoidsMoment`, `Incompatibilite` et `Menu`.\n- Procédures stockées et vues dédiées pour encapsuler les opérations d'insertion et de mise à jour.\n\n### Frontend Web (HTML5 / CSS3 / JavaScript)\n- Interface développée en Vanilla JS, légère et réactive, sans framework lourd.\n- Approche **Mobile-First** avec navigation intuitive par cartes pour une ergonomie optimale sur smartphone.\n- Servi en production par un serveur reverse-proxy **Nginx**.\n\n---\n\n## Retour d'Expérience & REX Production\n\nCe projet a dépassé le simple stade de prototype : il a été **déployé en production sur serveur dédié et utilisé au quotidien par ma famille**. Cette confrontation au monde réel a apporté des enseignements techniques inestimables :\n\n- **Sensibilité de la pondération multiplicative** : La multiplication de coefficients entiers discrets crée une dynamique hautement non-linéaire. Un seul facteur mal calibré pouvait neutraliser excessivement un aliment ou, à l'inverse, sur-représenter certains groupes.\n- **Nécessité d'un solveur global (CSP)** : L'approche stochastique pas-à-pas (*greedy roulette*) peut occasionnellement se heurter à des impasses combinatoires (aucun accompagnement compatible restant sur un créneau donné). Une approche par satisfaction de contraintes avec *backtracking* garantit mathématiquement une solution globale optimale.\n- **Ergonomie des réglages** : La configuration fine de multiples poids par produit s'est avérée trop complexe pour un utilisateur final non-technique, mettant en évidence le besoin de profils simplifiés et d'un calibrage plus intuitif.\n\n---\n\n## Perspectives & Version 2\n\nFort de ces retours terrain, une refonte complète (**v2**) est en cours de conception :\n- **Moteur CSP (Constraint Satisfaction Problem)** avec solveur de contraintes robuste garantissant un menu hebdomadaire équilibré sans blocage combinatoire.\n- **Génération automatique de la liste de courses** synchronisée avec les portions et ingrédients nécessaires.\n- **Refonte de l'interface utilisateur** avec gestion par profils, tags rapides (temps de préparation, budget, régimes) et expérience mobile modernisée.",
+    "category": "Personal",
+    "status": "Archived",
+    "date": "2024-10",
+    "tags": [
+      "Java",
+      "REST API",
+      "MariaDB",
+      "MySQL",
+      "JavaScript",
+      "Nginx",
+      "HTTPS / SSL",
+      "Algorithmique"
+    ],
+    "featured": false,
+    "order": 5,
+    "cover": "assets/images/projects/MenuD-laSemaine/cover.png",
+    "images": [
+      "assets/images/projects/MenuD-laSemaine/ajout-produit.png",
+      "assets/images/projects/MenuD-laSemaine/architecture-uml.png",
+      "assets/images/projects/MenuD-laSemaine/fiche-produit.png",
+      "assets/images/projects/MenuD-laSemaine/modele-relationnel-bdd.png",
+      "assets/images/projects/MenuD-laSemaine/planning-hebdomadaire.png"
+    ],
+    "links": {
+      "github": "https://github.com/Tanchouteur/MenuD-laSemaine"
+    },
+    "repoData": {
+      "stars": 1,
+      "forks": 0,
+      "language": "Java",
+      "isPrivate": false,
+      "updatedAt": "2026-08-15T12:59:49Z",
+      "createdAt": "2024-10-23T22:52:25Z"
+    }
+  },
+  {
+    "id": "CPUs",
+    "title": "Architecture Processeur & UAL 8-bit",
+    "description": "Conception et simulation modulaire d'une architecture processeur et d'une UAL 8 bits sous Logisim. Exploration approfondie des circuits logiques, du jeu d'instructions (ISA) et des fondements matériels.",
+    "longDescription": "# Architecture Processeur & Conception d'UAL 8-bit\n\nCe projet explore en profondeur les **fondements du matériel informatique**, de la logique booléenne jusqu'à la modélisation complète d'un processeur synchrone et d'une **Unité Arithmétique et Logique (UAL / ALU) 8 bits** sous **Logisim**.\n\nL'objectif central de cette démarche était d'acquérir une compréhension intime et concrète du fonctionnement interne des processeurs (« *from logic gates to computation* »). Cette maîtrise du niveau matériel permet aujourd'hui d'appréhender avec précision l'impact des choix d'architecture sur l'optimisation logicielle, la gestion de la mémoire, les pipelines d'exécution et le coût réel des instructions machine.\n\n---\n\n## 1. Unité Arithmétique et Logique (UAL 8 bits)\n\nL'UAL conçue est une unité de calcul modulaire capable de traiter deux opérandes 8 bits (`Operand A` et `Operand B`) en fonction d'un code opération (Opcode) 4 bits, tout en générant des indicateurs d'état (*Flags*).\n\n### Caractéristiques techniques de l'UAL\n- **Décodage d'instructions** : Décodeur 4 vers 16 pilotant la sélection des chemins de données.\n- **Opérations arithmétiques** : Additionneur/soustracteur avec retenue (*Carry in/out*), multiplicateur matériel et diviseur avec gestion du quotient et du reste (*remainder*).\n- **Opérations logiques** : Portes `AND`, `OR`, `XOR`, `NOT` vectorisées sur 8 bits.\n- **Routage & Sélection** : Réseau de multiplexeurs combiné à des encodeurs de priorité (*Priority Encoders*) garantissant une propagation déterministe des signaux.\n- **Gestion des Drapeaux (Flags)** : Indicateur de résultat nul (*Zero Flag*), débordement (*Overflow*), et retenue (*Carry*).\n\n### Table des Opcodes UAL\n\n| Opcode (Binaire) | Mnémonique | Description |\n| :--- | :--- | :--- |\n| `0000` | **NOP** | Aucune opération (No Operation) |\n| `0001` | **HALT** | Arrêt de l'exécution |\n| `0010` | **ADD** | Addition arithmétique ($A + B$) |\n| `0011` | **SUB** | Soustraction arithmétique ($A - B$) |\n| `0100` | **MUL** | Multiplication entière ($A \\times B$) |\n| `0101` | **DIV** | Division entière ($A / B$) |\n| `0110` | **AND** | Opération logique ET bit à bit ($A \\land B$) |\n| `0111` | **OR** | Opération logique OU bit à bit ($A \\lor B$) |\n| `1000` | **XOR** | Opération logique OU exclusif ($A \\oplus B$) |\n\n---\n\n## 2. Architecture CPU Complète (Gate-Level Design)\n\nAu-delà de l'UAL isolée, le projet intègre la conception intégrale d'un processeur synchrone au niveau des portes logiques et des bascules (*Gate-Level schematic*).\n\n### Composants clés du processeur\n1. **Banc de Registres (Register File)** : Matrice de stockage construite à partir de bascules D (*D Flip-Flops*), avec logique d'adressage en lecture et écriture synchrone.\n2. **Unité de Contrôle & Décodage** : Décodage des mots d'instruction et génération des signaux de contrôle pour les bus et l'UAL.\n3. **Format d'Instruction Binaire** :\n   - **Bits [12:10]** : Opcode instruction (3 bits).\n   - **Bits [9:7]** : Adresse du registre de destination (3 bits).\n   - **Bits [6:3]** : Registre source 1 ou valeur immédiate 4 bits (ex. instruction `load`).\n   - **Bits [2:0]** : Adresse du registre source 2 (3 bits).\n4. **Jeu d'Instructions (ISA)** :\n   - `000` — **ADD** : Addition des registres sources vers destination.\n   - `001` — **LOAD** : Chargement d'une valeur immédiate dans un registre.\n   - `010` — **SOUS** : Soustraction des registres sources.\n   - `011` — **CMP (==)** : Test d'égalité et mise à jour des drapeaux.\n   - `100` — **AND (&&)** : Opération logique ET.\n   - `101` — **OR (\\|\\|)** : Opération logique OU.\n   - `110` — **JUMP** : Saut inconditionnel dans le flux d'instructions.\n   - `111` — **JUMP_IF** : Saut conditionnel asservi aux drapeaux d'état (Zero / Overflow).\n\n---\n\n## 3. Compétences & Apports Pratiques\n\n- **Compréhension bas niveau** : Maîtrise des chemins de données (*datapath*), de l'interconnexion par bus, des aléas de propagation et des horloges synchrones.\n- **Conception de systèmes numériques** : Modélisation sous Logisim de circuits combinatoires et séquentiels complexes.\n- **Optimisation algorithmique** : Connaissance précise du coût matériel des opérations (branchements conditionnels, opérations arithmétiques, accès registres vs mémoire).\n- **Bases de l'ingénierie système** : Transition fluide entre architecture matérielle, assembleur, et développement logiciel optimisé.",
+    "category": "Personal",
+    "status": "Completed",
+    "date": "2025-01",
+    "tags": [
+      "Logisim",
+      "Computer Architecture",
+      "Digital Logic",
+      "CPU Design",
+      "ALU",
+      "Assembly",
+      "Hardware Simulation"
+    ],
+    "featured": false,
+    "order": 10,
+    "cover": "assets/images/projects/CPUs/cover.jpg",
+    "images": [
+      "assets/images/projects/CPUs/alu_8bits_circuit.jpg",
+      "assets/images/projects/CPUs/cpu_v1_architecture.png"
+    ],
+    "links": {
+      "github": "https://github.com/Tanchouteur/CPUs"
+    },
+    "repoData": {
+      "stars": 1,
+      "forks": 0,
+      "language": null,
+      "isPrivate": false,
+      "updatedAt": "2026-08-15T13:07:18Z",
+      "createdAt": "2025-01-27T06:21:59Z"
+    }
   }
 ]
