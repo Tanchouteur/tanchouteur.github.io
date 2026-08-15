@@ -1,36 +1,36 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lily+Script+One&display=swap');
-
-
 :root {
-    --color-bg: #efe3dc;
-    --color-white: #f7f7f7;
-    --color-dark-grey: #3d3d3d;
-    --color-light-green: #78a39b;
-    --color-light-blue: #c0dffc;
-    --color-light-orange: #f7d0ad;
-    --color-pink: #f3afe4;
+    --color-bg: #f2f0e9;
+    --color-surface: #f9f8f3;
+    --color-white: #ffffff;
+    --color-ink: #121815;
+    --color-ink-soft: #27302b;
+    --color-muted: #5f6863;
+    --color-line: rgba(18, 24, 21, .14);
+    --color-accent: #d8ff5f;
+    --color-accent-deep: #b8e637;
+    --color-title: var(--color-ink);
+    --color-text: var(--color-ink-soft);
+    --color-text-secondary: var(--color-muted);
+    --color-dark-grey: #121815;
+    --color-light-green: #d8ff5f;
+    --color-light-blue: #dce9ff;
+    --color-light-orange: #ffc798;
+    --color-pink: #f1b9dd;
+    --color-bg-gradient: linear-gradient(135deg, #d8ff5f 0%, #dce9ff 100%);
+    --color-card-gradient: linear-gradient(145deg, #202822 0%, #101512 100%);
+    --color-text-gradient: linear-gradient(90deg, #d8ff5f 0%, #dce9ff 100%);
 
-    --color-bg-gradient: linear-gradient(180deg, #c5d1d9 0%, #dabecd 100%);
-    --color-card-gradient: radial-gradient(circle, #2d3238 0%, #262626 100%);
+    --font-title: "Acorn", "Trebuchet MS", sans-serif;
+    --font-subtitle: "Barlow Semi Condensed", Arial, sans-serif;
+    --font-text: "Barlow Semi Condensed", Arial, sans-serif;
+    --bodyFont: "Barlow Semi Condensed", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
-    --color-text-gradient: linear-gradient(90deg, #99b1d3 0%, #ddb2c7 100%);
+    --font-body: clamp(1rem, .94rem + .25vw, 1.16rem);
+    --font-link: .95rem;
+    --font-mini: .82rem;
+    --font-h2-display: clamp(2.65rem, 1.7rem + 4vw, 6.4rem);
 
-    --color-title: #02594d;
-    --color-text: #3e4e4c;
-    --color-text-secondary: var(--color-green600);
-
-    --font-title: "Acorn", sans-serif;
-    --font-subtitle: "Poppins", sans-serif;
-    --font-text: "Barlow Semi Condensed", sans-serif;
-    --bodyFont: "gt", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-
-    --h1-size: clamp(3.2rem, .5692rem + 8.238vw, 13.75rem);
-    --font-body: clamp(1rem, .8852rem + .4898vw, 1.375rem);
-    --font-link: clamp(.875rem, .7985rem + .3265vw, 1.125rem);
-    --font-mini: clamp(.875rem, .8367rem + .1633vw, 1rem);
-    --font-h2-display: clamp(1.875rem, 1.301rem + 2.449vw, 3.95rem);
-
-    --10px: .575rem;
+    --10px: .625rem;
     --14px: .875rem;
     --15px: .9375rem;
     --16px: 1rem;
@@ -41,55 +41,63 @@
     --21px: 1.3125rem;
     --24px: 1.5rem;
     --34px: 2.125rem;
-    --42px: 2.652rem;
+    --42px: 2.625rem;
     --64px: 4rem;
     --128px: 8rem;
 
-    --color-green600: hsla(171, 15%, 35%, 0.71);
-
-    --transition-bounce: cubic-bezier(.175,.885,.32,1.275);
-    --transition-ease: ease-in-out;
-    --shadow-lg: 0px 50px 100px -20px rgba(0, 0, 0, .15);
-
+    --transition-bounce: cubic-bezier(.2, .8, .2, 1);
+    --transition-ease: cubic-bezier(.2, .8, .2, 1);
+    --shadow-lg: 0 30px 80px rgba(18, 24, 21, .12);
     --curve-timing: .35s;
+    --radius-sm: 10px;
+    --radius-md: 18px;
+    --radius-lg: 30px;
 }
 
 @font-face {
     font-family: "Acorn";
-    src: url("../fonts/acorn/Acorn-Regular.woff2") format("woff2"),
-    url("../fonts/acorn/Acorn-Regular.woff") format("woff");
+    src: url("../fonts/acorn/Acorn-Regular.woff2") format("woff2");
     font-weight: 400;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-    font-family: "Acorn SemiBold";
-    src: url("../fonts/acorn/Acorn-SemiBold.woff2") format("woff2"),
-    url("../fonts/acorn/Acorn-SemiBold.woff") format("woff");
-    font-weight: 550;
+    font-family: "Acorn";
+    src: url("../fonts/acorn/Acorn-SemiBold.woff2") format("woff2");
+    font-weight: 600;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-    font-family: "Acorn Bold";
-    src: url("../fonts/acorn/Acorn-Bold.woff2") format("woff2"),
-    url("../fonts/acorn/Acorn-Bold.woff") format("woff");
+    font-family: "Acorn";
+    src: url("../fonts/acorn/Acorn-Bold.woff2") format("woff2");
     font-weight: 700;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-    font-family: "Acorn Light";
-    src: url("../fonts/acorn/Acorn-Light.woff2") format("woff2"),
-    url("../fonts/acorn/Acorn-Light.woff") format("woff");
-    font-weight: 200;
+    font-family: "Barlow Semi Condensed";
+    src: url("../fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Regular.ttf") format("truetype");
+    font-weight: 400;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-    font-family: "Acorn Medium";
-    src: url("../fonts/acorn/Acorn-Medium.woff2") format("woff2"),
-    url("../fonts/acorn/Acorn-Medium.woff") format("woff");
-    font-weight: 500;
+    font-family: "Barlow Semi Condensed";
+    src: url("../fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-SemiBold.ttf") format("truetype");
+    font-weight: 600;
     font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Barlow Semi Condensed";
+    src: url("../fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
 }

@@ -1,137 +1,22 @@
-/* ─────────────────────────────────────────────────────────────────────────────
-   resonsive.css — Responsive Adjustments & Breakpoints
-───────────────────────────────────────────────────────────────────────────── */
-
-/* ─── Mobile Devices (< 640px) ───────────────────────────────────────────────── */
-@media screen and (max-width: 640px) {
-    .hero-title-main {
-        font-size: 2.8rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 1.25rem;
-    }
-
-    .hero-desc {
-        font-size: 0.98rem;
-        line-height: 1.5;
-        margin-bottom: 24px;
-    }
-
-    .hero-actions {
-        flex-direction: column;
-        width: 100%;
-        gap: 10px;
-    }
-
-    .hero-actions .btn {
-        width: 100%;
-    }
-
-    .hero-tech-pills {
-        gap: 6px;
-    }
-
-    .tech-pill {
-        font-size: 0.76rem;
-        padding: 4px 10px;
-    }
-
-    .section-header {
-        margin-bottom: 24px;
-    }
-
-    .section-title {
-        font-size: 1.8rem;
-    }
-
-    .filter-segmented-control {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .filter-tab {
-        flex: 1;
-        justify-content: center;
-        padding: 6px 10px;
-        font-size: 0.85rem;
-    }
-
-    .modern-project-card {
-        border-radius: 16px;
-    }
-
-    .card-content {
-        padding: 16px;
-    }
-
-    .card-title {
-        font-size: 1.25rem;
-    }
-
-    .card-description {
-        font-size: 0.9rem;
-    }
-
-    footer {
-        flex-direction: column;
-        gap: 14px;
-        padding: 24px 16px;
-    }
-
-    footer div {
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    /* Skills on Mobile */
-    section.skills {
-        flex-direction: column;
-    }
-
-    div.skills-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        padding: 14px;
-    }
-
-    /* Me on Mobile */
-    img.pp {
-        width: 130px;
-        height: 130px;
-    }
-
-    div.letter {
-        padding: 20px;
-        border-radius: 20px;
-    }
-
-    /* Hardware on Mobile */
-    div.hardware-card.double {
-        flex-direction: column;
-    }
-
-    div.hardware-card.double img {
-        max-width: 100%;
-    }
-
-    div.componnent-description.double {
-        width: 100%;
-    }
+@media (max-width: 680px) {
+    .hero-badge { align-items: flex-start; font-size: .72rem; }
+    .hero-desc { font-size: 1.08rem; }
+    .hero-actions { display: grid; grid-template-columns: 1fr; }
+    .hero-actions .btn { width: 100%; }
+    .projects-section { padding-top: 100px; }
+    .section-desc { margin-top: 18px; font-size: 1rem; }
+    .modern-project-card, .project-card.skeleton { border-radius: 22px; }
+    .card-media-wrapper, .skeleton-image { border-radius: 14px; }
+    .card-content { padding: 24px 20px; }
+    .profile-section { padding-block: 90px; }
+    .contact-strip { padding: 30px 24px; border-radius: 22px; }
+    section#title { min-height: 48vh !important; padding-top: 120px !important; }
+    section#title h1 { font-size: clamp(4rem, 22vw, 7rem); }
+    div.skills-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-/* ─── Tablets (641px - 1024px) ──────────────────────────────────────────────── */
-@media screen and (min-width: 641px) and (max-width: 1024px) {
-    .hero-title-main {
-        font-size: 4.2rem;
-    }
-
-    .hero-subtitle {
-        font-size: 1.6rem;
-    }
-
-    section.skills {
-        flex-direction: column;
-    }
+@media (max-width: 380px) {
+    .hero-title-main { font-size: 2.9rem; }
+    .filter-count { display: none; }
+    .filter-tab { padding-inline: 8px; }
 }

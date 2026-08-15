@@ -82,6 +82,103 @@
     }
 }
 
+/* 2026 visual system ------------------------------------------------------- */
+body:has(#project-title) main { padding-bottom: 100px; }
+body:has(#project-title) section#title {
+    min-height: 0 !important;
+    padding: 130px 0 30px !important;
+    border-bottom: 0;
+}
+
+.detail-back {
+    margin: 0;
+    padding: 10px 14px;
+    border: 1px solid var(--color-line);
+    border-radius: 9px;
+    background: rgba(249,248,243,.65);
+    color: var(--color-ink);
+    font-size: .85rem;
+}
+.detail-back:hover { background: var(--color-white); transform: translateX(-3px); }
+
+.project-hero {
+    max-width: none;
+    max-height: 680px;
+    margin-bottom: 50px;
+    border: 12px solid var(--color-surface);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-ink);
+    box-shadow: 0 30px 80px rgba(18,24,21,.12);
+}
+
+body:has(#project-title) section#subject { max-width: 1180px !important; padding: 0; }
+
+.project-meta-line { margin-bottom: 18px; }
+.project-meta-line .project-category,
+.project-meta-line .project-date {
+    color: var(--color-muted);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+}
+.project-status-badge { border-radius: 6px; background: rgba(18,24,21,.07); color: var(--color-ink-soft); }
+.project-status-badge.status-in-progress { background: var(--color-accent); color: var(--color-ink); }
+
+#project-title {
+    max-width: 900px;
+    margin-bottom: 22px;
+    color: var(--color-ink);
+    font-size: clamp(3.5rem, 2rem + 6vw, 7.5rem);
+    font-weight: 600;
+    letter-spacing: -.055em;
+    line-height: .9;
+}
+
+#project-description {
+    max-width: 820px;
+    margin-bottom: 70px;
+    color: var(--color-muted);
+    font-size: clamp(1.15rem, 1rem + .55vw, 1.45rem);
+    line-height: 1.55;
+}
+
+.project-detail-body { max-width: none; grid-template-columns: minmax(0, 1fr) 300px; gap: clamp(45px, 8vw, 110px); }
+
+#project-long-description { color: var(--color-ink-soft); font-size: 1.04rem; line-height: 1.78; }
+#project-long-description h2,
+#project-long-description h3 { color: var(--color-ink); font-weight: 600; letter-spacing: -.025em; }
+#project-long-description h2 { margin: 46px 0 16px; font-size: 2rem; }
+#project-long-description h3 { margin: 30px 0 12px; font-size: 1.45rem; }
+#project-long-description ul { list-style: disc; }
+#project-long-description ol { list-style: decimal; }
+#project-long-description code { background: rgba(18,24,21,.07); }
+#project-long-description pre { border-radius: 16px; background: var(--color-ink); color: var(--color-accent); }
+
+.detail-tag { border: 1px solid var(--color-line); border-radius: 7px; background: transparent; color: var(--color-ink-soft); font-size: .7rem; }
+.detail-tag:hover { background: var(--color-accent); border-color: var(--color-accent); }
+
+.project-detail-sidebar { position: sticky; top: 110px; }
+.detail-sidebar-card { padding: 24px; border: 1px solid var(--color-line); border-radius: 16px; background: var(--color-surface); box-shadow: none; }
+.detail-sidebar-card h4 { color: var(--color-muted); font-size: .68rem; letter-spacing: .14em; }
+.project-link-btn { border-radius: 8px; }
+.project-link-github { background: var(--color-ink); color: #fff; }
+.project-link-demo, .project-link-website { background: var(--color-accent); color: var(--color-ink); }
+
+#gallery-section { max-width: none; margin-top: 70px; }
+#gallery-section h3 { color: var(--color-ink); font-size: 2.1rem; }
+#project-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.gallery-item { border: 8px solid var(--color-surface); border-radius: 20px; box-shadow: 0 20px 50px rgba(18,24,21,.1); }
+
+@media (max-width: 768px) {
+    body:has(#project-title) section#title { padding-top: 100px !important; }
+    .project-hero { margin-bottom: 32px; border-width: 6px; border-radius: 18px; }
+    #project-title { font-size: clamp(3rem, 16vw, 5rem); }
+    #project-description { margin-bottom: 48px; }
+    .project-detail-body { grid-template-columns: 1fr; gap: 24px; }
+    .project-detail-sidebar { position: static; }
+    #project-gallery { grid-template-columns: 1fr; }
+}
+
 /* ── Main column ── */
 .project-detail-main {}
 

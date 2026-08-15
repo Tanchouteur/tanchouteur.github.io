@@ -6,7 +6,7 @@
     <title>Louis Tanchou — Développeur Logiciel & Systèmes</title>
 
     <meta name="robots" content="index,follow">
-    <meta name="description" content="Portfolio de Louis Tanchou, étudiant en BUT Informatique, développeur logiciel, bas-niveau et systèmes embarqués.">
+    <meta name="description" content="Portfolio de Louis Tanchou, étudiant école d'ingénieur, développeur logiciel, bas-niveau et systèmes embarqués.">
     <meta property="og:description" content="Portfolio de Louis Tanchou, étudiant en BUT Informatique, développeur logiciel, bas-niveau et systèmes embarqués.">
     <meta property="og:url" content="https://tanchou.fr">
     <meta property="og:type" content="website">
@@ -19,43 +19,64 @@
     <canvas id="colorCanvas"></canvas>
     
     <main class="home-main">
-        <!-- Hero Section -->
         <section id="hero" class="hero-section">
-            <div class="hero-badge">
-                <span class="pulse-dot"></span>
-                <span>Étudiant BUT Informatique · En recherche de stage</span>
-            </div>
-            
-            <h1 class="hero-title">
-                <span class="hero-title-main">Louis Tanchou</span>
-                <span class="hero-subtitle">Software & Embedded Developer</span>
-            </h1>
-            
-            <p class="hero-desc">
-                Passionné par le développement bas niveau, les systèmes embarqués, l'architecture logicielle et la création de projets concrets from scratch.
-            </p>
-
-            <div class="hero-actions">
-                <a href="#projects" class="btn btn-primary" id="btn-explore-projects">
-                    <span>Explorer mes projets</span>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
-                </a>
-                <a href="https://github.com/Tanchouteur" target="_blank" rel="noopener" class="btn btn-secondary" id="btn-github-profile">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-                    <span>GitHub</span>
-                </a>
-                <a href="/contact.html" class="btn btn-tertiary" id="btn-contact-link">
-                    <span>Contact</span>
-                </a>
+            <div class="hero-topline" aria-hidden="true">
+                <span>Portfolio · 2026</span>
+                <span>Code · Hardware · Produit</span>
             </div>
 
-            <div class="hero-tech-pills">
-                <span class="tech-pill">Python & QML</span>
-                <span class="tech-pill">C / C++</span>
-                <span class="tech-pill">Java</span>
-                <span class="tech-pill">CAN Bus / OBD-II</span>
-                <span class="tech-pill">Raspberry Pi</span>
-                <span class="tech-pill">Bases de données</span>
+            <div class="hero-layout">
+                <div class="hero-copy">
+                    <div class="hero-badge">
+                        <span class="pulse-dot"></span>
+                        <span>Disponible pour de nouvelles opportunités</span>
+                    </div>
+
+                    <h1 class="hero-title">
+                        <span class="hero-intro">Louis Tanchou — développeur</span>
+                        <span class="hero-title-main">Je conçois des produits <em>logiciels</em> qui vivent dans le monde réel.</span>
+                    </h1>
+
+                    <p class="hero-desc">
+                        Du code bas niveau à l’interface finale, je transforme des systèmes complexes en expériences fiables, lisibles et utiles.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="#projects" class="btn btn-primary" id="btn-explore-projects">
+                            <span>Découvrir mes projets</span>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                        </a>
+                        <a href="/assets/CV/CV_Louis_Tanchou.pdf" target="_blank" rel="noopener" class="btn btn-secondary">
+                            <span>Voir mon CV</span>
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3h7v7M10 14L21 3M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hero-visual" aria-label="Portrait de Louis Tanchou et domaines d’expertise">
+                    <div class="hero-portrait-frame">
+                        <span class="portrait-index">LT / 01</span>
+                        <img src="assets/images/pp.jpeg" alt="Portrait de Louis Tanchou" class="hero-portrait">
+                        <div class="portrait-caption">
+                            <span>Software</span>
+                            <span>Embedded</span>
+                            <span>Interfaces</span>
+                        </div>
+                    </div>
+                    <div class="orbit-stamp" aria-hidden="true">
+                        <span>BUILD · TEST · LEARN · SHIP ·</span>
+                        <strong>↗</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-capabilities">
+                <p>Ce que je fais</p>
+                <ul>
+                    <li><span>01</span> Architecture logicielle</li>
+                    <li><span>02</span> Systèmes embarqués</li>
+                    <li><span>03</span> Interfaces produit</li>
+                </ul>
             </div>
         </section>
 
@@ -63,14 +84,36 @@
         <section id="projects" class="projects-section">
             <div class="section-header">
                 <div class="section-title-wrap">
-                    <span class="section-badge">Projets</span>
-                    <h2 class="section-title">Travaux & Réalisations</h2>
-                    <p class="section-desc">Projets personnels et universitaires synchronisés automatiquement depuis GitHub.</p>
+                    <span class="section-badge">Sélection / 01—02</span>
+                    <h2 class="section-title">Des projets pensés,<br>construits et éprouvés.</h2>
+                    <p class="section-desc">Une sélection de projets personnels et universitaires, du prototype au produit fonctionnel.</p>
                 </div>
                 <div id="project-filters-container"></div>
             </div>
 
             <div id="grid"></div>
+        </section>
+
+        <section class="profile-section" aria-labelledby="profile-title">
+            <div class="profile-heading">
+                <span class="section-badge">Approche / 02</span>
+                <h2 id="profile-title">Comprendre en profondeur.<br><em>Construire avec intention.</em></h2>
+            </div>
+            <div class="profile-content">
+                <p>J’aime les projets où le logiciel rencontre une contrainte réelle : une voiture, un Raspberry Pi, une API, des données ou simplement un usage à rendre évident.</p>
+                <a href="/me.html" class="text-link">En savoir plus sur mon parcours <span>↗</span></a>
+            </div>
+        </section>
+
+        <section class="contact-strip" aria-label="Prendre contact">
+            <div>
+                <span>Un projet, une idée, une opportunité ?</span>
+                <h2>Parlons de ce qu’on peut construire ensemble.</h2>
+            </div>
+            <a href="/contact.html" class="contact-orb" aria-label="Me contacter">
+                <span>Me contacter</span>
+                <strong>↗</strong>
+            </a>
         </section>
     </main>
 

@@ -12,20 +12,18 @@ function drawWave() {
 
     const gradient = ctx.createLinearGradient(gradientOffset, 0, gradientOffset + width*2.1, 0);
 
-    gradient.addColorStop(0, "rgba(236,125,34,0.15)");
-    gradient.addColorStop(0.125, "rgba(221,193,9,0.15)");
-    gradient.addColorStop(0.25, "rgba(31,232,34,0.11)");
-    gradient.addColorStop(0.5, "rgba(250,119,12,0.15)");
-    gradient.addColorStop(0.625, "rgba(221,193,9,0.15)");
-    gradient.addColorStop(0.75, "rgba(31,232,34,0.15)");
-    gradient.addColorStop(1, "rgba(250,119,12,0.15)");
+    gradient.addColorStop(0, "rgba(216,255,95,0.32)");
+    gradient.addColorStop(0.22, "rgba(220,233,255,0.24)");
+    gradient.addColorStop(0.48, "rgba(255,199,152,0.18)");
+    gradient.addColorStop(0.72, "rgba(216,255,95,0.22)");
+    gradient.addColorStop(1, "rgba(220,233,255,0.22)");
 
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, width, height);
 
     const fadeGradient = ctx.createLinearGradient(0, height * 0.6, 0, height);
     fadeGradient.addColorStop(0, "#fff0");
-    fadeGradient.addColorStop(1, "rgb(239,227,220)");
+    fadeGradient.addColorStop(1, "rgb(242,240,233)");
 
     ctx.fillStyle = fadeGradient;
     ctx.fillRect(0, height * 0.6, width, height);
