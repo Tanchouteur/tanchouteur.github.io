@@ -15,7 +15,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write   # Pour committer les fichiers générés
+  contents: write   # Donne à GITHUB_TOKEN le droit d'écrire/pusher sur ce repo
 
 jobs:
   build:
@@ -26,8 +26,8 @@ jobs:
       - name: Checkout portfolio
         uses: actions/checkout@v4
         with:
-          # Utilise le PAT s'il existe pour que le push déclenche les webhooks Coolify
-          token: ${{ secrets.PORTFOLIO_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
+          # On utilise GITHUB_TOKEN ici pour avoir les droits d'écriture garantis sur ce repo
+          token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
       - name: Setup Node.js
@@ -37,6 +37,7 @@ jobs:
 
       - name: Run build script
         env:
+          # On passe PORTFOLIO_GITHUB_TOKEN au script pour lire les repos privés
           GITHUB_TOKEN: ${{ secrets.PORTFOLIO_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
         run: node scripts/build-projects.js
 
@@ -53,7 +54,7 @@ jobs:
             echo "changed=true" >> $GITHUB_OUTPUT
             echo "Changes detected, committing and pushing..."
             git commit -m "chore: update portfolio projects data"
-            git push
+            git push origin main
           fi
 
       # Déclenchement direct du webhook Coolify (si configuré dans les secrets GitHub)
