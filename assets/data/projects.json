@@ -116,5 +116,42 @@
       "updatedAt": "2026-08-15T08:30:57Z",
       "createdAt": "2026-04-02T09:13:30Z"
     }
+  },
+  {
+    "id": "RigConcentrateur",
+    "title": "RigConcentrateur",
+    "description": "Plateforme de télémétrie temps réel, monitoring thermique et calcul énergétique pour cluster de calcul GPU (Vast.ai, IA & rendering).",
+    "longDescription": "# RigConcentrateur — Concentrateur Télémétrique & Monitoring de Ferme GPU\n\n**RigConcentrateur** est une plateforme de supervision et d'ingestion télémétrique haute fréquence conçue pour monitorer en production une **ferme de serveurs de calcul GPU** (hébergement de rigs dédiés au deep learning, à l'inférence IA et au rendu 3D haute intensité sur des plateformes comme Vast.ai).\n\nDéployé 24h/24 et 7j/7, le système offre une visibilité totale sur l'intégrité matérielle du cluster, garantit la continuité de service des machines louées, prévient les dérives thermiques critiques et optimise la rentabilité énergétique globale.\n\n---\n\n### 🎯 Enjeux & Contexte Opérationnel\n\nL'exploitation d'une ferme de rigs de calcul GPU impose des contraintes sévères :\n- **Forte densité thermique** : Des cartes graphiques haut de gamme (RTX 4090, RTX 3080...) tournant à pleine charge requièrent une surveillance thermique millimétrée (GPU, VRAM, CPU, stockage NVMe) pour éviter le *thermal throttling* ou la dégradation matérielle.\n- **Disponibilité & Cycle de Location** : Détection en temps réel des transitions d'état (*Loué*, *Libre*, *Hors-ligne*) et du comportement des conteneurs de calcul afin d'assurer un SLA optimal aux clients.\n- **Maîtrise Énergétique** : Suivi fin de la puissance tirée (Watts) et calcul précis de la consommation cumulée en kilowattheures (kWh) pour chaque machine afin de modéliser avec exactitude le coût électrique réel.\n\n---\n\n### 🚀 Fonctionnalités Clés\n\n#### 1. Ingestion Télémétrique Haute Performance\n- Collecte sécurisée des trames système émises par chaque rig via une API REST protégée par Bearer token.\n- Capture exhaustive des métriques : charge GPU (%), température GPU (°C), puissance GPU (W), puissance cible, vitesse des ventilateurs (RPM & %), charge/température CPU, consommation globale (W), utilisation RAM et stockage (Go & %).\n\n#### 2. Dashboard Temps Réel & Visualisation Interactive\n- Tableau de bord en direct affichant l'état consolidé de la ferme (cartes d'état interactives par rig avec codes couleur statutaires : *Loué*, *Libre*, *Erreur*).\n- Graphiques temporels dynamiques via **Chart.js** pour analyser les courbes d'évolution thermique, de charge et de puissance avec sélection de plages temporelles (1h, 6h, 24h, 7j, 30j).\n\n#### 3. Moteur de Calcul d'Énergie & Rentabilité (kWh)\n- Module dédié de calcul d'énergie intégrée sur des fenêtres temporelles arbitraires.\n- Ventilation de la consommation électrique globale et par rig individuel pour un audit précis des coûts d'exploitation électrique.\n\n#### 4. Alerting Intelligent & Watchdog Proactif\n- **Alertes Événementielles par Email (SMTP)** : Envoi automatique de notifications lors des changements d'état de location (démarrage/fin de bail sur Vast.ai).\n- **Surveillance Thermique Configurable** : Définition de seuils limites de température (CPU, GPU, Stockage) depuis l'interface d'administration avec temporisation (cooldown anti-rebond) pour éviter le spam d'alertes.\n- **Watchdog Hors-Ligne** : Détection automatique des pertes de signal réseau ou coupures d'alimentation avec journalisation dédiée des pannes.\n\n#### 5. Historique Détaillé des Sessions de Location\n- Journalisation de chaque session de calcul : horodatage précis de début et de fin, durée cumulée, statistiques complètes (températures min/max/moyenne, consommation) et corrélation automatique des erreurs survenues pendant la location.\n\n#### 6. Sécurité & Contrôle d'Accès Granulaire (RBAC)\n- Authentification par cookies de session sécurisés avec persistance en base SQLite (`connect-sqlite3`) et hachage fort des mots de passe avec **bcrypt**.\n- Gestion de rôles différenciés :\n  - **Admin** : Accès complet (ajustement des seuils thermiques, purge de base, configuration globale).\n  - **Viewer** : Accès en lecture seule pour écrans de monitoring déportés ou clients légers (ESP32, applications de supervision externes).\n\n---\n\n### 🛠️ Architecture & Stack Technique\n\n- **Backend** : Node.js (v20+), Express 5, SQLite3 (stockage local optimisé et résilient, sans dépendance lourde), Nodemailer (moteur d'envoi d'emails transactionnels).\n- **Frontend** : Vanilla JavaScript moderne (ES Modules), Tailwind CSS, Chart.js (rendu performant et léger côté client, zéro latence).\n- **Conteneurisation & DevOps** : Déploiement conteneurisé via Docker (`Dockerfile`, `.dockerignore`), intégration de tests automatisés via Jest & Supertest.",
+    "category": "Personal",
+    "status": "Completed",
+    "date": "2026-05",
+    "tags": [
+      "Node.js",
+      "Express",
+      "SQLite",
+      "Chart.js",
+      "TailwindCSS",
+      "GPU Computing",
+      "Telemetry",
+      "IoT & Monitoring",
+      "Docker"
+    ],
+    "featured": true,
+    "order": 1,
+    "cover": "assets/images/projects/RigConcentrateur/cover.jpg",
+    "images": [
+      "assets/images/projects/RigConcentrateur/screenshot_analytics.jpg"
+    ],
+    "links": {
+      "github": "https://github.com/Tanchouteur/RigConcentrateur"
+    },
+    "repoData": {
+      "stars": 0,
+      "forks": 0,
+      "language": "JavaScript",
+      "isPrivate": true,
+      "updatedAt": "2026-08-15T12:27:57Z",
+      "createdAt": "2026-05-11T13:08:15Z"
+    }
   }
 ]
