@@ -24,7 +24,8 @@
     }
 
     try {
-      const res = await fetch('assets/data/projects.json');
+      let res = await fetch('assets/data/projects.json');
+      if (!res.ok) res = await fetch('/assets/data/projects.json');
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const projects = await res.json();
       const project = projects.find(p => p.id === projectId);

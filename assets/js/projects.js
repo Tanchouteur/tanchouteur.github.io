@@ -31,11 +31,12 @@
     renderSkeletons(grid, 6);
 
     try {
-      const res = await fetch('assets/data/projects.json');
+      let res = await fetch('assets/data/projects.json');
+      if (!res.ok) res = await fetch('/assets/data/projects.json');
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       allProjects = await res.json();
     } catch (err) {
-      console.warn('Portfolio: could not load projects.json', err);
+      console.error('Portfolio: could not load projects.json', err);
       grid.innerHTML = `<p class="projects-error">Impossible de charger les projets.</p>`;
       return;
     }

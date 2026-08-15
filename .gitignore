@@ -1,7 +1,2 @@
 /.idea/
 
-# Fichiers générés par le script de build GitHub Actions
-# (régénérés automatiquement, ne pas committer manuellement)
-assets/data/projects.json
-assets/images/projects/
-

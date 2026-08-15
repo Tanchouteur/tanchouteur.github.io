@@ -40,22 +40,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PORTFOLIO_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
         run: node scripts/build-projects.js
 
-      - name: Check for changes
-        id: check_changes
+      - name: Commit & Push changes
         run: |
-          git add assets/data/projects.json assets/images/projects/ 2>/dev/null || true
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/data/projects.json assets/images/projects/
           if git diff --cached --quiet; then
-            echo "changed=false" >> $GITHUB_OUTPUT
-            echo "No changes detected."
+            echo "No changes in projects data."
           else
-            echo "changed=true" >> $GITHUB_OUTPUT
-            echo "Changes detected!"
+            echo "Changes detected, committing and pushing..."
+            git commit -m "chore: update portfolio projects [skip ci]"
+            git push
           fi
 
-      - name: Commit & push generated files
-        if: steps.check_changes.outputs.changed == 'true'
-        run: |
-          git config user.name "Portfolio Bot"
-          git config user.email "bot@tanchou.fr"
-          git commit -m "chore: update projects data [skip ci]"
-          git push
