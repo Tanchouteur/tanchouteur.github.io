@@ -5,7 +5,7 @@ on:
   push:
     branches: ["main"]
     paths-ignore:
-      # Évite la boucle infinie quand le workflow commit lui-même
+      # Évite la boucle infinie si on modifie uniquement les fichiers générés
       - 'assets/data/projects.json'
       - 'assets/images/projects/**'
   # Cron : toutes les 6 heures
@@ -26,7 +26,8 @@ jobs:
       - name: Checkout portfolio
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          # Utilise le PAT s'il existe pour que le push déclenche les webhooks Coolify
+          token: ${{ secrets.PORTFOLIO_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
       - name: Setup Node.js
@@ -36,20 +37,31 @@ jobs:
 
       - name: Run build script
         env:
-          # Le GITHUB_TOKEN donne accès aux repos publics sans exposer de token personnel
           GITHUB_TOKEN: ${{ secrets.PORTFOLIO_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
         run: node scripts/build-projects.js
 
       - name: Commit & Push changes
+        id: git_push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add assets/data/projects.json assets/images/projects/
           if git diff --cached --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
             echo "No changes in projects data."
           else
+            echo "changed=true" >> $GITHUB_OUTPUT
             echo "Changes detected, committing and pushing..."
-            git commit -m "chore: update portfolio projects [skip ci]"
+            git commit -m "chore: update portfolio projects data"
             git push
           fi
 
+      # Déclenchement direct du webhook Coolify (si configuré dans les secrets GitHub)
+      - name: Trigger Coolify Deploy Webhook
+        if: steps.git_push.outputs.changed == 'true' && env.COOLIFY_WEBHOOK_URL != ''
+        env:
+          COOLIFY_WEBHOOK_URL: ${{ secrets.COOLIFY_WEBHOOK_URL }}
+        run: |
+          echo "Pinging Coolify Deploy Webhook..."
+          curl -f -X GET -s "$COOLIFY_WEBHOOK_URL" || curl -f -X POST -s "$COOLIFY_WEBHOOK_URL" || true
+          echo "Coolify webhook triggered successfully!"
