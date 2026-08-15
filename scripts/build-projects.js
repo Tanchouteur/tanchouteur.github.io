@@ -2,40 +2,58 @@
 
 /**
  * build-projects.js
- * Scanne tous les repos publics de Tanchouteur sur GitHub,
+ * Scanne tous les repos (publics et privés si PORTFOLIO_GITHUB_TOKEN est fourni) de Tanchouteur sur GitHub,
  * récupère les dossiers .portfolio/, télécharge les images,
  * et génère assets/data/projects.json.
  *
  * Utilisation :
  *   GITHUB_TOKEN=ghp_xxx node scripts/build-projects.js
- *   node scripts/build-projects.js --dry-run   (affiche sans écrire)
+ *   node scripts/build-projects.js --dry-run
  */
 
 const https = require('https');
+const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const { URL } = require('url');
 
 // ─── Configuration ────────────────────────────────────────────────────────────
 
 const GITHUB_USERNAME = 'Tanchouteur';
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN || '';
+const GITHUB_TOKEN = process.env.PORTFOLIO_GITHUB_TOKEN || process.env.GITHUB_TOKEN || '';
 const DRY_RUN = process.argv.includes('--dry-run');
 const OUTPUT_JSON = path.join(__dirname, '..', 'assets', 'data', 'projects.json');
 const IMAGES_DIR = path.join(__dirname, '..', 'assets', 'images', 'projects');
 const IMAGE_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg', '.avif'];
 
-const HEADERS = {
-  'User-Agent': 'tanchouteur-portfolio-builder/1.0',
-  'Accept': 'application/vnd.github+json',
-  'X-GitHub-Api-Version': '2022-11-28',
-  ...(GITHUB_TOKEN ? { 'Authorization': `Bearer ${GITHUB_TOKEN}` } : {}),
-};
+function getHeaders(targetUrl, customAccept = 'application/vnd.github+json') {
+  const urlObj = new URL(targetUrl);
+  const isGitHubApi = urlObj.hostname === 'api.github.com';
+  const isRawGitHub = urlObj.hostname === 'raw.githubusercontent.com';
+
+  const headers = {
+    'User-Agent': 'tanchouteur-portfolio-builder/2.0',
+  };
+
+  if (isGitHubApi) {
+    headers['Accept'] = customAccept;
+    headers['X-GitHub-Api-Version'] = '2022-11-28';
+  }
+
+  // Send token only to GitHub domains, never to external AWS S3 redirects
+  if (GITHUB_TOKEN && (isGitHubApi || isRawGitHub)) {
+    headers['Authorization'] = `Bearer ${GITHUB_TOKEN}`;
+  }
+
+  return headers;
+}
 
 // ─── HTTP Helpers ─────────────────────────────────────────────────────────────
 
 function fetchJSON(url) {
   return new Promise((resolve, reject) => {
-    https.get(url, { headers: HEADERS }, (res) => {
+    const headers = getHeaders(url, 'application/vnd.github+json');
+    https.get(url, { headers }, (res) => {
       let data = '';
       res.on('data', chunk => data += chunk);
       res.on('end', () => {
@@ -44,7 +62,7 @@ function fetchJSON(url) {
           return;
         }
         if (res.statusCode !== 200) {
-          reject(new Error(`HTTP ${res.statusCode} for ${url}`));
+          reject(new Error(`HTTP ${res.statusCode} for ${url}: ${data.substring(0, 100)}`));
           return;
         }
         try {
@@ -63,20 +81,34 @@ function downloadFile(url, destPath) {
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 
     const file = fs.createWriteStream(destPath);
-    const doRequest = (reqUrl) => {
-      https.get(reqUrl, { headers: HEADERS }, (res) => {
-        // Follow redirects
-        if (res.statusCode === 301 || res.statusCode === 302) {
-          file.destroy();
-          doRequest(res.headers.location);
+
+    const doRequest = (reqUrl, redirectCount = 0) => {
+      if (redirectCount > 5) {
+        file.destroy();
+        fs.unlink(destPath, () => {});
+        reject(new Error(`Too many redirects downloading ${reqUrl}`));
+        return;
+      }
+
+      const urlObj = new URL(reqUrl);
+      const client = urlObj.protocol === 'https:' ? https : http;
+      const headers = getHeaders(reqUrl, 'application/vnd.github.raw');
+
+      client.get(reqUrl, { headers }, (res) => {
+        // Handle 301, 302, 307, 308 redirects (GitHub API redirects to AWS S3 pre-signed URLs)
+        if ([301, 302, 307, 308].includes(res.statusCode) && res.headers.location) {
+          const nextUrl = new URL(res.headers.location, reqUrl).toString();
+          doRequest(nextUrl, redirectCount + 1);
           return;
         }
+
         if (res.statusCode !== 200) {
           file.destroy();
           fs.unlink(destPath, () => {});
           reject(new Error(`HTTP ${res.statusCode} downloading ${reqUrl}`));
           return;
         }
+
         res.pipe(file);
         file.on('finish', () => file.close(resolve));
         file.on('error', (err) => {
@@ -88,6 +120,7 @@ function downloadFile(url, destPath) {
         reject(err);
       });
     };
+
     doRequest(url);
   });
 }
@@ -97,25 +130,31 @@ function downloadFile(url, destPath) {
 async function listAllRepos() {
   const repos = [];
   let page = 1;
+
   while (true) {
-    const url = `https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&page=${page}&sort=updated`;
+    // If token is provided, use /user/repos to get both public and private repositories
+    const url = GITHUB_TOKEN
+      ? `https://api.github.com/user/repos?per_page=100&page=${page}&sort=updated&affiliation=owner&visibility=all`
+      : `https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&page=${page}&sort=updated`;
+
     const data = await fetchJSON(url);
-    if (!data || data.length === 0) break;
+    if (!data || !Array.isArray(data) || data.length === 0) break;
     repos.push(...data);
     if (data.length < 100) break;
     page++;
   }
+
   return repos;
 }
 
-async function getPortfolioFolder(repoName) {
-  const url = `https://api.github.com/repos/${GITHUB_USERNAME}/${repoName}/contents/.portfolio`;
+async function getPortfolioFolder(owner, repoName) {
+  const url = `https://api.github.com/repos/${owner}/${repoName}/contents/.portfolio`;
   const data = await fetchJSON(url);
-  return data; // null if 404, array of files if exists
+  return data; // null if 404, array of file objects if exists
 }
 
-async function getPortfolioJson(repoName, branch) {
-  const url = `https://api.github.com/repos/${GITHUB_USERNAME}/${repoName}/contents/.portfolio/portfolio.json`;
+async function getPortfolioJson(owner, repoName) {
+  const url = `https://api.github.com/repos/${owner}/${repoName}/contents/.portfolio/portfolio.json`;
   const data = await fetchJSON(url);
   if (!data || !data.content) return null;
   try {
@@ -139,11 +178,10 @@ function isCover(filename) {
   return base === 'cover';
 }
 
-async function downloadPortfolioImages(repoName, files) {
+async function downloadPortfolioImages(owner, repoName, files) {
   const repoImagesDir = path.join(IMAGES_DIR, repoName);
   const imageFiles = files.filter(f => f.type === 'file' && isImage(f.name));
 
-  const coverRelPath = null;
   let coverPath = null;
   const screenshotPaths = [];
 
@@ -151,10 +189,13 @@ async function downloadPortfolioImages(repoName, files) {
     const destPath = path.join(repoImagesDir, file.name);
     const relPath = `assets/images/projects/${repoName}/${file.name}`;
 
+    // Prefer file.url (GitHub API endpoint which supports private repos via raw Accept header)
+    const downloadUrl = file.url || file.download_url;
+
     if (!DRY_RUN) {
       console.log(`    ↓ Downloading ${file.name}...`);
       try {
-        await downloadFile(file.download_url, destPath);
+        await downloadFile(downloadUrl, destPath);
       } catch (e) {
         console.warn(`    ⚠ Failed to download ${file.name}: ${e.message}`);
         continue;
@@ -186,7 +227,6 @@ function buildProjectObject(repoData, portfolioJson, imagePaths) {
   ];
   const fallbackLink = repo.html_url;
 
-  // Merge portfolio.json over repo defaults
   return {
     id: repo.name,
     title: portfolioJson.title || repo.name,
@@ -210,6 +250,7 @@ function buildProjectObject(repoData, portfolioJson, imagePaths) {
       stars: repo.stargazers_count || 0,
       forks: repo.forks_count || 0,
       language: repo.language || null,
+      isPrivate: repo.private || false,
       updatedAt: repo.pushed_at || repo.updated_at,
       createdAt: repo.created_at,
     },
@@ -236,35 +277,36 @@ function cleanupRemovedProjects(currentProjectIds) {
 
 async function main() {
   console.log(`\n🔍 Portfolio Builder — ${DRY_RUN ? 'DRY RUN' : 'BUILD'}`);
-  console.log(`   User: ${GITHUB_USERNAME}`);
-  console.log(`   Auth: ${GITHUB_TOKEN ? '✅ Authenticated' : '⚠ Unauthenticated (60 req/h limit)'}`);
+  console.log(`   Target user: ${GITHUB_USERNAME}`);
+  console.log(`   Authentication: ${GITHUB_TOKEN ? '✅ Authenticated (Private + Public repos enabled)' : '⚠ Unauthenticated (Public repos only, 60 req/h)'}`);
   console.log('─'.repeat(50));
 
   // 1. List all repos
   console.log('\n📦 Fetching repository list...');
   const repos = await listAllRepos();
-  console.log(`   Found ${repos.length} public repositories`);
+  console.log(`   Found ${repos.length} repositories`);
 
-  // 2. For each repo, check for .portfolio/
+  // 2. Check each repo for .portfolio/
   const projects = [];
   const foundProjectIds = new Set();
 
   for (const repo of repos) {
-    // Skip the portfolio repo itself
     if (repo.name === 'tanchouteur.github.io') continue;
     if (repo.archived) continue;
 
-    process.stdout.write(`\n  📁 ${repo.name} `);
+    const owner = (repo.owner && repo.owner.login) || GITHUB_USERNAME;
+    const privacyLabel = repo.private ? '🔒 private' : '🌍 public';
+    process.stdout.write(`\n  📁 ${repo.name} (${privacyLabel}) `);
 
     // Check for .portfolio/ folder
-    const portfolioFolder = await getPortfolioFolder(repo.name);
+    const portfolioFolder = await getPortfolioFolder(owner, repo.name);
     if (!portfolioFolder || !Array.isArray(portfolioFolder)) {
       process.stdout.write('→ no .portfolio/\n');
       continue;
     }
 
     // Check for portfolio.json
-    const portfolioJson = await getPortfolioJson(repo.name);
+    const portfolioJson = await getPortfolioJson(owner, repo.name);
     if (!portfolioJson) {
       process.stdout.write('→ .portfolio/ found but no valid portfolio.json\n');
       continue;
@@ -272,8 +314,8 @@ async function main() {
 
     process.stdout.write(`→ ✅ "${portfolioJson.title || repo.name}"\n`);
 
-    // Download images
-    const imagePaths = await downloadPortfolioImages(repo.name, portfolioFolder);
+    // Download images (supports both public and private repository files)
+    const imagePaths = await downloadPortfolioImages(owner, repo.name, portfolioFolder);
 
     // Build project object
     const project = buildProjectObject(repo, portfolioJson, imagePaths);
@@ -296,7 +338,7 @@ async function main() {
 
   // 5. Write output JSON
   console.log('\n📄 Writing projects.json...');
-  console.log(`   → ${projects.length} projects found`);
+  console.log(`   → ${projects.length} project(s) ready for portfolio`);
 
   if (!DRY_RUN) {
     const dataDir = path.dirname(OUTPUT_JSON);
