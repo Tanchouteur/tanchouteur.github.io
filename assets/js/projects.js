@@ -54,7 +54,7 @@
     grid.innerHTML = '';
     for (let i = 0; i < count; i++) {
       const card = document.createElement('div');
-      card.className = 'project-card skeleton' + (i === 1 || i === 2 ? ' large' : '');
+      card.className = 'project-card skeleton';
       card.innerHTML = `
         <div class="project-header skeleton-header">
           <div class="skeleton-line short"></div>
@@ -238,24 +238,23 @@
       ? `<span class="card-status status-progress">En cours</span>`
       : `<span class="card-status">${formatDate(project.date)}</span>`;
 
+    const illustrationHtml = project.cover
+      ? `<div class="project-illustration">
+           <img src="${project.cover}" alt="${project.title}" loading="lazy">
+         </div>`
+      : `<div class="project-illustration no-cover">
+           <div class="no-cover-placeholder"><span>${project.title.charAt(0)}</span></div>
+         </div>`;
+
     card.innerHTML = `
       <div class="project-header">
         ${dateDisplay}
-        <div>
+        <div class="project-header-info">
           <h3>${project.category || ''}</h3>
           <h2>${project.title}</h2>
         </div>
       </div>
-      ${project.cover
-        ? `<div class="project-illustration">
-             <img src="${project.cover}" alt="${project.title}" loading="lazy">
-           </div>`
-        : `<div class="project-illustration project-no-cover">
-             <div class="no-cover-placeholder">
-               <span>${project.title.charAt(0)}</span>
-             </div>
-           </div>`
-      }
+      ${illustrationHtml}
       ${tagsHtml}
     `;
 

@@ -65,11 +65,9 @@ span.title {
     cursor: pointer;
     transition: transform .45s var(--transition-bounce), box-shadow .3s ease;
     background-color: var(--card-bg, var(--color-light-blue));
-    will-change: transform;
     position: relative;
 }
 
-/* Carte sombre (tous les 7) */
 .project-card.dark-card {
     background-color: var(--color-dark-grey);
 }
@@ -84,12 +82,10 @@ span.title {
     color: var(--color-light-blue);
 }
 
-/* Hover illustration offset */
 .project-card:hover .project-illustration {
-    transform: translateX(5%) translateY(5%);
+    transform: scale(1.03);
 }
 
-/* Animation d'entrée (cartes injectées dynamiquement) */
 .project-card.card-hidden {
     opacity: 0;
     transform: translateY(24px) scale(0.97);
@@ -100,7 +96,6 @@ span.title {
     transition: opacity .5s ease, transform .5s var(--transition-bounce);
 }
 
-/* Tags sur la carte */
 .card-tags {
     display: flex;
     flex-wrap: wrap;
@@ -120,14 +115,12 @@ span.title {
     padding: 3px 10px;
 }
 
-/* Status badge En cours */
 .card-status.status-progress {
     color: #2a7a5e;
     font-weight: 600;
     font-style: normal;
 }
 
-/* Placeholder quand pas de cover */
 .project-no-cover {
     background: rgba(0,0,0,0.05);
     min-height: 120px;
@@ -152,7 +145,6 @@ span.title {
     opacity: .5;
 }
 
-/* ── Skeleton Loading ── */
 .project-card.skeleton {
     pointer-events: none;
     background: linear-gradient(90deg,
@@ -187,7 +179,6 @@ span.title {
     100% { background-position: -200% 0; }
 }
 
-/* ── Filter Bar ── */
 #project-filters {
     width: 100%;
     display: flex;
@@ -238,7 +229,20 @@ span.title {
     opacity: 1;
 }
 
-/* Messages d'état */
+@media (max-width: 600px) {
+    .filter-tags {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        justify-content: flex-start;
+        padding-bottom: 5px;
+    }
+    .filter-tags::-webkit-scrollbar {
+        display: none;
+    }
+}
+
 .projects-error,
 .projects-empty {
     grid-column: 1 / -1;
@@ -248,7 +252,6 @@ span.title {
     font-style: italic;
 }
 
-/* Transition de grille (fade lors du changement de filtre) */
 .grid-transitioning .project-card {
     opacity: 0;
     transform: translateY(12px);
@@ -259,51 +262,53 @@ span.title {
     display: flex;
     flex-direction: row;
     padding: var(--10px);
-
     font-size: 1.4em;
-
     margin: var(--20px) var(--20px) 0 var(--20px);
-
     color: var(--color-text);
     font-weight: bold;
     justify-content: space-between;
     text-align: end;
-
     line-height: 1;
+}
 
-    h3 {
-        font-family: var(--font-subtitle);
-        line-height: 1;
-        font-size: 1em;
-    }
-    p.card-status{
-         font-weight: 300;
-         color: var(--color-text);
-         font-style: italic;
-         text-align: start;
-    }
+.project-header h3 {
+    font-family: var(--font-subtitle);
+    line-height: 1;
+    font-size: 1em;
+}
+.card-status {
+    font-weight: 300;
+    color: var(--color-text);
+    font-style: italic;
+    text-align: start;
 }
 
 .project-illustration {
     position: relative;
     width: 100%;
-
     display: flex;
-
     overflow: hidden;
-
     transition: transform 0.3s ease-in-out;
+    margin: 0 var(--20px);
+    box-shadow: none; /* Changed to avoid duplicate box shadow */
+}
 
-    margin-left: calc(var(--20px));
-
-    box-shadow: var(--shadow-lg);
+@media (max-width: 600px) {
+    .project-illustration {
+        margin: 0 var(--10px);
+    }
+    .project-header {
+        font-size: 1.1em;
+        margin: var(--10px) var(--10px) 0 var(--10px);
+    }
 }
 
 .project-illustration img {
     align-self: flex-start;
     width: 100%;
+    aspect-ratio: 16/9;
     object-fit: cover;
-    border-radius: 15px;
+    border-radius: 12px;
 }
 
 /* Footer */

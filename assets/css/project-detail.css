@@ -32,8 +32,9 @@
 .project-hero {
     width: 100%;
     max-width: 960px;
-    min-height: 340px;
+    min-height: 200px;
     max-height: 520px;
+    aspect-ratio: 16/9;
     border-radius: var(--42px);
     background-size: cover;
     background-position: center top;
@@ -448,5 +449,49 @@
         top: auto;
         bottom: -56px;
         transform: none;
+    }
+}
+
+/* ── Mobile responsive for project detail ── */
+@media (max-width: 768px) {
+    .project-hero {
+        border-radius: var(--20px);
+        margin-bottom: var(--20px);
+        min-height: 160px;
+    }
+    #project-title {
+        font-size: clamp(1.6rem, 1rem + 3vw, 2.5rem);
+        margin-bottom: var(--10px);
+    }
+    #project-description {
+        font-size: .95rem;
+        margin-bottom: var(--10px);
+    }
+    .project-detail-body {
+        gap: var(--20px);
+        margin-bottom: var(--20px);
+    }
+    .project-detail-sidebar {
+        gap: var(--10px);
+    }
+    .detail-sidebar-card {
+        padding: var(--10px);
+        border-radius: 12px;
+    }
+    #project-gallery {
+        grid-template-columns: 1fr;
+        gap: var(--10px);
+    }
+    #gallery-section {
+        margin-bottom: var(--20px);
+    }
+    #gallery-section h3 {
+        font-size: 1.1rem;
+    }
+    .gallery-item {
+        border-radius: 12px;
+    }
+    #lightbox-img {
+        border-radius: 8px;
     }
 }

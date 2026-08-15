@@ -1,20 +1,25 @@
-/*Grid project*/
 #grid {
     display: grid;
-    gap: 20px; /* Espacement entre les projets */
-    grid-template-columns: 33% 33% 33%;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
     width: 100%;
 }
 
-.large {
-    grid-column: span 2;
-}
-
-/* Hardware */
-
-div.computer{
+div.computer {
     display: grid;
-
-    grid-template-columns: 50% 50%;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
     width: 100%;
+}
+
+@media (min-width: 650px) {
+    .large {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 649px) {
+    .large {
+        grid-column: auto;
+    }
 }

@@ -1,46 +1,101 @@
-@media (min-width: 992px) {
+/* Mobile (<600px) */
+@media screen and (max-width: 599px) {
+    #grid, div.computer {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+        width: 100%;
+    }
+
+    .large {
+        grid-column: auto;
+    }
+
+    section#title {
+        height: auto;
+        padding: 4rem 0 2rem;
+    }
+
+    #colorCanvas {
+        height: 100%;
+    }
+
     h1 {
-        letter-spacing: -4px;
+        font-size: calc(var(--h1-size) * 0.6);
     }
-}
-@media (min-width: 768px) {
-    section#title{
-        padding: 12rem 0 3rem;
-    }
-}
 
-@media (max-width: 900px) {
-    #grid {
-        grid-template-columns: 100%; /* 1 seule colonne en dessous de 900px */
-    }
-}
-
-@media (min-width: 768px) {
-    span.title {
-        display: block;
-    }
-}
-
-/*NavBar*/
-
-@media (min-width: 768px) {
-    a.nav-link {
-        margin: 0 5px;
-        padding: calc(var(--16px) - 10px) var(--20px);
-    }
-}
-
-/*Grid*/
-
-@media (min-width: 992px) {
     .project-card {
-        max-height: 550px;
-        border-radius: var(--42px);
+        border-radius: 20px;
+    }
+
+    .project-illustration {
+        margin: 0 !important;
+    }
+
+    .project-header {
+        font-size: 1.1em;
+        padding: 8px;
+        margin: 10px;
+    }
+
+    footer {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        padding: 20px 0;
+    }
+
+    #project-filters .filter-tags {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        justify-content: flex-start;
+        padding-bottom: 5px;
+    }
+
+    #project-filters .filter-tags::-webkit-scrollbar {
+        display: none;
     }
 }
 
-@media (max-width: 1255px) {
-    section.skills{
-        flex-direction: column;
+/* Tablet (600px - 900px) */
+@media screen and (min-width: 600px) and (max-width: 900px) {
+    #grid, div.computer {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        width: 100%;
+    }
+
+    .large {
+        grid-column: span 2;
+    }
+
+    section#title {
+        height: 50dvh;
+        padding: 6rem 0 2rem;
+    }
+
+    #colorCanvas {
+        height: 50dvh;
+    }
+    
+    h1 {
+        font-size: calc(var(--h1-size) * 0.8);
+    }
+}
+
+/* Desktop (>900px) */
+@media screen and (min-width: 901px) {
+    #grid, div.computer {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        width: 100%;
+    }
+
+    .large {
+        grid-column: span 2;
     }
 }
