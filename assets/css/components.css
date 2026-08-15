@@ -2,8 +2,6 @@
    components.css — UI Components, Hero, Cards, Badges, Buttons, Skills, Footer
 ───────────────────────────────────────────────────────────────────────────── */
 
-@import "navbar.css";
-
 /* ─── Canvas Background ──────────────────────────────────────────────────────── */
 #colorCanvas {
     position: absolute;
@@ -31,7 +29,6 @@
     font-weight: 600;
     letter-spacing: 0.02em;
     margin-bottom: 24px;
-    animation: fadeInDown 0.6s ease-out;
 }
 
 .pulse-dot {
@@ -60,7 +57,7 @@
 
 .hero-title-main {
     font-family: var(--font-title);
-    font-size: clamp(2.8rem, 1.5rem + 5vw, 6rem);
+    font-size: clamp(2.8rem, 1.5rem + 5vw, 5.5rem);
     color: var(--color-title);
     font-weight: 700;
     letter-spacing: -0.03em;
@@ -68,7 +65,7 @@
 
 .hero-subtitle {
     font-family: var(--font-subtitle);
-    font-size: clamp(1.2rem, 0.8rem + 2vw, 2.2rem);
+    font-size: clamp(1.2rem, 0.8rem + 2vw, 2rem);
     font-weight: 600;
     color: var(--color-text);
     opacity: 0.85;
@@ -319,7 +316,7 @@
 .card-media-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.35) 100%);
+    background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.3) 100%);
     pointer-events: none;
 }
 
