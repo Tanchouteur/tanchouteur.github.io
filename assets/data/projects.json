@@ -22,8 +22,12 @@
     "order": 1,
     "cover": "assets/images/projects/MenuD-laSemaine/cover.jpg",
     "images": [
+      "assets/images/projects/MenuD-laSemaine/historique.jpg",
+      "assets/images/projects/MenuD-laSemaine/ingredient.jpg",
       "assets/images/projects/MenuD-laSemaine/liste-de-courses.jpg",
-      "assets/images/projects/MenuD-laSemaine/planning-hebdomadaire.jpg"
+      "assets/images/projects/MenuD-laSemaine/planning-hebdomadaire.jpg",
+      "assets/images/projects/MenuD-laSemaine/recette.jpg",
+      "assets/images/projects/MenuD-laSemaine/regle.jpg"
     ],
     "links": {
       "github": "https://github.com/Tanchouteur/MenuD-laSemaine"
@@ -33,7 +37,7 @@
       "forks": 0,
       "language": "TypeScript",
       "isPrivate": false,
-      "updatedAt": "2026-08-16T07:03:48Z",
+      "updatedAt": "2026-08-16T13:33:33Z",
       "createdAt": "2024-10-23T22:52:25Z"
     }
   },
