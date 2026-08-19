@@ -142,9 +142,10 @@
     ],
     "featured": true,
     "order": 1,
-    "cover": "assets/images/projects/CliOS/cover.png",
+    "cover": "assets/images/projects/CliOS/cover.jpg",
     "images": [
-      "assets/images/projects/CliOS/screenshot1.png"
+      "assets/images/projects/CliOS/apex-3.jpg",
+      "assets/images/projects/CliOS/atelier_luxe.jpg"
     ],
     "links": {
       "github": "https://github.com/Tanchouteur/CliOS"
@@ -154,7 +155,7 @@
       "forks": 0,
       "language": "QML",
       "isPrivate": false,
-      "updatedAt": "2026-08-18T20:12:35Z",
+      "updatedAt": "2026-08-19T10:58:08Z",
       "createdAt": "2026-04-02T09:13:30Z"
     }
   },
