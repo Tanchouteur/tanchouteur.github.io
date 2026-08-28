@@ -8,9 +8,9 @@ on:
       # Évite la boucle infinie si on modifie uniquement les fichiers générés
       - 'assets/data/projects.json'
       - 'assets/images/projects/**'
-  # Cron : toutes les 6 heures
+  # Cron : toutes les 24 heures
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '0 0 /1 * *'
   # Déclenchement manuel depuis GitHub Actions
   workflow_dispatch:
 
