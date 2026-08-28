@@ -1,16 +1,9 @@
 name: Build Portfolio Projects
 
 on:
-  # Déclenche sur chaque push sur main
-  push:
-    branches: ["main"]
-    paths-ignore:
-      # Évite la boucle infinie si on modifie uniquement les fichiers générés
-      - 'assets/data/projects.json'
-      - 'assets/images/projects/**'
-  # Cron : toutes les 24 heures
+  # Tous les jours à minuit UTC
   schedule:
-    - cron: '0 0 /1 * *'
+    - cron: '0 0 * * *'
   # Déclenchement manuel depuis GitHub Actions
   workflow_dispatch:
 
