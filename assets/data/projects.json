@@ -1,40 +1,84 @@
 [
   {
-    "id": "MenuD-laSemaine",
-    "title": "Menu de la Semaine",
-    "description": "Application web mobile-first de planification familiale des 14 repas hebdomadaires, génération déterministe sous contraintes et liste de courses synchronisée.",
-    "longDescription": "# Menu de la Semaine — Planification Familiale & Courses Intelligentes\n\n## Contexte & Genèse du Projet\n\nLa planification des repas au sein d'un foyer représente une charge mentale hebdomadaire récurrente : comment concevoir **14 repas équilibrés et variés** (7 déjeuners et 7 dîners) sans tourner en rond, tout en tenant compte du temps disponible selon les jours, des saisons, des goûts et du nombre de convives ?\n\nNé initialement d'un prototype personnel pour répondre aux besoins concrets de ma famille, le projet a fait l'objet d'une **refonte intégrale (V2)** en architecture web moderne, typée et autonome. L'application combine un **moteur de décision déterministe sous contraintes**, une **liste de courses dynamique** et une **synchronisation agenda en temps réel**.\n\n---\n\n## Fonctionnalités Principales\n\n- **Génération Déterministe Complète** : Création instantanée et cohérente des 14 repas de la semaine en un clic.\n- **Remplacement Intelligent Expliqué** : Pour chaque repas, proposition de trois alternatives pertinentes avec explication contextuelle (ex. *« Rapide pour un midi en semaine »*, *« Légumes de saison »*).\n- **Verrouillage & Régénération Partielle** : Possibilité de figer certains repas choisis et de recalculer uniquement les autres créneaux.\n- **Gestion des Imprévus** : Prise en charge des repas à l'extérieur, des restes, des repas libres et ajustement du nombre de personnes par repas.\n- **Liste de Courses Automatique & Persistante** : Calcul dynamique des quantités selon le nombre réel de convives, regroupement automatique par rayons de supermarché et persistance des articles cochés.\n- **Historique & Réutilisation** : Conservation d'un instantané immuable des semaines confirmées et réapplication en un clic d'anciennes semaines favorites.\n- **Abonnement iCalendar (`webcal://`)** : Synchronisation automatique des menus confirmés avec Apple Calendrier (iPhone / Mac), Google Agenda et Outlook.\n- **Catalogue Complet** : Gestion des ingrédients, recettes multi-composants, rayons de magasin et incompatibilités alimentaires.\n\n---\n\n## Moteur Algorithmique & Résolution sous Contraintes\n\nLe cœur métier repose sur un moteur pur (sans dépendance externe, validé par une suite complète de tests unitaires) capable d'arbitrer parmi de multiples règles croisées :\n\n1. **Saisonnalité** : Filtrage strict selon les saisons calendaires actives pour privilégier les produits de saison.\n2. **Moments de Consommation** : Différenciation des exigences entre déjeuners et dîners, jours de semaine (recettes rapides) et week-ends (plats mijotés ou familiaux).\n3. **Anti-Répétition & Rotation Glissante** : Pénalisation progressive des aliments consommés récemment pour garantir une variété maximale d'une semaine sur l'autre.\n4. **Matrice d'Incompatibilités** : Exclusion formelle des associations d'ingrédients proscrites par le foyer.\n5. **Génération Déterministe** : Capacité à reproduire fidèlement un état de planification à partir d'une graine (*seed*).\n\n---\n\n## Architecture Technique\n\n- **Frontend** : Interface *Mobile-First* développée en Next.js App Router (React Server & Client Components) avec Vanilla CSS moderne, optimisée pour un usage fluide à une main en cuisine ou dans les rayons.\n- **Backend & API** : Next.js Route Handlers avec typage strict TypeScript de bout en bout.\n- **Persistance & Données** : PostgreSQL 17 géré via Prisma ORM avec transactions atomiques pour la validation des semaines et l'état des courses.\n- **Sécurité** : Authentification familiale simplifiée par cookie sécurisé signé par token HMAC-SHA256 (`FAMILY_PASSWORD`).\n- **Conteneurisation & Déploiement** : Image Docker multi-stage optimisée (`node:alpine`), exécution automatique des migrations Prisma au démarrage et déploiement continu sur serveur Coolify avec sauvegardes automatiques de la base de données.\n\n---\n\n## Rétrospective & Enseignements\n\nCette version V2 concrétise les retours d'usage de la première version : suppression des blocages stochastiques grâce à un moteur déterministe prédictible, persistance intégrale de la liste de courses évitant les doubles saisies, et intégration directe dans les agendas partagés du foyer.",
+    "id": "RigFarm",
+    "title": "RigFarm",
+    "description": "Plateforme centralisée de supervision et de pilotage d'une ferme GPU : télémétrie temps réel, orchestration Vast.ai, contrôle énergétique et tarification automatisée.",
+    "longDescription": "# RigFarm — Supervision et orchestration d'une ferme GPU\n\n**RigFarm** est une plateforme complète conçue pour exploiter une ferme de serveurs GPU loués sur **Vast.ai**. Elle centralise dans une seule application la télémétrie matérielle, le suivi des locations, le pilotage de la puissance, l'analyse énergétique, les alertes et la stratégie tarifaire.\n\nLe projet succède à RigConcentrateur et à BotVast avec une architecture entièrement repensée pour la production. Un agent léger, **RigClient**, reste installé sur chaque machine et transmet des mesures structurées au serveur central, tandis qu'un worker dédié synchronise l'état de la ferme et exécute les opérations d'orchestration.\n\n---\n\n## Objectifs\n\nL'exploitation de machines GPU à distance demande plus qu'un simple tableau de bord. RigFarm répond à quatre enjeux essentiels :\n\n- disposer d'une vue fiable et consolidée de tous les rigs ;\n- protéger le matériel en surveillant les températures, la charge et la puissance ;\n- adapter automatiquement le comportement des machines à leur état de location ;\n- suivre et optimiser les coûts d'exploitation ainsi que la rentabilité.\n\n---\n\n## Fonctionnalités principales\n\n### Télémétrie multi-rig et multi-GPU\n\nChaque agent envoie des trames versionnées contenant les métriques CPU, GPU, mémoire, stockage, ventilation, conteneurs et consommation globale. Les envois sont authentifiés par jeton, idempotents et mis en file localement par RigClient en cas de coupure réseau afin d'être rejoués au retour de la connexion.\n\n### Tableau de bord d'exploitation\n\nL'interface React présente l'état global de la ferme et le détail de chaque machine : disponibilité de l'agent, état Vast.ai, location en cours, températures, puissance, charge, historique et erreurs. Des vues dédiées permettent également de suivre les locations, l'énergie et la santé des services.\n\n### Orchestration Vast.ai\n\nVast.ai constitue la source de vérité pour déterminer si un rig est loué ou disponible. Un worker synchronise les machines, historise les transitions de location et réconcilie automatiquement l'état attendu. En cas d'indisponibilité de l'API distante, RigFarm conserve le dernier état confirmé et n'exécute aucune nouvelle action risquée.\n\n### Gestion automatisée de la puissance\n\nRigFarm applique par SSH un profil de puissance limité lorsqu'une machine est louée et un profil pleine puissance lorsqu'elle est libre. Le système intègre la vérification stricte des empreintes SSH, des tests de connexion sans effet de bord, une file d'actions persistante, des tentatives progressives et un journal d'audit. Le mode observation permet de valider le comportement avant toute activation automatique.\n\n### Énergie et tarification\n\nLa plateforme agrège la consommation des rigs et conserve un historique exploitable pour analyser les coûts énergétiques. Un moteur de tarification compare les machines au marché Vast.ai, calcule des recommandations à partir de la demande et fait converger les prix dans le temps. Il peut fonctionner en mode désactivé, simulation ou actif afin de sécuriser sa mise en production.\n\n### Alertes, audit et résilience\n\nRigFarm détecte les agents hors ligne, signale les changements de location et journalise les opérations sensibles. Les données de télémétrie suivent une politique de rétention avec agrégation des mesures anciennes. Les actions importantes sont persistées en base afin que les redémarrages du worker ne provoquent ni perte d'état ni double exécution.\n\n### Sécurité et contrôle d'accès\n\nLes comptes administrateur et invité sont séparés des jetons utilisés par les agents et les intégrations. Les autorisations machine reposent sur des scopes dédiés, les secrets SSH ne sont accessibles qu'au worker et l'accès public peut être protégé par Cloudflare.\n\n---\n\n## Architecture technique\n\n- **Backend** : Python 3.12, FastAPI, SQLAlchemy, Alembic et Pydantic ;\n- **Frontend** : React, TypeScript, Vite, TanStack Query et Recharts ;\n- **Données** : PostgreSQL en production, avec migrations versionnées et sauvegardes quotidiennes ;\n- **Orchestration** : worker autonome pour Vast.ai, SSH, tarification, alertes et rétention ;\n- **Déploiement** : Docker Compose sur Coolify, healthchecks et exposition sécurisée via Cloudflare ;\n- **Qualité** : tests automatisés du backend et compilation TypeScript du frontend.\n\nRigFarm transforme ainsi plusieurs outils spécialisés en un système cohérent, auditable et conçu pour piloter durablement une infrastructure GPU réelle.",
     "category": "Personal",
-    "status": "Completed",
+    "status": "In Progress",
     "date": "2026-08",
     "tags": [
-      "Next.js",
-      "TypeScript",
-      "React",
+      "Python",
+      "FastAPI",
       "PostgreSQL",
-      "Prisma",
-      "Docker",
-      "Coolify",
-      "iCalendar",
-      "Vitest"
+      "React",
+      "TypeScript",
+      "Vast.ai",
+      "GPU Computing",
+      "Telemetry",
+      "Automation",
+      "Docker"
     ],
     "featured": true,
     "order": 1,
-    "cover": "assets/images/projects/MenuD-laSemaine/cover.jpg",
+    "cover": "assets/images/projects/RigFarm/cover.jpg",
     "images": [
-      "assets/images/projects/MenuD-laSemaine/liste-de-courses.jpg",
-      "assets/images/projects/MenuD-laSemaine/planning-hebdomadaire.jpg"
+      "assets/images/projects/RigFarm/vue-electricite.jpg",
+      "assets/images/projects/RigFarm/vue-location.jpg",
+      "assets/images/projects/RigFarm/vue-reglage.png",
+      "assets/images/projects/RigFarm/vue-rig.jpg",
+      "assets/images/projects/RigFarm/vue-systeme.jpg"
     ],
     "links": {
-      "github": "https://github.com/Tanchouteur/MenuD-laSemaine"
+      "github": "https://github.com/Tanchouteur/RigFarm"
     },
     "repoData": {
-      "stars": 1,
+      "stars": 0,
       "forks": 0,
-      "language": "TypeScript",
-      "isPrivate": false,
-      "updatedAt": "2026-08-16T07:03:48Z",
-      "createdAt": "2024-10-23T22:52:25Z"
+      "language": "Python",
+      "isPrivate": true,
+      "updatedAt": "2026-08-28T07:15:19Z",
+      "createdAt": "2026-08-25T11:24:33Z"
+    }
+  },
+  {
+    "id": "SpotifySort",
+    "title": "SpotiSort v4",
+    "description": "Triez automatiquement vos playlists Spotify avec Google Gemini AI. Chaque utilisateur configure ses propres clés et règles de classification.",
+    "longDescription": "# SpotiSort v4\n\n## À propos du projet\n\nSpotiSort est une application web complète qui automatise le tri des morceaux dans vos playlists Spotify. Utilisez la puissance de Google Gemini pour classifier intelligemment chaque morceau selon vos règles personnalisées.\n\n## Fonctionnalités principales\n\n### Tri Intelligent\n- Classification automatique des morceaux en utilisant Google Gemini AI\n- Traitement par lots avec délai configurable entre les requêtes\n- Schéma JSON strict pour éviter les réponses invalides\n- Support des modèles Gemini configurables par utilisateur\n\n### Sécurité & Confidentialité\n- Chiffrement end-to-end des tokens Spotify et clés API Google\n- Les secrets ne sont jamais exposés au navigateur\n- Sessions HttpOnly sans token en localStorage\n- Vérification OAuth `state` contre les attaques CSRF\n- Filtrage strict des données par utilisateur\n\n### Gestion des Comptes\n- Authentification OAuth avec Spotify\n- Chaque utilisateur configure sa propre clé Google AI Studio\n- Espace isolé par compte avec règles, modèles et secrets propres\n- Support multi-utilisateur sans liste blanche\n\n### Automatisation\n- Daemon en arrière-plan avec intervalle configurable par utilisateur\n- Tris verrouillés pour éviter les concurrences\n- Reprise idempotente des opérations\n- Historique détaillé des succès, tris ignorés et erreurs\n\n### Robustesse\n- Traitement par lots de 100 à la fois via l'API Spotify\n- Détection automatique des doublons\n- Gestion complète des erreurs Spotify\n- Logs détaillés de chaque opération\n\n## Stack Technique\n\n- **Backend** : FastAPI + Uvicorn\n- **Base de données** : SQLAlchemy ORM + PostgreSQL\n- **Frontend** : HTML/CSS/JavaScript vanilla\n- **API Externes** : Spotify API, Google Gemini API\n- **Sécurité** : Cryptography (Fernet), Python-dotenv\n- **Déploiement** : Docker + Docker Compose + Nginx\n\n### Prêt pour la production\n- Support HTTPS/HTTPS Redirect URI\n- Configuration d'environnement par profil (local/production)\n- Intégration Docker complète\n- Reverse proxy Nginx intégré\n\n## Architecture Sécurisée\n\n```\nUtilisateur → Navigateur (HTTPS) → FastAPI\n              ↓\n         Session Cookie (HttpOnly)\n         ↓\nBD Chiffrée (Tokens + API Keys)\n         ↓\n    API Externes (Spotify, Gemini)\n```\n\n Le tout complètement isolé par utilisateur.",
+    "category": "Personal",
+    "status": "In Progress",
+    "date": "2026-08",
+    "tags": [
+      "Python",
+      "FastAPI",
+      "Spotify API",
+      "Google Gemini",
+      "SQLAlchemy",
+      "PostgreSQL",
+      "Docker",
+      "Web"
+    ],
+    "featured": true,
+    "order": 1,
+    "cover": "assets/images/projects/SpotifySort/cover.png",
+    "images": [
+      "assets/images/projects/SpotifySort/Home1.png",
+      "assets/images/projects/SpotifySort/Home2.png",
+      "assets/images/projects/SpotifySort/Trie1.png",
+      "assets/images/projects/SpotifySort/Trie2.png"
+    ],
+    "links": {
+      "github": "https://github.com/Tanchouteur/SpotifySort",
+      "SpotiSort": "https://spotibot.tanchou.fr"
+    },
+    "repoData": {
+      "stars": 0,
+      "forks": 0,
+      "language": "Python",
+      "isPrivate": true,
+      "updatedAt": "2026-08-28T07:04:08Z",
+      "createdAt": "2026-08-12T09:31:06Z"
     }
   },
   {
@@ -75,48 +119,49 @@
       "forks": 0,
       "language": "Astro",
       "isPrivate": true,
-      "updatedAt": "2026-08-15T12:17:38Z",
+      "updatedAt": "2026-08-26T08:39:18Z",
       "createdAt": "2026-08-06T13:17:44Z"
     }
   },
   {
-    "id": "SpotifySort",
-    "title": "SpotiSort v4",
-    "description": "Triez automatiquement vos playlists Spotify avec Google Gemini AI. Chaque utilisateur configure ses propres clés et règles de classification.",
-    "longDescription": "# SpotiSort v4\n\n## À propos du projet\n\nSpotiSort est une application web complète qui automatise le tri des morceaux dans vos playlists Spotify. Utilisez la puissance de Google Gemini pour classifier intelligemment chaque morceau selon vos règles personnalisées.\n\n## Fonctionnalités principales\n\n### Tri Intelligent\n- Classification automatique des morceaux en utilisant Google Gemini AI\n- Traitement par lots avec délai configurable entre les requêtes\n- Schéma JSON strict pour éviter les réponses invalides\n- Support des modèles Gemini configurables par utilisateur\n\n### Sécurité & Confidentialité\n- Chiffrement end-to-end des tokens Spotify et clés API Google\n- Les secrets ne sont jamais exposés au navigateur\n- Sessions HttpOnly sans token en localStorage\n- Vérification OAuth `state` contre les attaques CSRF\n- Filtrage strict des données par utilisateur\n\n### Gestion des Comptes\n- Authentification OAuth avec Spotify\n- Chaque utilisateur configure sa propre clé Google AI Studio\n- Espace isolé par compte avec règles, modèles et secrets propres\n- Support multi-utilisateur sans liste blanche\n\n### Automatisation\n- Daemon en arrière-plan avec intervalle configurable par utilisateur\n- Tris verrouillés pour éviter les concurrences\n- Reprise idempotente des opérations\n- Historique détaillé des succès, tris ignorés et erreurs\n\n### Robustesse\n- Traitement par lots de 100 à la fois via l'API Spotify\n- Détection automatique des doublons\n- Gestion complète des erreurs Spotify\n- Logs détaillés de chaque opération\n\n## Stack Technique\n\n- **Backend** : FastAPI + Uvicorn\n- **Base de données** : SQLAlchemy ORM + PostgreSQL\n- **Frontend** : HTML/CSS/JavaScript vanilla\n- **API Externes** : Spotify API, Google Gemini API\n- **Sécurité** : Cryptography (Fernet), Python-dotenv\n- **Déploiement** : Docker + Docker Compose + Nginx\n\n### Prêt pour la production\n- Support HTTPS/HTTPS Redirect URI\n- Configuration d'environnement par profil (local/production)\n- Intégration Docker complète\n- Reverse proxy Nginx intégré\n\n## Architecture Sécurisée\n\n```\nUtilisateur → Navigateur (HTTPS) → FastAPI\n              ↓\n         Session Cookie (HttpOnly)\n         ↓\nBD Chiffrée (Tokens + API Keys)\n         ↓\n    API Externes (Spotify, Gemini)\n```\n\n Le tout complètement isolé par utilisateur.",
+    "id": "MenuD-laSemaine",
+    "title": "Menu de la Semaine",
+    "description": "Application web mobile-first de planification familiale des 14 repas hebdomadaires, génération déterministe sous contraintes et liste de courses synchronisée.",
+    "longDescription": "# Menu de la Semaine — Planification Familiale & Courses Intelligentes\n\n## Contexte & Genèse du Projet\n\nLa planification des repas au sein d'un foyer représente une charge mentale hebdomadaire récurrente : comment concevoir **14 repas équilibrés et variés** (7 déjeuners et 7 dîners) sans tourner en rond, tout en tenant compte du temps disponible selon les jours, des saisons, des goûts et du nombre de convives ?\n\nNé initialement d'un prototype personnel pour répondre aux besoins concrets de ma famille, le projet a fait l'objet d'une **refonte intégrale (V2)** en architecture web moderne, typée et autonome. L'application combine un **moteur de décision déterministe sous contraintes**, une **liste de courses dynamique** et une **synchronisation agenda en temps réel**.\n\n---\n\n## Fonctionnalités Principales\n\n- **Génération Déterministe Complète** : Création instantanée et cohérente des 14 repas de la semaine en un clic.\n- **Remplacement Intelligent Expliqué** : Pour chaque repas, proposition de trois alternatives pertinentes avec explication contextuelle (ex. *« Rapide pour un midi en semaine »*, *« Légumes de saison »*).\n- **Verrouillage & Régénération Partielle** : Possibilité de figer certains repas choisis et de recalculer uniquement les autres créneaux.\n- **Gestion des Imprévus** : Prise en charge des repas à l'extérieur, des restes, des repas libres et ajustement du nombre de personnes par repas.\n- **Liste de Courses Automatique & Persistante** : Calcul dynamique des quantités selon le nombre réel de convives, regroupement automatique par rayons de supermarché et persistance des articles cochés.\n- **Historique & Réutilisation** : Conservation d'un instantané immuable des semaines confirmées et réapplication en un clic d'anciennes semaines favorites.\n- **Abonnement iCalendar (`webcal://`)** : Synchronisation automatique des menus confirmés avec Apple Calendrier (iPhone / Mac), Google Agenda et Outlook.\n- **Catalogue Complet** : Gestion des ingrédients, recettes multi-composants, rayons de magasin et incompatibilités alimentaires.\n\n---\n\n## Moteur Algorithmique & Résolution sous Contraintes\n\nLe cœur métier repose sur un moteur pur (sans dépendance externe, validé par une suite complète de tests unitaires) capable d'arbitrer parmi de multiples règles croisées :\n\n1. **Saisonnalité** : Filtrage strict selon les saisons calendaires actives pour privilégier les produits de saison.\n2. **Moments de Consommation** : Différenciation des exigences entre déjeuners et dîners, jours de semaine (recettes rapides) et week-ends (plats mijotés ou familiaux).\n3. **Anti-Répétition & Rotation Glissante** : Pénalisation progressive des aliments consommés récemment pour garantir une variété maximale d'une semaine sur l'autre.\n4. **Matrice d'Incompatibilités** : Exclusion formelle des associations d'ingrédients proscrites par le foyer.\n5. **Génération Déterministe** : Capacité à reproduire fidèlement un état de planification à partir d'une graine (*seed*).\n\n---\n\n## Architecture Technique\n\n- **Frontend** : Interface *Mobile-First* développée en Next.js App Router (React Server & Client Components) avec Vanilla CSS moderne, optimisée pour un usage fluide à une main en cuisine ou dans les rayons.\n- **Backend & API** : Next.js Route Handlers avec typage strict TypeScript de bout en bout.\n- **Persistance & Données** : PostgreSQL 17 géré via Prisma ORM avec transactions atomiques pour la validation des semaines et l'état des courses.\n- **Sécurité** : Authentification familiale simplifiée par cookie sécurisé signé par token HMAC-SHA256 (`FAMILY_PASSWORD`).\n- **Conteneurisation & Déploiement** : Image Docker multi-stage optimisée (`node:alpine`), exécution automatique des migrations Prisma au démarrage et déploiement continu sur serveur Coolify avec sauvegardes automatiques de la base de données.\n\n---\n\n## Rétrospective & Enseignements\n\nCette version V2 concrétise les retours d'usage de la première version : suppression des blocages stochastiques grâce à un moteur déterministe prédictible, persistance intégrale de la liste de courses évitant les doubles saisies, et intégration directe dans les agendas partagés du foyer.",
     "category": "Personal",
-    "status": "In Progress",
+    "status": "Completed",
     "date": "2026-08",
     "tags": [
-      "Python",
-      "FastAPI",
-      "Spotify API",
-      "Google Gemini",
-      "SQLAlchemy",
+      "Next.js",
+      "TypeScript",
+      "React",
       "PostgreSQL",
+      "Prisma",
       "Docker",
-      "Web"
+      "Coolify",
+      "iCalendar",
+      "Vitest"
     ],
     "featured": true,
     "order": 1,
-    "cover": "assets/images/projects/SpotifySort/cover.png",
+    "cover": "assets/images/projects/MenuD-laSemaine/cover.jpg",
     "images": [
-      "assets/images/projects/SpotifySort/Home1.png",
-      "assets/images/projects/SpotifySort/Home2.png",
-      "assets/images/projects/SpotifySort/Trie1.png",
-      "assets/images/projects/SpotifySort/Trie2.png"
+      "assets/images/projects/MenuD-laSemaine/historique.jpg",
+      "assets/images/projects/MenuD-laSemaine/ingredient.jpg",
+      "assets/images/projects/MenuD-laSemaine/liste-de-courses.jpg",
+      "assets/images/projects/MenuD-laSemaine/recette.jpg",
+      "assets/images/projects/MenuD-laSemaine/regle.jpg"
     ],
     "links": {
-      "github": "https://github.com/Tanchouteur/SpotifySort",
-      "SpotiSort": "https://spotibot.tanchou.fr"
+      "github": "https://github.com/Tanchouteur/MenuD-laSemaine"
     },
     "repoData": {
-      "stars": 0,
+      "stars": 1,
       "forks": 0,
-      "language": "Python",
-      "isPrivate": true,
-      "updatedAt": "2026-08-15T09:40:48Z",
-      "createdAt": "2026-08-12T09:31:06Z"
+      "language": "TypeScript",
+      "isPrivate": false,
+      "updatedAt": "2026-08-16T13:47:54Z",
+      "createdAt": "2024-10-23T22:52:25Z"
     }
   },
   {
@@ -139,57 +184,21 @@
     ],
     "featured": true,
     "order": 1,
-    "cover": "assets/images/projects/CliOS/cover.png",
+    "cover": "assets/images/projects/CliOS/cover.jpg",
     "images": [
-      "assets/images/projects/CliOS/screenshot1.png"
+      "assets/images/projects/CliOS/apex-3.jpg",
+      "assets/images/projects/CliOS/atelier_luxe.jpg"
     ],
     "links": {
       "github": "https://github.com/Tanchouteur/CliOS"
     },
     "repoData": {
-      "stars": 1,
-      "forks": 0,
-      "language": "QML",
+      "stars": 28,
+      "forks": 1,
+      "language": "Python",
       "isPrivate": false,
-      "updatedAt": "2026-08-15T08:30:57Z",
+      "updatedAt": "2026-08-24T13:57:28Z",
       "createdAt": "2026-04-02T09:13:30Z"
-    }
-  },
-  {
-    "id": "RigConcentrateur",
-    "title": "RigConcentrateur",
-    "description": "Plateforme de télémétrie temps réel, monitoring thermique et calcul énergétique pour cluster de calcul GPU (Vast.ai, IA & rendering).",
-    "longDescription": "# RigConcentrateur — Concentrateur Télémétrique & Monitoring de Ferme GPU\n\n**RigConcentrateur** est une plateforme de supervision et d'ingestion télémétrique haute fréquence conçue pour monitorer en production une **ferme de serveurs de calcul GPU** (hébergement de rigs dédiés au deep learning, à l'inférence IA et au rendu 3D haute intensité sur des plateformes comme Vast.ai).\n\nDéployé 24h/24 et 7j/7, le système offre une visibilité totale sur l'intégrité matérielle du cluster, garantit la continuité de service des machines louées, prévient les dérives thermiques critiques et optimise la rentabilité énergétique globale.\n\n---\n\n### 🎯 Enjeux & Contexte Opérationnel\n\nL'exploitation d'une ferme de rigs de calcul GPU impose des contraintes sévères :\n- **Forte densité thermique** : Des cartes graphiques haut de gamme (RTX 4090, RTX 3080...) tournant à pleine charge requièrent une surveillance thermique millimétrée (GPU, VRAM, CPU, stockage NVMe) pour éviter le *thermal throttling* ou la dégradation matérielle.\n- **Disponibilité & Cycle de Location** : Détection en temps réel des transitions d'état (*Loué*, *Libre*, *Hors-ligne*) et du comportement des conteneurs de calcul afin d'assurer un SLA optimal aux clients.\n- **Maîtrise Énergétique** : Suivi fin de la puissance tirée (Watts) et calcul précis de la consommation cumulée en kilowattheures (kWh) pour chaque machine afin de modéliser avec exactitude le coût électrique réel.\n\n---\n\n### 🚀 Fonctionnalités Clés\n\n#### 1. Ingestion Télémétrique Haute Performance\n- Collecte sécurisée des trames système émises par chaque rig via une API REST protégée par Bearer token.\n- Capture exhaustive des métriques : charge GPU (%), température GPU (°C), puissance GPU (W), puissance cible, vitesse des ventilateurs (RPM & %), charge/température CPU, consommation globale (W), utilisation RAM et stockage (Go & %).\n\n#### 2. Dashboard Temps Réel & Visualisation Interactive\n- Tableau de bord en direct affichant l'état consolidé de la ferme (cartes d'état interactives par rig avec codes couleur statutaires : *Loué*, *Libre*, *Erreur*).\n- Graphiques temporels dynamiques via **Chart.js** pour analyser les courbes d'évolution thermique, de charge et de puissance avec sélection de plages temporelles (1h, 6h, 24h, 7j, 30j).\n\n#### 3. Moteur de Calcul d'Énergie & Rentabilité (kWh)\n- Module dédié de calcul d'énergie intégrée sur des fenêtres temporelles arbitraires.\n- Ventilation de la consommation électrique globale et par rig individuel pour un audit précis des coûts d'exploitation électrique.\n\n#### 4. Alerting Intelligent & Watchdog Proactif\n- **Alertes Événementielles par Email (SMTP)** : Envoi automatique de notifications lors des changements d'état de location (démarrage/fin de bail sur Vast.ai).\n- **Surveillance Thermique Configurable** : Définition de seuils limites de température (CPU, GPU, Stockage) depuis l'interface d'administration avec temporisation (cooldown anti-rebond) pour éviter le spam d'alertes.\n- **Watchdog Hors-Ligne** : Détection automatique des pertes de signal réseau ou coupures d'alimentation avec journalisation dédiée des pannes.\n\n#### 5. Historique Détaillé des Sessions de Location\n- Journalisation de chaque session de calcul : horodatage précis de début et de fin, durée cumulée, statistiques complètes (températures min/max/moyenne, consommation) et corrélation automatique des erreurs survenues pendant la location.\n\n#### 6. Sécurité & Contrôle d'Accès Granulaire (RBAC)\n- Authentification par cookies de session sécurisés avec persistance en base SQLite (`connect-sqlite3`) et hachage fort des mots de passe avec **bcrypt**.\n- Gestion de rôles différenciés :\n  - **Admin** : Accès complet (ajustement des seuils thermiques, purge de base, configuration globale).\n  - **Viewer** : Accès en lecture seule pour écrans de monitoring déportés ou clients légers (ESP32, applications de supervision externes).\n\n---\n\n### 🛠️ Architecture & Stack Technique\n\n- **Backend** : Node.js (v20+), Express 5, SQLite3 (stockage local optimisé et résilient, sans dépendance lourde), Nodemailer (moteur d'envoi d'emails transactionnels).\n- **Frontend** : Vanilla JavaScript moderne (ES Modules), Tailwind CSS, Chart.js (rendu performant et léger côté client, zéro latence).\n- **Conteneurisation & DevOps** : Déploiement conteneurisé via Docker (`Dockerfile`, `.dockerignore`), intégration de tests automatisés via Jest & Supertest.",
-    "category": "Personal",
-    "status": "Completed",
-    "date": "2026-05",
-    "tags": [
-      "Node.js",
-      "Express",
-      "SQLite",
-      "Chart.js",
-      "TailwindCSS",
-      "GPU Computing",
-      "Telemetry",
-      "IoT & Monitoring",
-      "Docker"
-    ],
-    "featured": true,
-    "order": 1,
-    "cover": "assets/images/projects/RigConcentrateur/cover.jpg",
-    "images": [
-      "assets/images/projects/RigConcentrateur/screenshot_analytics.jpg"
-    ],
-    "links": {
-      "github": "https://github.com/Tanchouteur/RigConcentrateur"
-    },
-    "repoData": {
-      "stars": 0,
-      "forks": 0,
-      "language": "JavaScript",
-      "isPrivate": true,
-      "updatedAt": "2026-08-15T12:27:57Z",
-      "createdAt": "2026-05-11T13:08:15Z"
     }
   },
   {
