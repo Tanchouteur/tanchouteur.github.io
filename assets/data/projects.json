@@ -1,5 +1,47 @@
 [
   {
+    "id": "RigFarm",
+    "title": "RigFarm",
+    "description": "Plateforme centralisée de supervision et de pilotage d'une ferme GPU : télémétrie temps réel, orchestration Vast.ai, contrôle énergétique et tarification automatisée.",
+    "longDescription": "# RigFarm — Supervision et orchestration d'une ferme GPU\n\n**RigFarm** est une plateforme complète conçue pour exploiter une ferme de serveurs GPU loués sur **Vast.ai**. Elle centralise dans une seule application la télémétrie matérielle, le suivi des locations, le pilotage de la puissance, l'analyse énergétique, les alertes et la stratégie tarifaire.\n\nLe projet succède à RigConcentrateur et à BotVast avec une architecture entièrement repensée pour la production. Un agent léger, **RigClient**, reste installé sur chaque machine et transmet des mesures structurées au serveur central, tandis qu'un worker dédié synchronise l'état de la ferme et exécute les opérations d'orchestration.\n\n---\n\n## Objectifs\n\nL'exploitation de machines GPU à distance demande plus qu'un simple tableau de bord. RigFarm répond à quatre enjeux essentiels :\n\n- disposer d'une vue fiable et consolidée de tous les rigs ;\n- protéger le matériel en surveillant les températures, la charge et la puissance ;\n- adapter automatiquement le comportement des machines à leur état de location ;\n- suivre et optimiser les coûts d'exploitation ainsi que la rentabilité.\n\n---\n\n## Fonctionnalités principales\n\n### Télémétrie multi-rig et multi-GPU\n\nChaque agent envoie des trames versionnées contenant les métriques CPU, GPU, mémoire, stockage, ventilation, conteneurs et consommation globale. Les envois sont authentifiés par jeton, idempotents et mis en file localement par RigClient en cas de coupure réseau afin d'être rejoués au retour de la connexion.\n\n### Tableau de bord d'exploitation\n\nL'interface React présente l'état global de la ferme et le détail de chaque machine : disponibilité de l'agent, état Vast.ai, location en cours, températures, puissance, charge, historique et erreurs. Des vues dédiées permettent également de suivre les locations, l'énergie et la santé des services.\n\n### Orchestration Vast.ai\n\nVast.ai constitue la source de vérité pour déterminer si un rig est loué ou disponible. Un worker synchronise les machines, historise les transitions de location et réconcilie automatiquement l'état attendu. En cas d'indisponibilité de l'API distante, RigFarm conserve le dernier état confirmé et n'exécute aucune nouvelle action risquée.\n\n### Gestion automatisée de la puissance\n\nRigFarm applique par SSH un profil de puissance limité lorsqu'une machine est louée et un profil pleine puissance lorsqu'elle est libre. Le système intègre la vérification stricte des empreintes SSH, des tests de connexion sans effet de bord, une file d'actions persistante, des tentatives progressives et un journal d'audit. Le mode observation permet de valider le comportement avant toute activation automatique.\n\n### Énergie et tarification\n\nLa plateforme agrège la consommation des rigs et conserve un historique exploitable pour analyser les coûts énergétiques. Un moteur de tarification compare les machines au marché Vast.ai, calcule des recommandations à partir de la demande et fait converger les prix dans le temps. Il peut fonctionner en mode désactivé, simulation ou actif afin de sécuriser sa mise en production.\n\n### Alertes, audit et résilience\n\nRigFarm détecte les agents hors ligne, signale les changements de location et journalise les opérations sensibles. Les données de télémétrie suivent une politique de rétention avec agrégation des mesures anciennes. Les actions importantes sont persistées en base afin que les redémarrages du worker ne provoquent ni perte d'état ni double exécution.\n\n### Sécurité et contrôle d'accès\n\nLes comptes administrateur et invité sont séparés des jetons utilisés par les agents et les intégrations. Les autorisations machine reposent sur des scopes dédiés, les secrets SSH ne sont accessibles qu'au worker et l'accès public peut être protégé par Cloudflare.\n\n---\n\n## Architecture technique\n\n- **Backend** : Python 3.12, FastAPI, SQLAlchemy, Alembic et Pydantic ;\n- **Frontend** : React, TypeScript, Vite, TanStack Query et Recharts ;\n- **Données** : PostgreSQL en production, avec migrations versionnées et sauvegardes quotidiennes ;\n- **Orchestration** : worker autonome pour Vast.ai, SSH, tarification, alertes et rétention ;\n- **Déploiement** : Docker Compose sur Coolify, healthchecks et exposition sécurisée via Cloudflare ;\n- **Qualité** : tests automatisés du backend et compilation TypeScript du frontend.\n\nRigFarm transforme ainsi plusieurs outils spécialisés en un système cohérent, auditable et conçu pour piloter durablement une infrastructure GPU réelle.",
+    "category": "Personal",
+    "status": "In Progress",
+    "date": "2026-08",
+    "tags": [
+      "Python",
+      "FastAPI",
+      "PostgreSQL",
+      "React",
+      "TypeScript",
+      "Vast.ai",
+      "GPU Computing",
+      "Telemetry",
+      "Automation",
+      "Docker"
+    ],
+    "featured": true,
+    "order": 1,
+    "cover": "assets/images/projects/RigFarm/cover.jpg",
+    "images": [
+      "assets/images/projects/RigFarm/vue-electricite.jpg",
+      "assets/images/projects/RigFarm/vue-location.jpg",
+      "assets/images/projects/RigFarm/vue-reglage.png",
+      "assets/images/projects/RigFarm/vue-rig.jpg",
+      "assets/images/projects/RigFarm/vue-systeme.jpg"
+    ],
+    "links": {
+      "github": "https://github.com/Tanchouteur/RigFarm"
+    },
+    "repoData": {
+      "stars": 0,
+      "forks": 0,
+      "language": "Python",
+      "isPrivate": true,
+      "updatedAt": "2026-09-08T11:32:17Z",
+      "createdAt": "2026-08-25T11:24:33Z"
+    }
+  },
+  {
     "id": "Lapins-du-Gapeau",
     "title": "Lapins du Gapeau",
     "description": "Site vitrine et e-commerce local haute performance pour un élevage familial dans le Var. Développé avec Astro, Decap CMS et Cloudflare, optimisé pour le SEO local et la gestion autonome de contenu.",
@@ -39,48 +81,6 @@
       "isPrivate": true,
       "updatedAt": "2026-09-06T12:11:33Z",
       "createdAt": "2026-08-06T13:17:44Z"
-    }
-  },
-  {
-    "id": "RigFarm",
-    "title": "RigFarm",
-    "description": "Plateforme centralisée de supervision et de pilotage d'une ferme GPU : télémétrie temps réel, orchestration Vast.ai, contrôle énergétique et tarification automatisée.",
-    "longDescription": "# RigFarm — Supervision et orchestration d'une ferme GPU\n\n**RigFarm** est une plateforme complète conçue pour exploiter une ferme de serveurs GPU loués sur **Vast.ai**. Elle centralise dans une seule application la télémétrie matérielle, le suivi des locations, le pilotage de la puissance, l'analyse énergétique, les alertes et la stratégie tarifaire.\n\nLe projet succède à RigConcentrateur et à BotVast avec une architecture entièrement repensée pour la production. Un agent léger, **RigClient**, reste installé sur chaque machine et transmet des mesures structurées au serveur central, tandis qu'un worker dédié synchronise l'état de la ferme et exécute les opérations d'orchestration.\n\n---\n\n## Objectifs\n\nL'exploitation de machines GPU à distance demande plus qu'un simple tableau de bord. RigFarm répond à quatre enjeux essentiels :\n\n- disposer d'une vue fiable et consolidée de tous les rigs ;\n- protéger le matériel en surveillant les températures, la charge et la puissance ;\n- adapter automatiquement le comportement des machines à leur état de location ;\n- suivre et optimiser les coûts d'exploitation ainsi que la rentabilité.\n\n---\n\n## Fonctionnalités principales\n\n### Télémétrie multi-rig et multi-GPU\n\nChaque agent envoie des trames versionnées contenant les métriques CPU, GPU, mémoire, stockage, ventilation, conteneurs et consommation globale. Les envois sont authentifiés par jeton, idempotents et mis en file localement par RigClient en cas de coupure réseau afin d'être rejoués au retour de la connexion.\n\n### Tableau de bord d'exploitation\n\nL'interface React présente l'état global de la ferme et le détail de chaque machine : disponibilité de l'agent, état Vast.ai, location en cours, températures, puissance, charge, historique et erreurs. Des vues dédiées permettent également de suivre les locations, l'énergie et la santé des services.\n\n### Orchestration Vast.ai\n\nVast.ai constitue la source de vérité pour déterminer si un rig est loué ou disponible. Un worker synchronise les machines, historise les transitions de location et réconcilie automatiquement l'état attendu. En cas d'indisponibilité de l'API distante, RigFarm conserve le dernier état confirmé et n'exécute aucune nouvelle action risquée.\n\n### Gestion automatisée de la puissance\n\nRigFarm applique par SSH un profil de puissance limité lorsqu'une machine est louée et un profil pleine puissance lorsqu'elle est libre. Le système intègre la vérification stricte des empreintes SSH, des tests de connexion sans effet de bord, une file d'actions persistante, des tentatives progressives et un journal d'audit. Le mode observation permet de valider le comportement avant toute activation automatique.\n\n### Énergie et tarification\n\nLa plateforme agrège la consommation des rigs et conserve un historique exploitable pour analyser les coûts énergétiques. Un moteur de tarification compare les machines au marché Vast.ai, calcule des recommandations à partir de la demande et fait converger les prix dans le temps. Il peut fonctionner en mode désactivé, simulation ou actif afin de sécuriser sa mise en production.\n\n### Alertes, audit et résilience\n\nRigFarm détecte les agents hors ligne, signale les changements de location et journalise les opérations sensibles. Les données de télémétrie suivent une politique de rétention avec agrégation des mesures anciennes. Les actions importantes sont persistées en base afin que les redémarrages du worker ne provoquent ni perte d'état ni double exécution.\n\n### Sécurité et contrôle d'accès\n\nLes comptes administrateur et invité sont séparés des jetons utilisés par les agents et les intégrations. Les autorisations machine reposent sur des scopes dédiés, les secrets SSH ne sont accessibles qu'au worker et l'accès public peut être protégé par Cloudflare.\n\n---\n\n## Architecture technique\n\n- **Backend** : Python 3.12, FastAPI, SQLAlchemy, Alembic et Pydantic ;\n- **Frontend** : React, TypeScript, Vite, TanStack Query et Recharts ;\n- **Données** : PostgreSQL en production, avec migrations versionnées et sauvegardes quotidiennes ;\n- **Orchestration** : worker autonome pour Vast.ai, SSH, tarification, alertes et rétention ;\n- **Déploiement** : Docker Compose sur Coolify, healthchecks et exposition sécurisée via Cloudflare ;\n- **Qualité** : tests automatisés du backend et compilation TypeScript du frontend.\n\nRigFarm transforme ainsi plusieurs outils spécialisés en un système cohérent, auditable et conçu pour piloter durablement une infrastructure GPU réelle.",
-    "category": "Personal",
-    "status": "In Progress",
-    "date": "2026-08",
-    "tags": [
-      "Python",
-      "FastAPI",
-      "PostgreSQL",
-      "React",
-      "TypeScript",
-      "Vast.ai",
-      "GPU Computing",
-      "Telemetry",
-      "Automation",
-      "Docker"
-    ],
-    "featured": true,
-    "order": 1,
-    "cover": "assets/images/projects/RigFarm/cover.jpg",
-    "images": [
-      "assets/images/projects/RigFarm/vue-electricite.jpg",
-      "assets/images/projects/RigFarm/vue-location.jpg",
-      "assets/images/projects/RigFarm/vue-reglage.png",
-      "assets/images/projects/RigFarm/vue-rig.jpg",
-      "assets/images/projects/RigFarm/vue-systeme.jpg"
-    ],
-    "links": {
-      "github": "https://github.com/Tanchouteur/RigFarm"
-    },
-    "repoData": {
-      "stars": 0,
-      "forks": 0,
-      "language": "Python",
-      "isPrivate": true,
-      "updatedAt": "2026-08-29T08:49:10Z",
-      "createdAt": "2026-08-25T11:24:33Z"
     }
   },
   {
