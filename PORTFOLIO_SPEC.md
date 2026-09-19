@@ -49,9 +49,35 @@ mon-projet/
 | `status` | string | — | `"Completed"` | `"In Progress"`, `"Completed"`, ou `"Archived"` |
 | `date` | string | — | Date de création du repo | Format `YYYY-MM` ou `YYYY` |
 | `tags` | string[] | — | Topics GitHub + langage principal | Technologies utilisées |
-| `featured` | boolean | — | `false` | Si `true`, la carte prend 2 colonnes dans la grille |
+| `featured` | boolean | — | `false` | Si `true`, éligible à la sélection de 3 projets maximum, selon `order` |
 | `order` | number | — | `999` | Ordre d'affichage (plus petit = premier) |
 | `links` | object | — | URL du repo GitHub | Liens externes (`github`, `demo`, `docs`, `website`) |
+
+## Présentation facultative (Atelier v2)
+
+Les anciens fichiers restent compatibles. Sans `presentation`, le portfolio utilise une surface neutre, une image entière et un accent cuivre.
+
+```json
+{
+  "presentation": {
+    "type": "interface",
+    "accent": "#9a4c32",
+    "captions": {
+      "screenshot1.png": "Planification de la semaine",
+      "screenshot2.jpg": "Détail d’une recette"
+    }
+  }
+}
+```
+
+- `type` : `neutral` (image entière, défaut), `interface` (cadre de fenêtre), `photo` (recadrage bord à bord), `diagram` (image entière sur fond clair).
+- `accent` : couleur hexadécimale à six chiffres, décorative uniquement. Invalide → cuivre par défaut.
+- `captions` : légendes indexées par nom de fichier exact ; facultatives.
+- Aucune branche de rendu ne dépend du nom du projet. Les catégories personnalisées sont également filtrables.
+- Les liens vers le code des dépôts privés sont masqués côté affichage. Le contenu placé dans `.portfolio/` est destiné à devenir public.
+- Les fichiers collectés sont servis sous `assets/images/Projects/` (P majuscule).
+
+La spécification complète de la refonte est dans [docs/REFONTE_SPEC.md](docs/REFONTE_SPEC.md).
 
 ## Convention d'images
 
@@ -87,7 +113,7 @@ git add .portfolio/
 git commit -m "feat: add portfolio metadata"
 git push
 
-# → Le portfolio se mettra à jour dans les 6 heures (ou manuellement via GitHub Actions)
+# → Le portfolio se mettra à jour au prochain passage quotidien (minuit UTC) (ou manuellement via GitHub Actions)
 ```
 
 ## Retirer un projet

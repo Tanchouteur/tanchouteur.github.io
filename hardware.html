@@ -1,89 +1,119 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
-    <title>Louis Tanchou - Hardware</title>
-
-    <meta name="robots" content="hardware,follow">
-    <meta name="description" content="The portfolio of Louis Tanchou, Software Developper.">
-    <meta property="og:description" content="The portfolio of Louis Tanchou, Software Developper.">
-    <meta property="og:url" content="https://tanchou.fr">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Louis Tanchou">
-
-    <link rel="stylesheet" href="./assets/css/main.css">
-</head>
-<body class="hardware">
-<header id="navbar-container" class="dark"></header>
-
-<main>
-    <section id="title" class="dark" style="line-height: 0; height: 40dvh;">
-        <h1>
-            <span class="title-container">
-                <span class="title">Hardware</span>
-            </span>
-        </h1>
-        <p>Let’s me show you my workstation</p>
-    </section>
-
-    <section id="subject" class="hardware">
-        <div class="title">
-            <h2>My workstation</h2>
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lab — Louis Tanchou</title>
+    <meta
+      name="description"
+      content="Le laboratoire personnel de Louis Tanchou : infrastructure, systèmes et expérimentations matérielles."
+    />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#f2efe8" />
+    <meta property="og:title" content="Lab — Louis Tanchou" />
+    <meta
+      property="og:description"
+      content="Le laboratoire personnel de Louis Tanchou : infrastructure, systèmes et expérimentations matérielles."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tanchou.fr/hardware.html" />
+    <link
+      rel="icon"
+      href="/assets/images/atelier-mark.svg"
+      type="image/svg+xml"
+    />
+    <script type="module" src="/assets/js/app.mjs"></script>
+  </head>
+  <body>
+    <!-- partial:nav -->
+    <main id="main">
+      <section class="page-heading">
+        <p class="eyebrow">03 / Le laboratoire</p>
+        <h1>Les mains dans<br /><em>les rouages.</em></h1>
+        <p class="page-intro">
+          Un terrain d’expérimentation pour relier les applications à ce qui les
+          fait réellement fonctionner.
+        </p>
+      </section>
+      <section class="lab-feature">
+        <div
+          class="lab-diagram"
+          aria-label="Architecture simplifiée : applications, conteneurs et virtualisation"
+        >
+          <span class="eyebrow">NEXUS / INFRASTRUCTURE PERSONNELLE</span>
+          <div class="diagram-level">
+            <span>APPLICATIONS</span><strong>Projets & services</strong>
+          </div>
+          <span class="diagram-connector" aria-hidden="true">│</span>
+          <div class="diagram-level">
+            <span>ORCHESTRATION</span><strong>Docker · Coolify</strong>
+          </div>
+          <span class="diagram-connector" aria-hidden="true">│</span>
+          <div class="diagram-level">
+            <span>FONDATIONS</span><strong>Linux · Proxmox</strong>
+          </div>
         </div>
-        <div class="computer">
-            <div class="hardware-card">
-                <img src="assets/images/Hardware/cg.jpg" alt="cg">
-                <div class="componnent-description">
-                    <h3>Graphique Card</h3>
-                    <p>RTX 4080</p>
-
-                </div>
-            </div>
-            <div class="hardware-card">
-                <img src="assets/images/Hardware/cpu.jpg" alt="cpu">
-                <div class="componnent-description">
-                    <h3>Processor</h3>
-                    <p>Ryzen 9 7950x</p>
-
-                </div>
-            </div>
-            <div class="hardware-card double large">
-                <div class="componnent-description double">
-                    <h3>MotherBoard</h3>
-                    <p>Asus x670e</p>
-                    <br>
-                    <h3>Ram</h3>
-                    <p>Corsair DDR5 6Ghz<br>x32</p>
-                </div>
-                <img src="assets/images/Hardware/cm.jpg" alt="Motherboard">
-            </div>
-
-            <div class="hardware-card double large">
-                <div class="componnent-description double">
-                    <h3>Accessory</h3>
-                    <h4>SCREEN</h4>
-                    <p>27”  WQHD 165hz </p>
-                    <p>24”  FHD 60hz </p>
-
-                    <h4>Keyboard & Mouse</h4>
-                    <p>IronClad</p>
-                    <p>Logitech g502</p>
-
-                    <h4>Microphone & Headphone</h4>
-                    <p>Zoom - zum 2</p>
-                    <p>SteelSeries - Arctics Nova Pro</p>
-                </div>
-                <img src="assets/images/Hardware/screen.jpg" alt="Motherboard">
-            </div>
+        <div class="prose">
+          <p class="eyebrow">01 / Héberger pour comprendre</p>
+          <h2>Un laboratoire<br />qui sert au quotidien.</h2>
+          <p>
+            J’exploite une infrastructure personnelle virtualisée pour déployer
+            mes applications, explorer les réseaux et automatiser les
+            opérations.
+          </p>
+          <p>
+            Le portfolio en fait partie. Ses projets sont collectés depuis
+            GitHub, puis publiés sur une infrastructure auto-hébergée avec
+            Coolify.
+          </p>
+          <ul class="tag-list">
+            <li>Proxmox</li>
+            <li>Docker</li>
+            <li>Cloudflare Tunnel</li>
+            <li>Home Assistant</li>
+          </ul>
         </div>
-    </section>
-</main>
-
-<footer id="footer" class="dark"></footer>
-
-<script src="assets/js/main.js"></script>
-<script src="assets/js/events.js" defer></script>
-<script src="assets/js/scroll.js" defer></script>
-</body>
+      </section>
+      <section class="lab-grid">
+        <article>
+          <span class="eyebrow">02 / Calcul & matériel</span>
+          <h2>Assembler.<br />Mesurer. Ajuster.</h2>
+          <img
+            src="/assets/images/Hardware/cm.jpg"
+            alt="Carte mère et composants d’un ordinateur"
+            loading="lazy"
+          />
+          <p>
+            Le matériel offre un autre regard sur les logiciels : ressources
+            disponibles, consommation et limites physiques. Un prolongement
+            concret de mes projets de supervision.
+          </p>
+        </article>
+        <article>
+          <span class="eyebrow">03 / Du signal à l’interface</span>
+          <h2>Faire dialoguer<br />les systèmes.</h2>
+          <div class="signal-art" aria-hidden="true">
+            <span>01</span><i></i><span>10</span><i></i><span>11</span>
+          </div>
+          <p>
+            Bus CAN, circuits logiques, capteurs et automatisations : autant de
+            façons d’explorer la frontière entre une donnée et le monde réel.
+          </p>
+          <a class="text-link" href="/index.html#projects"
+            >Explorer les réalisations ↗</a
+          >
+        </article>
+      </section>
+      <section class="contact-band">
+        <div>
+          <p class="eyebrow">La suite commence par une conversation</p>
+          <h2>Et si on construisait<br /><em>quelque chose ?</em></h2>
+        </div>
+        <a class="round-link" href="/contact.html" aria-label="Me contacter"
+          >↗</a
+        >
+      </section>
+    </main>
+    <!-- partial:footer -->
+  </body>
 </html>

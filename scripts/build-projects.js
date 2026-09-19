@@ -11,38 +11,53 @@
  *   node scripts/build-projects.js --dry-run
  */
 
-const https = require('https');
-const http = require('http');
-const fs = require('fs');
-const path = require('path');
-const { URL } = require('url');
+const https = require("https");
+const http = require("http");
+const fs = require("fs");
+const path = require("path");
+const { URL } = require("url");
 
 // ─── Configuration ────────────────────────────────────────────────────────────
 
-const GITHUB_USERNAME = 'Tanchouteur';
-const GITHUB_TOKEN = process.env.PORTFOLIO_GITHUB_TOKEN || process.env.GITHUB_TOKEN || '';
-const DRY_RUN = process.argv.includes('--dry-run');
-const OUTPUT_JSON = path.join(__dirname, '..', 'assets', 'data', 'projects.json');
-const IMAGES_DIR = path.join(__dirname, '..', 'assets', 'images', 'projects');
-const IMAGE_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg', '.avif'];
+const GITHUB_USERNAME = "Tanchouteur";
+const GITHUB_TOKEN =
+  process.env.PORTFOLIO_GITHUB_TOKEN || process.env.GITHUB_TOKEN || "";
+const DRY_RUN = process.argv.includes("--dry-run");
+const OUTPUT_JSON = path.join(
+  __dirname,
+  "..",
+  "assets",
+  "data",
+  "projects.json",
+);
+const IMAGES_DIR = path.join(__dirname, "..", "assets", "images", "Projects");
+const IMAGE_EXTENSIONS = [
+  ".png",
+  ".jpg",
+  ".jpeg",
+  ".gif",
+  ".webp",
+  ".svg",
+  ".avif",
+];
 
-function getHeaders(targetUrl, customAccept = 'application/vnd.github+json') {
+function getHeaders(targetUrl, customAccept = "application/vnd.github+json") {
   const urlObj = new URL(targetUrl);
-  const isGitHubApi = urlObj.hostname === 'api.github.com';
-  const isRawGitHub = urlObj.hostname === 'raw.githubusercontent.com';
+  const isGitHubApi = urlObj.hostname === "api.github.com";
+  const isRawGitHub = urlObj.hostname === "raw.githubusercontent.com";
 
   const headers = {
-    'User-Agent': 'tanchouteur-portfolio-builder/2.0',
+    "User-Agent": "tanchouteur-portfolio-builder/2.0",
   };
 
   if (isGitHubApi) {
-    headers['Accept'] = customAccept;
-    headers['X-GitHub-Api-Version'] = '2022-11-28';
+    headers["Accept"] = customAccept;
+    headers["X-GitHub-Api-Version"] = "2022-11-28";
   }
 
   // Send token only to GitHub domains, never to external AWS S3 redirects
   if (GITHUB_TOKEN && (isGitHubApi || isRawGitHub)) {
-    headers['Authorization'] = `Bearer ${GITHUB_TOKEN}`;
+    headers["Authorization"] = `Bearer ${GITHUB_TOKEN}`;
   }
 
   return headers;
@@ -52,26 +67,32 @@ function getHeaders(targetUrl, customAccept = 'application/vnd.github+json') {
 
 function fetchJSON(url) {
   return new Promise((resolve, reject) => {
-    const headers = getHeaders(url, 'application/vnd.github+json');
-    https.get(url, { headers }, (res) => {
-      let data = '';
-      res.on('data', chunk => data += chunk);
-      res.on('end', () => {
-        if (res.statusCode === 404) {
-          resolve(null);
-          return;
-        }
-        if (res.statusCode !== 200) {
-          reject(new Error(`HTTP ${res.statusCode} for ${url}: ${data.substring(0, 100)}`));
-          return;
-        }
-        try {
-          resolve(JSON.parse(data));
-        } catch (e) {
-          reject(new Error(`JSON parse error for ${url}: ${e.message}`));
-        }
-      });
-    }).on('error', reject);
+    const headers = getHeaders(url, "application/vnd.github+json");
+    https
+      .get(url, { headers }, (res) => {
+        let data = "";
+        res.on("data", (chunk) => (data += chunk));
+        res.on("end", () => {
+          if (res.statusCode === 404) {
+            resolve(null);
+            return;
+          }
+          if (res.statusCode !== 200) {
+            reject(
+              new Error(
+                `HTTP ${res.statusCode} for ${url}: ${data.substring(0, 100)}`,
+              ),
+            );
+            return;
+          }
+          try {
+            resolve(JSON.parse(data));
+          } catch (e) {
+            reject(new Error(`JSON parse error for ${url}: ${e.message}`));
+          }
+        });
+      })
+      .on("error", reject);
   });
 }
 
@@ -91,34 +112,39 @@ function downloadFile(url, destPath) {
       }
 
       const urlObj = new URL(reqUrl);
-      const client = urlObj.protocol === 'https:' ? https : http;
-      const headers = getHeaders(reqUrl, 'application/vnd.github.raw');
+      const client = urlObj.protocol === "https:" ? https : http;
+      const headers = getHeaders(reqUrl, "application/vnd.github.raw");
 
-      client.get(reqUrl, { headers }, (res) => {
-        // Handle 301, 302, 307, 308 redirects (GitHub API redirects to AWS S3 pre-signed URLs)
-        if ([301, 302, 307, 308].includes(res.statusCode) && res.headers.location) {
-          const nextUrl = new URL(res.headers.location, reqUrl).toString();
-          doRequest(nextUrl, redirectCount + 1);
-          return;
-        }
+      client
+        .get(reqUrl, { headers }, (res) => {
+          // Handle 301, 302, 307, 308 redirects (GitHub API redirects to AWS S3 pre-signed URLs)
+          if (
+            [301, 302, 307, 308].includes(res.statusCode) &&
+            res.headers.location
+          ) {
+            const nextUrl = new URL(res.headers.location, reqUrl).toString();
+            doRequest(nextUrl, redirectCount + 1);
+            return;
+          }
 
-        if (res.statusCode !== 200) {
-          file.destroy();
-          fs.unlink(destPath, () => {});
-          reject(new Error(`HTTP ${res.statusCode} downloading ${reqUrl}`));
-          return;
-        }
+          if (res.statusCode !== 200) {
+            file.destroy();
+            fs.unlink(destPath, () => {});
+            reject(new Error(`HTTP ${res.statusCode} downloading ${reqUrl}`));
+            return;
+          }
 
-        res.pipe(file);
-        file.on('finish', () => file.close(resolve));
-        file.on('error', (err) => {
+          res.pipe(file);
+          file.on("finish", () => file.close(resolve));
+          file.on("error", (err) => {
+            fs.unlink(destPath, () => {});
+            reject(err);
+          });
+        })
+        .on("error", (err) => {
           fs.unlink(destPath, () => {});
           reject(err);
         });
-      }).on('error', (err) => {
-        fs.unlink(destPath, () => {});
-        reject(err);
-      });
     };
 
     doRequest(url);
@@ -158,10 +184,12 @@ async function getPortfolioJson(owner, repoName) {
   const data = await fetchJSON(url);
   if (!data || !data.content) return null;
   try {
-    const decoded = Buffer.from(data.content, 'base64').toString('utf-8');
+    const decoded = Buffer.from(data.content, "base64").toString("utf-8");
     return JSON.parse(decoded);
   } catch (e) {
-    console.warn(`  ⚠ Could not parse portfolio.json for ${repoName}: ${e.message}`);
+    console.warn(
+      `  ⚠ Could not parse portfolio.json for ${repoName}: ${e.message}`,
+    );
     return null;
   }
 }
@@ -175,24 +203,29 @@ function isImage(filename) {
 
 function isCover(filename) {
   const base = path.basename(filename, path.extname(filename)).toLowerCase();
-  return base === 'cover';
+  return base === "cover";
 }
 
-async function downloadPortfolioImages(owner, repoName, files) {
+async function downloadPortfolioImages(
+  owner,
+  repoName,
+  files,
+  { dryRun = DRY_RUN } = {},
+) {
   const repoImagesDir = path.join(IMAGES_DIR, repoName);
-  const imageFiles = files.filter(f => f.type === 'file' && isImage(f.name));
+  const imageFiles = files.filter((f) => f.type === "file" && isImage(f.name));
 
   let coverPath = null;
   const screenshotPaths = [];
 
   for (const file of imageFiles) {
     const destPath = path.join(repoImagesDir, file.name);
-    const relPath = `assets/images/projects/${repoName}/${file.name}`;
+    const relPath = `assets/images/Projects/${repoName}/${file.name}`;
 
     // Prefer file.url (GitHub API endpoint which supports private repos via raw Accept header)
     const downloadUrl = file.url || file.download_url;
 
-    if (!DRY_RUN) {
+    if (!dryRun) {
       console.log(`    ↓ Downloading ${file.name}...`);
       try {
         await downloadFile(downloadUrl, destPath);
@@ -216,7 +249,8 @@ async function downloadPortfolioImages(owner, repoName, files) {
 
 // ─── Project builder ──────────────────────────────────────────────────────────
 
-function buildProjectObject(repoData, portfolioJson, imagePaths) {
+async function buildProjectObject(repoData, portfolioJson, imagePaths) {
+  const { normalizePresentation } = await import("../lib/portfolio.mjs");
   const repo = repoData;
 
   // Fallback values from repo metadata
@@ -230,16 +264,25 @@ function buildProjectObject(repoData, portfolioJson, imagePaths) {
   return {
     id: repo.name,
     title: portfolioJson.title || repo.name,
-    description: portfolioJson.description || repo.description || '',
-    longDescription: portfolioJson.longDescription || '',
-    category: portfolioJson.category || 'Personal',
-    status: portfolioJson.status || 'Completed',
-    date: portfolioJson.date || fallbackDate,
-    tags: portfolioJson.tags && portfolioJson.tags.length > 0
-      ? portfolioJson.tags
-      : fallbackTags,
-    featured: portfolioJson.featured || false,
-    order: portfolioJson.order !== undefined ? portfolioJson.order : 999,
+    description: portfolioJson.description || repo.description || "",
+    longDescription: portfolioJson.longDescription || "",
+    category: portfolioJson.category || "Personal",
+    status: portfolioJson.status || "Completed",
+    date:
+      typeof portfolioJson.date === "string"
+        ? portfolioJson.date
+        : fallbackDate,
+    tags:
+      Array.isArray(portfolioJson.tags) && portfolioJson.tags.length > 0
+        ? portfolioJson.tags.filter((tag) => typeof tag === "string")
+        : fallbackTags,
+    featured: portfolioJson.featured === true,
+    presentation: normalizePresentation(portfolioJson.presentation),
+    order:
+      typeof portfolioJson.order === "number" &&
+      Number.isFinite(portfolioJson.order)
+        ? portfolioJson.order
+        : 999,
     cover: imagePaths.cover || null,
     images: imagePaths.images || [],
     links: {
@@ -259,14 +302,18 @@ function buildProjectObject(repoData, portfolioJson, imagePaths) {
 
 // ─── Cleanup removed projects ─────────────────────────────────────────────────
 
-function cleanupRemovedProjects(currentProjectIds) {
-  if (!fs.existsSync(IMAGES_DIR)) return;
-  const existingDirs = fs.readdirSync(IMAGES_DIR);
+function cleanupRemovedProjects(
+  currentProjectIds,
+  imagesDir = IMAGES_DIR,
+  dryRun = DRY_RUN,
+) {
+  if (!fs.existsSync(imagesDir)) return;
+  const existingDirs = fs.readdirSync(imagesDir);
   for (const dir of existingDirs) {
     if (!currentProjectIds.has(dir)) {
-      const dirPath = path.join(IMAGES_DIR, dir);
+      const dirPath = path.join(imagesDir, dir);
       console.log(`  🗑 Removing images for deleted project: ${dir}`);
-      if (!DRY_RUN) {
+      if (!dryRun) {
         fs.rmSync(dirPath, { recursive: true, force: true });
       }
     }
@@ -275,50 +322,68 @@ function cleanupRemovedProjects(currentProjectIds) {
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
-async function main() {
-  console.log(`\n🔍 Portfolio Builder — ${DRY_RUN ? 'DRY RUN' : 'BUILD'}`);
-  console.log(`   Target user: ${GITHUB_USERNAME}`);
-  console.log(`   Authentication: ${GITHUB_TOKEN ? '✅ Authenticated (Private + Public repos enabled)' : '⚠ Unauthenticated (Public repos only, 60 req/h)'}`);
-  console.log('─'.repeat(50));
+async function main(options = {}) {
+  const logger = options.logger || console;
+  const dryRun = options.dryRun ?? DRY_RUN;
+  const outputJson = options.outputJson || OUTPUT_JSON;
+  const imagesDir = options.imagesDir || IMAGES_DIR;
+  const api = {
+    listAllRepos,
+    getPortfolioFolder,
+    getPortfolioJson,
+    downloadPortfolioImages,
+    ...options.api,
+  };
+  logger.log(`\n🔍 Portfolio Builder — ${dryRun ? "DRY RUN" : "BUILD"}`);
+  logger.log(`   Target user: ${GITHUB_USERNAME}`);
+  logger.log(
+    `   Authentication: ${GITHUB_TOKEN ? "✅ Authenticated (Private + Public repos enabled)" : "⚠ Unauthenticated (Public repos only, 60 req/h)"}`,
+  );
+  logger.log("─".repeat(50));
 
   // 1. List all repos
-  console.log('\n📦 Fetching repository list...');
-  const repos = await listAllRepos();
-  console.log(`   Found ${repos.length} repositories`);
+  logger.log("\n📦 Fetching repository list...");
+  const repos = await api.listAllRepos();
+  logger.log(`   Found ${repos.length} repositories`);
 
   // 2. Check each repo for .portfolio/
   const projects = [];
   const foundProjectIds = new Set();
 
   for (const repo of repos) {
-    if (repo.name === 'tanchouteur.github.io') continue;
+    if (repo.name === "tanchouteur.github.io") continue;
     if (repo.archived) continue;
 
     const owner = (repo.owner && repo.owner.login) || GITHUB_USERNAME;
-    const privacyLabel = repo.private ? '🔒 private' : '🌍 public';
-    process.stdout.write(`\n  📁 ${repo.name} (${privacyLabel}) `);
+    const privacyLabel = repo.private ? "🔒 private" : "🌍 public";
+    logger.log(`\n  📁 ${repo.name} (${privacyLabel}) `);
 
     // Check for .portfolio/ folder
-    const portfolioFolder = await getPortfolioFolder(owner, repo.name);
+    const portfolioFolder = await api.getPortfolioFolder(owner, repo.name);
     if (!portfolioFolder || !Array.isArray(portfolioFolder)) {
-      process.stdout.write('→ no .portfolio/\n');
+      logger.log("→ no .portfolio/\n");
       continue;
     }
 
     // Check for portfolio.json
-    const portfolioJson = await getPortfolioJson(owner, repo.name);
+    const portfolioJson = await api.getPortfolioJson(owner, repo.name);
     if (!portfolioJson) {
-      process.stdout.write('→ .portfolio/ found but no valid portfolio.json\n');
+      logger.log("→ .portfolio/ found but no valid portfolio.json\n");
       continue;
     }
 
-    process.stdout.write(`→ ✅ "${portfolioJson.title || repo.name}"\n`);
+    logger.log(`→ ✅ "${portfolioJson.title || repo.name}"\n`);
 
     // Download images (supports both public and private repository files)
-    const imagePaths = await downloadPortfolioImages(owner, repo.name, portfolioFolder);
+    const imagePaths = await api.downloadPortfolioImages(
+      owner,
+      repo.name,
+      portfolioFolder,
+      { dryRun },
+    );
 
     // Build project object
-    const project = buildProjectObject(repo, portfolioJson, imagePaths);
+    const project = await buildProjectObject(repo, portfolioJson, imagePaths);
     projects.push(project);
     foundProjectIds.add(repo.name);
   }
@@ -333,27 +398,30 @@ async function main() {
   });
 
   // 4. Cleanup images for removed projects
-  console.log('\n🧹 Cleaning up removed projects...');
-  cleanupRemovedProjects(foundProjectIds);
+  logger.log("\n🧹 Cleaning up removed projects...");
+  cleanupRemovedProjects(foundProjectIds, imagesDir, dryRun);
 
   // 5. Write output JSON
-  console.log('\n📄 Writing projects.json...');
-  console.log(`   → ${projects.length} project(s) ready for portfolio`);
+  logger.log("\n📄 Writing projects.json...");
+  logger.log(`   → ${projects.length} project(s) ready for portfolio`);
 
-  if (!DRY_RUN) {
-    const dataDir = path.dirname(OUTPUT_JSON);
+  if (!dryRun) {
+    const dataDir = path.dirname(outputJson);
     if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
-    fs.writeFileSync(OUTPUT_JSON, JSON.stringify(projects, null, 2), 'utf-8');
-    console.log(`   ✅ Written to ${OUTPUT_JSON}`);
+    fs.writeFileSync(outputJson, JSON.stringify(projects, null, 2), "utf-8");
+    logger.log(`   ✅ Written to ${outputJson}`);
   } else {
-    console.log('\n[dry-run] Output JSON:');
-    console.log(JSON.stringify(projects, null, 2));
+    logger.log("\n[dry-run] Output JSON:");
+    logger.log(JSON.stringify(projects, null, 2));
   }
 
-  console.log('\n✅ Build complete!\n');
+  logger.log("\n✅ Build complete!\n");
+  return projects;
 }
 
-main().catch(err => {
-  console.error('\n❌ Build failed:', err.message);
-  process.exit(1);
-});
+module.exports = { buildProjectObject, main, isCover, isImage };
+if (require.main === module)
+  main().catch((err) => {
+    console.error("\n❌ Build failed:", err.message);
+    process.exitCode = 1;
+  });

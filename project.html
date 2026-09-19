@@ -1,115 +1,56 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Projet — Louis Tanchou</title>
-
-    <meta name="robots" content="index,follow">
-    <meta name="description" content="Détail du projet sur le portfolio de Louis Tanchou.">
-    <meta property="og:description" content="Détail du projet sur le portfolio de Louis Tanchou.">
-    <meta property="og:url" content="https://tanchou.fr/project.html">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Projet — Louis Tanchou">
-
-    <link rel="stylesheet" href="./assets/css/main.css">
-    <link rel="stylesheet" href="./assets/css/project-detail.css">
-
-    <!-- Marked.js pour le rendu Markdown de longDescription -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-</head>
-<body>
-    <header id="navbar-container"></header>
-    <canvas id="colorCanvas"></canvas>
-
-    <main>
-        <section id="title" style="height: auto; padding: 8rem 0 2rem; min-height: unset;">
-            <a href="/" class="detail-back" id="back-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M19 12H5M12 5l-7 7 7 7"/>
-                </svg>
-                Retour
-            </a>
-        </section>
-
-        <section id="subject" style="max-width: 960px; width: 100%; text-align: left;">
-
-            <!-- Hero cover image -->
-            <div class="project-hero" id="project-hero"></div>
-
-            <!-- Title + status -->
-            <div class="project-meta-line">
-                <span id="project-category" class="project-category"></span>
-                <span class="dot">·</span>
-                <span id="project-date" class="project-date"></span>
-                <span id="project-status" class="project-status-badge"></span>
-            </div>
-
-            <h1 id="project-title">Chargement…</h1>
-            <p id="project-description"></p>
-
-            <!-- Two-column layout: main content + sidebar -->
-            <div class="project-detail-body">
-
-                <!-- Main: long description + tags -->
-                <div class="project-detail-main">
-                    <div id="project-long-description"></div>
-                    <div id="project-tags"></div>
-                </div>
-
-                <!-- Sidebar: stats + links -->
-                <aside class="project-detail-sidebar">
-                    <div class="detail-sidebar-card">
-                        <h4>Statistiques</h4>
-                        <div id="project-stats"></div>
-                    </div>
-                    <div class="detail-sidebar-card">
-                        <h4>Liens</h4>
-                        <div id="project-links"></div>
-                    </div>
-                </aside>
-            </div>
-
-            <!-- Screenshots gallery -->
-            <div id="gallery-section">
-                <h3>Screenshots</h3>
-                <div id="project-gallery"></div>
-            </div>
-
-        </section>
-    </main>
-
-    <!-- Lightbox -->
-    <div id="lightbox" role="dialog" aria-modal="true" aria-label="Galerie images">
-        <div id="lightbox-content">
-            <button id="lightbox-close" onclick="window.__closeLightbox()" aria-label="Fermer">✕</button>
-            <img id="lightbox-img" src="" alt="Screenshot agrandi">
-            <div id="lightbox-counter"></div>
-            <button class="lightbox-btn" id="lightbox-prev" onclick="window.__navigateLightbox(-1)" aria-label="Image précédente">‹</button>
-            <button class="lightbox-btn" id="lightbox-next" onclick="window.__navigateLightbox(1)" aria-label="Image suivante">›</button>
+    <meta
+      name="description"
+      content="Une réalisation de Louis Tanchou : contexte, technologies et exploration."
+    />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#f2efe8" />
+    <meta property="og:title" content="Projet — Louis Tanchou" />
+    <meta
+      property="og:description"
+      content="Une réalisation de Louis Tanchou : contexte, technologies et exploration."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tanchou.fr/project.html" />
+    <link
+      rel="icon"
+      href="/assets/images/atelier-mark.svg"
+      type="image/svg+xml"
+    />
+    <script type="module" src="/assets/js/app.mjs"></script>
+    <script type="module" src="/assets/js/detail.mjs"></script>
+  </head>
+  <body>
+    <!-- partial:nav -->
+    <main id="main">
+      <div class="detail-wrap">
+        <a class="back-link" href="/index.html#projects"
+          >← Retour à l’atelier</a
+        >
+        <div id="project-detail" aria-live="polite">
+          <h1 class="loading-title">Ouverture du projet…</h1>
         </div>
-    </div>
-    <!-- Fermer la lightbox en cliquant hors de l'image -->
-    <script>
-        document.getElementById('lightbox').addEventListener('click', function(e) {
-            if (e.target === this) window.__closeLightbox();
-        });
-    </script>
-
-    <footer id="footer"></footer>
-
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/events.js" defer></script>
-    <script src="assets/js/animations.js" defer></script>
-    <script src="assets/js/scroll.js" defer></script>
-    <script src="assets/js/project-detail.js" defer></script>
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YC2BEZV3RH"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-YC2BEZV3RH');
-    </script>
-</body>
+        <noscript>Activez JavaScript pour consulter cette fiche.</noscript>
+      </div>
+      <dialog id="gallery-dialog" aria-label="Aperçu du projet">
+        <form method="dialog">
+          <button class="dialog-close" aria-label="Fermer la galerie">
+            Fermer ✕
+          </button>
+        </form>
+        <div class="dialog-stage"><img id="dialog-image" alt="" /></div>
+        <div class="dialog-controls">
+          <button id="gallery-prev" aria-label="Image précédente">←</button>
+          <p id="dialog-caption" aria-live="polite"></p>
+          <button id="gallery-next" aria-label="Image suivante">→</button>
+        </div>
+      </dialog>
+    </main>
+    <!-- partial:footer -->
+  </body>
 </html>

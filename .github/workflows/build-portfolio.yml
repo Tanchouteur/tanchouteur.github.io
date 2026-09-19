@@ -3,15 +3,16 @@ name: Build Portfolio Projects
 on:
   # Tous les jours à minuit UTC
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
   # Déclenchement manuel depuis GitHub Actions
   workflow_dispatch:
 
 permissions:
-  contents: write   # Donne à GITHUB_TOKEN le droit d'écrire/pusher sur ce repo
+  contents: write # Donne à GITHUB_TOKEN le droit d'écrire/pusher sur ce repo
 
 jobs:
   build:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     name: Scan repos & generate projects.json
 
@@ -26,7 +27,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "22"
+          cache: npm
 
       - name: Run build script
         env:
@@ -34,12 +36,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PORTFOLIO_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
         run: node scripts/build-projects.js
 
+      - name: Install and validate generated portfolio
+        run: npm ci && npm run check
+
       - name: Commit & Push changes
         id: git_push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add assets/data/projects.json assets/images/projects/
+          git add assets/data/projects.json assets/images/Projects/
           if git diff --cached --quiet; then
             echo "changed=false" >> $GITHUB_OUTPUT
             echo "No changes in projects data."
@@ -57,5 +62,5 @@ jobs:
           COOLIFY_WEBHOOK_URL: ${{ secrets.COOLIFY_WEBHOOK_URL }}
         run: |
           echo "Pinging Coolify Deploy Webhook..."
-          curl -f -X GET -s "$COOLIFY_WEBHOOK_URL" || curl -f -X POST -s "$COOLIFY_WEBHOOK_URL" || true
+          curl --fail --silent --show-error --max-time 60 -X GET "$COOLIFY_WEBHOOK_URL"
           echo "Coolify webhook triggered successfully!"

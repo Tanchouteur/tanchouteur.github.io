@@ -19,12 +19,12 @@
     ],
     "featured": true,
     "order": 1,
-    "cover": "assets/images/projects/SpotifySort/cover.png",
+    "cover": "assets/images/Projects/SpotifySort/cover.png",
     "images": [
-      "assets/images/projects/SpotifySort/Home1.png",
-      "assets/images/projects/SpotifySort/Home2.png",
-      "assets/images/projects/SpotifySort/Trie1.png",
-      "assets/images/projects/SpotifySort/Trie2.png"
+      "assets/images/Projects/SpotifySort/Home1.png",
+      "assets/images/Projects/SpotifySort/Home2.png",
+      "assets/images/Projects/SpotifySort/Trie1.png",
+      "assets/images/Projects/SpotifySort/Trie2.png"
     ],
     "links": {
       "github": "https://github.com/Tanchouteur/SpotifySort",
@@ -58,14 +58,14 @@
     ],
     "featured": true,
     "order": 1,
-    "cover": "assets/images/projects/Lapins-du-Gapeau/cover.png",
+    "cover": "assets/images/Projects/Lapins-du-Gapeau/cover.png",
     "images": [
-      "assets/images/projects/Lapins-du-Gapeau/screenshot-a-propos.png",
-      "assets/images/projects/Lapins-du-Gapeau/screenshot-detail.png",
-      "assets/images/projects/Lapins-du-Gapeau/screenshot-granules.png",
-      "assets/images/projects/Lapins-du-Gapeau/screenshot-home.png",
-      "assets/images/projects/Lapins-du-Gapeau/screenshot-mobile.png",
-      "assets/images/projects/Lapins-du-Gapeau/screenshot-portees.png"
+      "assets/images/Projects/Lapins-du-Gapeau/screenshot-a-propos.png",
+      "assets/images/Projects/Lapins-du-Gapeau/screenshot-detail.png",
+      "assets/images/Projects/Lapins-du-Gapeau/screenshot-granules.png",
+      "assets/images/Projects/Lapins-du-Gapeau/screenshot-home.png",
+      "assets/images/Projects/Lapins-du-Gapeau/screenshot-mobile.png",
+      "assets/images/Projects/Lapins-du-Gapeau/screenshot-portees.png"
     ],
     "links": {
       "github": "https://github.com/Tanchouteur/Lapins-du-Gapeau",
@@ -103,13 +103,13 @@
     ],
     "featured": true,
     "order": 1,
-    "cover": "assets/images/projects/RigFarm/cover.jpg",
+    "cover": "assets/images/Projects/RigFarm/cover.jpg",
     "images": [
-      "assets/images/projects/RigFarm/vue-electricite.jpg",
-      "assets/images/projects/RigFarm/vue-location.jpg",
-      "assets/images/projects/RigFarm/vue-reglage.png",
-      "assets/images/projects/RigFarm/vue-rig.jpg",
-      "assets/images/projects/RigFarm/vue-systeme.jpg"
+      "assets/images/Projects/RigFarm/vue-electricite.jpg",
+      "assets/images/Projects/RigFarm/vue-location.jpg",
+      "assets/images/Projects/RigFarm/vue-reglage.png",
+      "assets/images/Projects/RigFarm/vue-rig.jpg",
+      "assets/images/Projects/RigFarm/vue-systeme.jpg"
     ],
     "links": {
       "github": "https://github.com/Tanchouteur/RigFarm"
@@ -144,13 +144,13 @@
     ],
     "featured": true,
     "order": 1,
-    "cover": "assets/images/projects/MenuD-laSemaine/cover.jpg",
+    "cover": "assets/images/Projects/MenuD-laSemaine/cover.jpg",
     "images": [
-      "assets/images/projects/MenuD-laSemaine/historique.jpg",
-      "assets/images/projects/MenuD-laSemaine/ingredient.jpg",
-      "assets/images/projects/MenuD-laSemaine/liste-de-courses.jpg",
-      "assets/images/projects/MenuD-laSemaine/recette.jpg",
-      "assets/images/projects/MenuD-laSemaine/regle.jpg"
+      "assets/images/Projects/MenuD-laSemaine/historique.jpg",
+      "assets/images/Projects/MenuD-laSemaine/ingredient.jpg",
+      "assets/images/Projects/MenuD-laSemaine/liste-de-courses.jpg",
+      "assets/images/Projects/MenuD-laSemaine/recette.jpg",
+      "assets/images/Projects/MenuD-laSemaine/regle.jpg"
     ],
     "links": {
       "github": "https://github.com/Tanchouteur/MenuD-laSemaine"
@@ -184,10 +184,10 @@
     ],
     "featured": true,
     "order": 1,
-    "cover": "assets/images/projects/CliOS/cover.jpg",
+    "cover": "assets/images/Projects/CliOS/cover.jpg",
     "images": [
-      "assets/images/projects/CliOS/apex-3.jpg",
-      "assets/images/projects/CliOS/atelier_luxe.jpg"
+      "assets/images/Projects/CliOS/apex-3.jpg",
+      "assets/images/Projects/CliOS/atelier_luxe.jpg"
     ],
     "links": {
       "github": "https://github.com/Tanchouteur/CliOS"
@@ -221,18 +221,18 @@
     ],
     "featured": true,
     "order": 1,
-    "cover": "assets/images/projects/BUT2-SAE-DorfRomantik/cover.jpg",
+    "cover": "assets/images/Projects/BUT2-SAE-DorfRomantik/cover.jpg",
     "images": [
-      "assets/images/projects/BUT2-SAE-DorfRomantik/activite_poches.svg",
-      "assets/images/projects/BUT2-SAE-DorfRomantik/architecture_bdd.svg",
-      "assets/images/projects/BUT2-SAE-DorfRomantik/architecture_endgame.svg",
-      "assets/images/projects/BUT2-SAE-DorfRomantik/architecture_jeux.svg",
-      "assets/images/projects/BUT2-SAE-DorfRomantik/architecture_menu.svg",
-      "assets/images/projects/BUT2-SAE-DorfRomantik/logo.png",
-      "assets/images/projects/BUT2-SAE-DorfRomantik/paysages.svg",
-      "assets/images/projects/BUT2-SAE-DorfRomantik/terrains.svg",
-      "assets/images/projects/BUT2-SAE-DorfRomantik/titre.png",
-      "assets/images/projects/BUT2-SAE-DorfRomantik/tuto.png"
+      "assets/images/Projects/BUT2-SAE-DorfRomantik/activite_poches.svg",
+      "assets/images/Projects/BUT2-SAE-DorfRomantik/architecture_bdd.svg",
+      "assets/images/Projects/BUT2-SAE-DorfRomantik/architecture_endgame.svg",
+      "assets/images/Projects/BUT2-SAE-DorfRomantik/architecture_jeux.svg",
+      "assets/images/Projects/BUT2-SAE-DorfRomantik/architecture_menu.svg",
+      "assets/images/Projects/BUT2-SAE-DorfRomantik/logo.png",
+      "assets/images/Projects/BUT2-SAE-DorfRomantik/paysages.svg",
+      "assets/images/Projects/BUT2-SAE-DorfRomantik/terrains.svg",
+      "assets/images/Projects/BUT2-SAE-DorfRomantik/titre.png",
+      "assets/images/Projects/BUT2-SAE-DorfRomantik/tuto.png"
     ],
     "links": {
       "github": "https://github.com/Tanchouteur/BUT2-SAE-DorfRomantik"
@@ -265,10 +265,10 @@
     ],
     "featured": false,
     "order": 10,
-    "cover": "assets/images/projects/CPUs/cover.jpg",
+    "cover": "assets/images/Projects/CPUs/cover.jpg",
     "images": [
-      "assets/images/projects/CPUs/alu_8bits_circuit.jpg",
-      "assets/images/projects/CPUs/cpu_v1_architecture.png"
+      "assets/images/Projects/CPUs/alu_8bits_circuit.jpg",
+      "assets/images/Projects/CPUs/cpu_v1_architecture.png"
     ],
     "links": {
       "github": "https://github.com/Tanchouteur/CPUs"

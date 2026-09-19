@@ -1,52 +1,77 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
-    <title>Louis Tanchou - Contact</title>
-
-    <meta name="robots" content="hardware,follow">
-    <meta name="description" content="The portfolio of Louis Tanchou, Software Developper.">
-    <meta property="og:description" content="The portfolio of Louis Tanchou, Software Developper.">
-    <meta property="og:url" content="https://tanchou.fr">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Louis Tanchou">
-
-    <link rel="stylesheet" href="./assets/css/main.css">
-</head>
-<body>
-<header id="navbar-container" class=""></header>
-
-<canvas id="colorCanvas"></canvas>
-<main>
-    <section id="title" style="line-height: 0; height: 40dvh;">
-        <h1>
-            <span class="title-container">
-                <span class="title">Contact</span>
-            </span>
-        </h1>
-        <p>Une question, une opportunité ou un projet ? Écrivez-moi.</p>
-    </section>
-
-    <section>
-        <div class="social">
-            <div><a href="https://www.linkedin.com/in/louis-tanchou/" target="_blank" rel="noopener"><img src="assets/images/Contact/linkedin.png" alt="LinkedIn"></a></div>
-            <div><a href="https://github.com/Tanchouteur" target="_blank" rel="noopener"><img src="assets/images/Contact/github.png" alt="GitHub"></a></div>
-        </div>
-        <div>
-
-            <div id="cv">
-                <a href="assets/CV/CV_Louis_Tanchou.pdf" target="_blank"><img src="assets/images/Contact/cv.jpg" alt="Consulter le CV de Louis Tanchou"></a>
-            </div>
-        </div>
-    </section>
-</main>
-
-<footer id="footer"></footer>
-
-<script src="assets/js/main.js"></script>
-<script src="assets/js/events.js" defer></script>
-<script src="assets/js/animations.js" defer></script>
-<script src="assets/js/scroll.js" defer></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact — Louis Tanchou</title>
+    <meta
+      name="description"
+      content="Échanger avec Louis Tanchou autour d’un projet, d’une opportunité ou d’une question technique."
+    />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#f2efe8" />
+    <meta property="og:title" content="Contact — Louis Tanchou" />
+    <meta
+      property="og:description"
+      content="Échanger avec Louis Tanchou autour d’un projet, d’une opportunité ou d’une question technique."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tanchou.fr/contact.html" />
+    <link
+      rel="icon"
+      href="/assets/images/atelier-mark.svg"
+      type="image/svg+xml"
+    />
+    <script type="module" src="/assets/js/app.mjs"></script>
+  </head>
+  <body>
+    <!-- partial:nav -->
+    <main id="main">
+      <section class="page-heading">
+        <p class="eyebrow">04 / Contact</p>
+        <h1>Les bonnes idées<br /><em>commencent à deux.</em></h1>
+        <p class="page-intro">
+          Un projet, une opportunité ou simplement l’envie de discuter
+          technique. Je serai ravi d’échanger.
+        </p>
+      </section>
+      <section class="contact-options">
+        <a
+          href="https://www.linkedin.com/in/louis-tanchou/"
+          target="_blank"
+          rel="noopener noreferrer"
+          ><span class="row-index">01</span>
+          <div>
+            <h2>Échangeons sur LinkedIn</h2>
+            <p>Parcours, opportunités et conversations.</p>
+          </div>
+          <span class="contact-arrow">↗</span></a
+        ><a
+          href="https://github.com/Tanchouteur"
+          target="_blank"
+          rel="noopener noreferrer"
+          ><span class="row-index">02</span>
+          <div>
+            <h2>Retrouvons-nous sur GitHub</h2>
+            <p>Le code, les expérimentations et les projets.</p>
+          </div>
+          <span class="contact-arrow">↗</span></a
+        ><a
+          href="/assets/CV/CV_Louis_Tanchou.pdf"
+          target="_blank"
+          rel="noopener"
+          ><span class="row-index">03</span>
+          <div>
+            <h2>Mon parcours en un document</h2>
+            <p>Consulter mon CV au format PDF.</p>
+          </div>
+          <span class="contact-arrow">↗</span></a
+        >
+      </section>
+      <div class="contact-signature" aria-hidden="true">
+        À bientôt<span>·</span>
+      </div>
+    </main>
+    <!-- partial:footer -->
+  </body>
 </html>

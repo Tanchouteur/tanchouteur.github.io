@@ -1,65 +1,151 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
-    <title>Louis Tanchou - Me</title>
-
-    <meta name="robots" content="skills,follow">
-    <meta name="description" content="The portfolio of Louis Tanchou, Software Developper.">
-    <meta property="og:description" content="The portfolio of Louis Tanchou, Software Developper.">
-    <meta property="og:url" content="https://tanchou.fr">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Louis Tanchou">
-
-    <link rel="stylesheet" href="./assets/css/main.css">
-</head>
-<body>
-<header id="navbar-container">
-</header>
-
-<canvas id="colorCanvas"></canvas>
-<main>
-    <section id="title" style="line-height: 0; height: 40dvh;">
-        <h1>
-            <span class="title-container">
-                <span class="title">Me</span>
-            </span>
-        </h1>
-        <p>Let's talk about me</p>
-    </section>
-
-    <section id="subject" class="me" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-        <div class="intro-box" style="margin-top: 0; display: flex; justify-content: center; align-items: center;">
-            <img src="assets/images/pp.jpeg" class="pp" alt="Louis Tanchou">
-            <div>
-                <h2>I'm  actually Second-year student in a engineer in Computer Science</h2>
-            </div>
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>À propos — Louis Tanchou</title>
+    <meta
+      name="description"
+      content="Louis Tanchou, étudiant-ingénieur à l’ENSIIE et apprenti chez EDF R&D. Une curiosité qui relie logiciel et matériel."
+    />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#f2efe8" />
+    <meta property="og:title" content="À propos — Louis Tanchou" />
+    <meta
+      property="og:description"
+      content="Louis Tanchou, étudiant-ingénieur à l’ENSIIE et apprenti chez EDF R&D. Une curiosité qui relie logiciel et matériel."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tanchou.fr/me.html" />
+    <link
+      rel="icon"
+      href="/assets/images/atelier-mark.svg"
+      type="image/svg+xml"
+    />
+    <script type="module" src="/assets/js/app.mjs"></script>
+  </head>
+  <body>
+    <!-- partial:nav -->
+    <main id="main">
+      <section class="page-heading">
+        <p class="eyebrow">02 / À propos</p>
+        <h1>La curiosité<br /><em>comme point de départ.</em></h1>
+        <p class="page-intro">
+          J’aime ouvrir la boîte, comprendre les mécanismes et imaginer ce qu’on
+          pourrait en faire autrement.
+        </p>
+      </section>
+      <section class="about-layout">
+        <div class="about-portrait">
+          <img src="/assets/images/pp.jpeg" alt="Portrait de Louis Tanchou" />
+          <p class="eyebrow">Louis Tanchou / Logiciel & systèmes</p>
         </div>
-
-        <!--Cover letter ah importer en js depuis un fichier-->
-        <div class="letter">
+        <div class="prose">
+          <h2>Du fonctionnement<br />à la construction.</h2>
+          <p>
+            Ce qui m’attire dans l’informatique, c’est la possibilité de
+            parcourir toute la chaîne : une porte logique, un processeur, un
+            système, puis une application qui rend service.
+          </p>
+          <p>
+            Après un parcours en BUT Informatique à l’IUT de Fontainebleau, j’ai
+            rejoint l’ENSIIE. En alternance chez EDF R&D, je développe des
+            solutions logicielles et travaille sur des architectures FPGA dans
+            un contexte d’essais et d’instrumentation.
+          </p>
+          <p>
+            Mes projets personnels prolongent cette curiosité : interfaces
+            automobiles, automatisation, applications web et infrastructure
+            auto-hébergée. J’aime autant comprendre une contrainte technique que
+            rendre le résultat simple à utiliser.
+          </p>
+          <h3>En dehors du code</h3>
+          <p>
+            L’automobile, l’acoustique et la photographie de rue nourrissent
+            aussi mon goût pour les systèmes, la précision et la composition.
+          </p>
+          <a
+            class="button"
+            href="/assets/CV/CV_Louis_Tanchou.pdf"
+            target="_blank"
+            rel="noopener"
+            >Consulter mon CV ↗</a
+          >
         </div>
-
-    </section>
-
-
-</main>
-
-<footer id="footer"></footer>
-
-<script type="text/javascript">
-    let coverLetter = document.querySelector('.letter');
-    fetch('assets/html/cover-letter.html')
-        .then(response => response.text())
-        .then(data => {
-            coverLetter.innerHTML = data;
-        });
-</script>
-
-<script src="assets/js/main.js"></script>
-<script src="assets/js/events.js" defer></script>
-<script src="assets/js/animations.js" defer></script>
-<script src="assets/js/scroll.js" defer></script>
-</body>
+      </section>
+      <section class="career-timeline" aria-labelledby="career-title">
+        <header class="career-heading">
+          <div>
+            <p class="eyebrow">Le parcours / deux fils qui se rejoignent</p>
+            <h2 id="career-title">
+              Apprendre.<br /><em>Mettre en pratique.</em>
+            </h2>
+          </div>
+          <p>
+            Depuis septembre 2025, ma formation à l’ENSIIE et mon alternance
+            chez EDF R&D avancent ensemble.
+          </p>
+        </header>
+        <div class="career-axis" aria-hidden="true">
+          <span>2023</span><span>2025</span><span>2028 · diplôme visé</span>
+        </div>
+        <div class="career-tracks">
+          <p class="career-track-label track-study"><span></span>Formation</p>
+          <article class="career-event career-foundations">
+            <p class="career-date">
+              <time datetime="2023">2023</time> —
+              <time datetime="2025">2025</time>
+            </p>
+            <h3>BUT Informatique</h3>
+            <p class="career-place">UPEC · IUT de Fontainebleau</p>
+            <p>
+              Un parcours pour apprendre à concevoir, développer et valider des
+              applications.
+            </p>
+            <span class="career-status">Les fondations</span>
+          </article>
+          <article class="career-event career-engineering">
+            <p class="career-date">
+              <time datetime="2025">2025</time> —
+              <time datetime="2028">2028</time> <span>· prévisionnel</span>
+            </p>
+            <h3>Cycle ingénieur</h3>
+            <p class="career-place">ENSIIE</p>
+            <p>
+              Approfondir l’informatique, les systèmes et les architectures.
+            </p>
+            <span class="career-status">Formation en cours</span>
+          </article>
+          <p class="career-track-label track-work"><span></span>Expérience</p>
+          <div class="career-parallel" aria-hidden="true">
+            L’école et le terrain<br /><span>en parallèle ↗</span>
+          </div>
+          <article class="career-event career-apprenticeship">
+            <p class="career-date">
+              Depuis <time datetime="2025-09">septembre 2025</time>
+            </p>
+            <h3>Alternance · EDF R&D</h3>
+            <p class="career-place">Développement logiciel & FPGA</p>
+            <p>
+              Mettre les connaissances en pratique dans un contexte d’essais et
+              d’instrumentation.
+            </p>
+            <span class="career-status"
+              ><i aria-hidden="true"></i> En parallèle du cycle ingénieur</span
+            >
+          </article>
+        </div>
+      </section>
+      <section class="contact-band">
+        <div>
+          <p class="eyebrow">La suite commence par une conversation</p>
+          <h2>Et si on construisait<br /><em>quelque chose ?</em></h2>
+        </div>
+        <a class="round-link" href="/contact.html" aria-label="Me contacter"
+          >↗</a
+        >
+      </section>
+    </main>
+    <!-- partial:footer -->
+  </body>
 </html>

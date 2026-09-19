@@ -1,67 +1,124 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width">
-  <title>Louis Tanchou - Skills</title>
-
-  <meta name="robots" content="skills,follow">
-  <meta name="description" content="The portfolio of Louis Tanchou, Software Developper.">
-  <meta property="og:description" content="The portfolio of Louis Tanchou, Software Developper.">
-  <meta property="og:url" content="https://tanchou.fr">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Louis Tanchou">
-
-  <link rel="stylesheet" href="./assets/css/main.css">
-</head>
-<body>
-  <header id="navbar-container">
-  </header>
-
-  <canvas id="colorCanvas"></canvas>
-<main>
-    <section id="title" style="line-height: 0;">
-      <h1>
-        <span class="title-container">
-            <span class="title">Skills</span>
-        </span>
-      </h1>
-      <p>A collection of my Skills</p>
-    </section>
-
-    <section id="subject" class="skills">
-      <div class="skills-box">
-        <h2>Core Technologie</h2>
-        <div class="skills-grid">
-          <img src="assets/images/Skills/html_white.jpg" alt="html">
-          <img src="assets/images/Skills/css_white.png" alt="css">
-          <img src="assets/images/Skills/JavaScript_white.png" alt="js">
-          <img src="assets/images/Skills/php.jpg" alt="php">
-          <img src="assets/images/Skills/java.jpg" alt="java">
-          <img src="assets/images/Skills/C_white.png" alt="c">
-          <img src="assets/images/Skills/sql_white.jpg" alt="sql">
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Expertise — Louis Tanchou</title>
+    <meta
+      name="description"
+      content="Logiciel, systèmes embarqués, interfaces et infrastructure : les domaines explorés par Louis Tanchou."
+    />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#f2efe8" />
+    <meta property="og:title" content="Expertise — Louis Tanchou" />
+    <meta
+      property="og:description"
+      content="Logiciel, systèmes embarqués, interfaces et infrastructure : les domaines explorés par Louis Tanchou."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tanchou.fr/skills.html" />
+    <link
+      rel="icon"
+      href="/assets/images/atelier-mark.svg"
+      type="image/svg+xml"
+    />
+    <script type="module" src="/assets/js/app.mjs"></script>
+  </head>
+  <body>
+    <!-- partial:nav -->
+    <main id="main">
+      <section class="page-heading">
+        <p class="eyebrow">01 / Expertise</p>
+        <h1>Relier les couches.<br /><em>Maîtriser l’ensemble.</em></h1>
+        <p class="page-intro">
+          Une approche du développement qui va des fondamentaux de la machine
+          jusqu’au produit que l’on utilise.
+        </p>
+      </section>
+      <section class="expertise-list">
+        <article>
+          <span class="row-index">01</span>
+          <div>
+            <h2>Logiciel & données</h2>
+            <p>
+              Concevoir des API, modéliser les données et traduire des
+              contraintes réelles en comportements fiables.
+            </p>
+            <ul class="tag-list">
+              <li>Python / FastAPI</li>
+              <li>Java</li>
+              <li>C</li>
+              <li>SQL / PostgreSQL</li>
+              <li>Algorithmique</li>
+            </ul>
+          </div>
+          <span class="expertise-glyph" aria-hidden="true">{ }</span>
+        </article>
+        <article>
+          <span class="row-index">02</span>
+          <div>
+            <h2>Interfaces & produits</h2>
+            <p>
+              Donner une forme lisible aux systèmes : des interfaces web aux
+              tableaux de bord embarqués.
+            </p>
+            <ul class="tag-list">
+              <li>TypeScript</li>
+              <li>React / Next.js</li>
+              <li>Astro</li>
+              <li>HTML / CSS</li>
+              <li>PySide6 / QML</li>
+            </ul>
+          </div>
+          <span class="expertise-glyph" aria-hidden="true">▧</span>
+        </article>
+        <article>
+          <span class="row-index">03</span>
+          <div>
+            <h2>Embarqué & bas niveau</h2>
+            <p>
+              Comprendre les signaux, les architectures et les échanges entre le
+              logiciel et le matériel.
+            </p>
+            <ul class="tag-list">
+              <li>VHDL / FPGA</li>
+              <li>CAN / OBD</li>
+              <li>Raspberry Pi</li>
+              <li>Logisim</li>
+              <li>Arduino</li>
+            </ul>
+          </div>
+          <span class="expertise-glyph" aria-hidden="true">⌘</span>
+        </article>
+        <article>
+          <span class="row-index">04</span>
+          <div>
+            <h2>Infrastructure & déploiement</h2>
+            <p>
+              Héberger, automatiser et maintenir les applications au-delà de
+              leur première mise en ligne.
+            </p>
+            <ul class="tag-list">
+              <li>Docker</li>
+              <li>Linux / Proxmox</li>
+              <li>Coolify</li>
+              <li>Cloudflare</li>
+              <li>GitHub Actions</li>
+            </ul>
+          </div>
+          <span class="expertise-glyph" aria-hidden="true">▤</span>
+        </article>
+      </section>
+      <section class="contact-band">
+        <div>
+          <p class="eyebrow">La suite commence par une conversation</p>
+          <h2>Et si on construisait<br /><em>quelque chose ?</em></h2>
         </div>
-      </div>
-
-      <div class="skills-box">
-        <h2>Other Technologie & Tools</h2>
-        <div class="skills-grid">
-          <img src="assets/images/Tools/github.jpg" alt="GitHub">
-          <img src="assets/images/Tools/starUml.jpg" alt="StarUML">
-          <img src="assets/images/Tools/figma.jpg" alt="Figma">
-          <img src="assets/images/Tools/android-studio.jpg" alt="Android Studio">
-        </div>
-      </div>
-    </section>
-
-</main>
-
-  <footer id="footer">
-
-  </footer>
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/events.js" defer></script>
-  <script src="assets/js/animations.js" defer></script>
-  <script src="assets/js/scroll.js" defer></script>
-</body>
+        <a class="round-link" href="/contact.html" aria-label="Me contacter"
+          >↗</a
+        >
+      </section>
+    </main>
+    <!-- partial:footer -->
+  </body>
 </html>
