@@ -6,7 +6,7 @@ import {
 
 export function media(project, { eager = false } = {}) {
   const { type, accent, background } = project.presentation;
-  return `<div class="project-media media-${type}" style="--project-accent:${accent}${background ? `;--project-background:${background}` : ""}">
+  return `<div class="project-media media-${type}${project.cover ? " has-cover" : ""}" style="--project-accent:${accent}${background ? `;--project-background:${background}` : ""}">
     <div class="media-fallback" aria-hidden="true"><span>${e(project.title.slice(0, 2).toUpperCase())}</span><i></i><small>${e(project.tags[0] || "Exploration")}</small></div>
     ${project.cover ? `<img class="media-ambient" src="${e(project.cover)}" alt="" aria-hidden="true" loading="${eager ? "eager" : "lazy"}" decoding="async"><img class="media-cover" src="${e(project.cover)}" alt="Aperçu de ${e(project.title)}" loading="${eager ? "eager" : "lazy"}" decoding="async">` : ""}
     ${type === "interface" ? '<div class="window-chrome" aria-hidden="true"><i></i><i></i><i></i></div>' : ""}

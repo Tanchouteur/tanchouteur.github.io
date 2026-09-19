@@ -132,6 +132,7 @@ test("une couverture conserve son ratio sur un fond flouté dérivé", async () 
   await initProjects(doc, fetchData([sample]));
   const media = doc.querySelector(".project-media");
   const normalizedCover = normalizeProjects([sample])[0].cover;
+  assert.ok(media.classList.contains("has-cover"));
   assert.equal(media.querySelectorAll("img").length, 2);
   assert.equal(
     media.querySelector(".media-ambient").getAttribute("src"),
