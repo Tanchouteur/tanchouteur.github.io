@@ -20,7 +20,7 @@ test("réponse continue dès le début du geste, sans zone morte", () => {
   assert.equal(journeyState(10, 1000, 5).camera, 0.04);
   assert.ok(journeyState(470, 1000, 5).camera > 1.8);
 });
-test("panneau ancré au tunnel, premier aperçu lointain et ouverture latérale", () => {
+test("panneaux à profondeur fixe dans le tunnel, aperçu et sortie latérale", () => {
   assert.equal(panelPose(1, 1).interactive, true);
   assert.equal(panelPose(0, 1).interactive, false);
   assert.equal(panelPose(2, 1).interactive, false);
@@ -29,7 +29,14 @@ test("panneau ancré au tunnel, premier aperçu lointain et ouverture latérale"
   assert.equal(panelPose(1, 1).entry, 1);
   assert.equal(panelPose(1, 0).z, -(54 - -12) * 26);
   assert.equal(panelPose(1, 1).z, 0);
-  assert.equal(panelPose(1, 1.5).z, 0);
+  assert.equal(panelPose(1, 1.5).z, 260);
+  assert.equal(panelPose(2, 1.5).z, -260);
+  assert.ok(panelPose(1, 1.25).z > panelPose(1, 1).z);
+  assert.ok(panelPose(0, 0.2).z > panelPose(0, 0).z);
+  assert.equal(panelPose(0, 0.3).opacity, 1);
+  assert.equal(panelPose(0, 0.3).exit, 0);
+  assert.equal(panelPose(0, 0.95).opacity, 0);
+  assert.ok(panelPose(0, 0.7).exit > 0.5);
   assert.ok(panelPose(1, 1.5).exit > 0.5);
   assert.equal(panelPose(1, 2).opacity, 0);
 });

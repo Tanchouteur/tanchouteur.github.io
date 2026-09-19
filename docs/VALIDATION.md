@@ -83,3 +83,13 @@ des six pages réussis. Dans l'aperçu local, le premier média est perceptible
 derrière le portail et les stations suivantes restent lisibles après la sortie
 latérale. Aucun nouveau test Docker ni déploiement Coolify n'a été exécuté pour
 ces ajustements.
+
+## Correction du parallaxe
+
+Après le premier retour visuel, la profondeur des projets n'est plus figée à
+zéro après leur station : elle continue de varier avec la position de la caméra,
+comme celle du décor Three.js. Le parvis utilise un déplacement de profondeur
+plus doux pour que le portrait et le texte restent lisibles au début du scroll.
+L'ouverture latérale intervient ensuite. Le test unitaire couvre les positions
+avant et après un arrêt ; `npm run check` (27 tests et build) passe. L'accueil et
+la transition vers le deuxième projet ont été inspectés dans l'aperçu local.
