@@ -146,5 +146,17 @@ test("une couverture conserve son ratio sur un fond flouté dérivé", async () 
     media.querySelector(".media-ambient").getAttribute("aria-hidden"),
     "true",
   );
+  const cover = media.querySelector(".media-cover");
+  Object.defineProperties(cover, {
+    naturalWidth: { value: 1600 },
+    naturalHeight: { value: 900 },
+  });
+  cover.dispatchEvent(new dom.window.Event("load"));
+  assert.equal(media.style.getPropertyValue("--media-ratio"), "1600 / 900");
+  assert.equal(
+    media.style.getPropertyValue("--media-ratio-value"),
+    String(1600 / 900),
+  );
+  assert.ok(media.classList.contains("media-ratio-ready"));
   dom.window.close();
 });

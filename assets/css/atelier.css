@@ -2857,7 +2857,9 @@ dialog form {
   display: none;
 }
 .journey-project-object .project-media {
-  aspect-ratio: 1.55;
+  aspect-ratio: var(--media-ratio, 1.55);
+  width: min(100%, calc(62vh * var(--media-ratio-value, 1.55)));
+  margin-inline: auto;
   padding: 0;
   border: 0;
   border-radius: 4px;
@@ -2904,5 +2906,8 @@ dialog form {
   z-index: 3;
 }
 .journey-project-object .media-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   filter: drop-shadow(0 12px 24px #0008);
 }

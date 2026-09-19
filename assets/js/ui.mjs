@@ -35,4 +35,20 @@ export function bindImageFallbacks(root = document) {
     image.addEventListener("error", fail, { once: true });
     if (image.complete && image.naturalWidth === 0) fail();
   });
+  root.querySelectorAll(".project-media .media-cover").forEach((image) => {
+    const fitFrame = () => {
+      if (!image.naturalWidth || !image.naturalHeight) return;
+      image.parentElement.style.setProperty(
+        "--media-ratio",
+        `${image.naturalWidth} / ${image.naturalHeight}`,
+      );
+      image.parentElement.style.setProperty(
+        "--media-ratio-value",
+        String(image.naturalWidth / image.naturalHeight),
+      );
+      image.parentElement.classList.add("media-ratio-ready");
+    };
+    image.addEventListener("load", fitFrame, { once: true });
+    if (image.complete && image.naturalWidth > 0) fitFrame();
+  });
 }
