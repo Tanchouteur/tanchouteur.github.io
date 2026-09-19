@@ -1,52 +1,5 @@
 [
   {
-    "id": "MenuD-laSemaine",
-    "title": "Menu de la Semaine",
-    "description": "Application web mobile-first de planification familiale des 14 repas hebdomadaires, génération déterministe sous contraintes et liste de courses synchronisée.",
-    "longDescription": "# Menu de la Semaine — Planification Familiale & Courses Intelligentes\n\n## Contexte & Genèse du Projet\n\nLa planification des repas au sein d'un foyer représente une charge mentale hebdomadaire récurrente : comment concevoir **14 repas équilibrés et variés** (7 déjeuners et 7 dîners) sans tourner en rond, tout en tenant compte du temps disponible selon les jours, des saisons, des goûts et du nombre de convives ?\n\nNé initialement d'un prototype personnel pour répondre aux besoins concrets de ma famille, le projet a fait l'objet d'une **refonte intégrale (V2)** en architecture web moderne, typée et autonome. L'application combine un **moteur de décision déterministe sous contraintes**, une **liste de courses dynamique** et une **synchronisation agenda en temps réel**.\n\n---\n\n## Fonctionnalités Principales\n\n- **Génération Déterministe Complète** : Création instantanée et cohérente des 14 repas de la semaine en un clic.\n- **Remplacement Intelligent Expliqué** : Pour chaque repas, proposition de trois alternatives pertinentes avec explication contextuelle (ex. *« Rapide pour un midi en semaine »*, *« Légumes de saison »*).\n- **Verrouillage & Régénération Partielle** : Possibilité de figer certains repas choisis et de recalculer uniquement les autres créneaux.\n- **Gestion des Imprévus** : Prise en charge des repas à l'extérieur, des restes, des repas libres et ajustement du nombre de personnes par repas.\n- **Liste de Courses Automatique & Persistante** : Calcul dynamique des quantités selon le nombre réel de convives, regroupement automatique par rayons de supermarché et persistance des articles cochés.\n- **Historique & Réutilisation** : Conservation d'un instantané immuable des semaines confirmées et réapplication en un clic d'anciennes semaines favorites.\n- **Abonnement iCalendar (`webcal://`)** : Synchronisation automatique des menus confirmés avec Apple Calendrier (iPhone / Mac), Google Agenda et Outlook.\n- **Catalogue Complet** : Gestion des ingrédients, recettes multi-composants, rayons de magasin et incompatibilités alimentaires.\n\n---\n\n## Moteur Algorithmique & Résolution sous Contraintes\n\nLe cœur métier repose sur un moteur pur (sans dépendance externe, validé par une suite complète de tests unitaires) capable d'arbitrer parmi de multiples règles croisées :\n\n1. **Saisonnalité** : Filtrage strict selon les saisons calendaires actives pour privilégier les produits de saison.\n2. **Moments de Consommation** : Différenciation des exigences entre déjeuners et dîners, jours de semaine (recettes rapides) et week-ends (plats mijotés ou familiaux).\n3. **Anti-Répétition & Rotation Glissante** : Pénalisation progressive des aliments consommés récemment pour garantir une variété maximale d'une semaine sur l'autre.\n4. **Matrice d'Incompatibilités** : Exclusion formelle des associations d'ingrédients proscrites par le foyer.\n5. **Génération Déterministe** : Capacité à reproduire fidèlement un état de planification à partir d'une graine (*seed*).\n\n---\n\n## Architecture Technique\n\n- **Frontend** : Interface *Mobile-First* développée en Next.js App Router (React Server & Client Components) avec Vanilla CSS moderne, optimisée pour un usage fluide à une main en cuisine ou dans les rayons.\n- **Backend & API** : Next.js Route Handlers avec typage strict TypeScript de bout en bout.\n- **Persistance & Données** : PostgreSQL 17 géré via Prisma ORM avec transactions atomiques pour la validation des semaines et l'état des courses.\n- **Sécurité** : Authentification familiale simplifiée par cookie sécurisé signé par token HMAC-SHA256 (`FAMILY_PASSWORD`).\n- **Conteneurisation & Déploiement** : Image Docker multi-stage optimisée (`node:alpine`), exécution automatique des migrations Prisma au démarrage et déploiement continu sur serveur Coolify avec sauvegardes automatiques de la base de données.\n\n---\n\n## Rétrospective & Enseignements\n\nCette version V2 concrétise les retours d'usage de la première version : suppression des blocages stochastiques grâce à un moteur déterministe prédictible, persistance intégrale de la liste de courses évitant les doubles saisies, et intégration directe dans les agendas partagés du foyer.",
-    "category": "Personal",
-    "status": "Completed",
-    "date": "2026-08",
-    "tags": [
-      "Next.js",
-      "TypeScript",
-      "React",
-      "PostgreSQL",
-      "Prisma",
-      "Docker",
-      "Coolify",
-      "iCalendar",
-      "Vitest"
-    ],
-    "featured": true,
-    "presentation": {
-      "type": "neutral",
-      "accent": "#9a4c32",
-      "background": "",
-      "captions": {}
-    },
-    "order": 20,
-    "cover": "assets/images/Projects/MenuD-laSemaine/cover.jpg",
-    "images": [
-      "assets/images/Projects/MenuD-laSemaine/historique.jpg",
-      "assets/images/Projects/MenuD-laSemaine/ingredient.jpg",
-      "assets/images/Projects/MenuD-laSemaine/liste-de-courses.jpg",
-      "assets/images/Projects/MenuD-laSemaine/recette.jpg",
-      "assets/images/Projects/MenuD-laSemaine/regle.jpg"
-    ],
-    "links": {
-      "github": "https://github.com/Tanchouteur/MenuD-laSemaine"
-    },
-    "repoData": {
-      "stars": 1,
-      "forks": 0,
-      "language": "TypeScript",
-      "isPrivate": false,
-      "updatedAt": "2026-08-16T13:47:54Z",
-      "createdAt": "2024-10-23T22:52:25Z"
-    }
-  },
-  {
     "id": "CliOS",
     "title": "CliOS",
     "description": "Tableau de bord automobile modulaire en Python/PySide6 pour Renault Clio 3, avec télémétrie CAN/OBD, statistiques de trajet et services embarqués en temps réel.",
@@ -91,57 +44,6 @@
       "isPrivate": false,
       "updatedAt": "2026-09-19T07:18:21Z",
       "createdAt": "2026-04-02T09:13:30Z"
-    }
-  },
-  {
-    "id": "BUT2-SAE-DorfRomantik",
-    "title": "Dorfjavatik",
-    "description": "Jeu de stratégie et de puzzle hexagonal inspiré de Dorfromantik, conçu en Java Vanilla (Swing/Graphics2D) avec génération procédurale, algorithmique de graphes et classement MariaDB.",
-    "longDescription": "# Dorfjavatik — Jeu de Stratégie Hexagonale en Java Vanilla\n\n**Dorfjavatik** est une réimplémentation complète et optimisée du célèbre jeu de réflexion et de construction de paysages *Dorfromantik*. Développé de zéro en **Java pur (Swing & Graphics2D)** sans aucun moteur de jeu tiers, ce projet met en œuvre des algorithmes avancés de théorie des graphes, un moteur de rendu vectoriel avec relief pseudo-3D, une gestion audio multi-pistes et une synchronisation en ligne avec une base de données MariaDB.\n\n---\n\n## 📌 Contexte & Enjeux du Projet\n\nRéalisé dans le cadre de la **SAE 3.1 en BUT 2 Informatique** (IUT de Fontainebleau) par une équipe de 3 développeurs sur une période de 3 semaines, ce projet avait pour objectif d'explorer les fondamentaux du développement de jeux vidéo et de l'architecture logicielle sous de fortes contraintes techniques :\n- **100% Java Vanilla** : interdiction d'utiliser des moteurs ou frameworks de haut niveau (tels que Unity, Godot, LibGDX ou JavaFX). Seul le JDK standard et le driver JDBC MariaDB étaient autorisés.\n- **Rendu graphique bas niveau** : conception de tous les éléments visuels, polygones hexagonaux, transformations matricielles et shaders de relief directement avec l'API `java.awt.Graphics2D`.\n- **Architecture logicielle pérenne** : application stricte du patron de conception **Modèle-Vue-Contrôleur (MVC)** pour découpler proprement la logique algorithmique, la restitution graphique et la gestion des événements.\n\n---\n\n## 🎮 Concept & Mécaniques de Jeu\n\nLe joueur est invité à assembler progressivement un paysage harmonieux à partir d'une pioche de tuiles hexagonales :\n\n- **5 biomes distincts** : Mer (Eau), Montagne, Champ, Pré / Plaine et Forêt. Chaque tuile est découpée en 6 secteurs triangulaires pouvant combiner jusqu'à deux biomes différents.\n- **Placement & Adjacence** : Chaque nouvelle tuile tirée doit être connectée à au moins un côté d'une tuile déjà posée sur le plateau.\n- **Système de Poches & Score Quadratique** :\n  - Lorsque deux tuiles adjacentes partagent le même biome sur leur arête commune, elles fusionnent au sein d'une même **poche** de terrain.\n  - Le score d'une poche est calculé selon une formule quadratique : **Score = N²**, où N représente le nombre total de tuiles constituant la poche.\n  - Cette mécanique encourage une planification stratégique à long terme pour bâtir d'immenses territoires continus.\n- **Génération Déterministe par Graine (Seed)** :\n  - Chaque série de 50 tuiles est générée de manière pseudo-aléatoire mais déterministe (`TuileRandomFactory`) à partir d'une graine entière.\n  - Cela garantit une équité parfaite pour comparer les scores entre joueurs sur une même série.\n\n---\n\n## 🧩 Défis Algorithmiques & Géométrie Hexagonale\n\n### 1. Détection des Composantes Connexes en Temps Réel\nÀ chaque pose de tuile, le moteur identifie ses 6 voisins immédiats (coordonnées axiales décalées) et résout la connectivité des biomes :\n- Fusion dynamique des poches distinctes devenues adjacentes.\n- Mise à jour instantanée du différentiel de points (retrait des anciens scores isolés et ajout du nouveau score combiné).\n\n### 2. Algorithme d'Annulation (Undo) et Recalcul Topologique\nPermettre l'annulation d'un coup représentait un défi algorithmique majeur : retirer une tuile peut scinder une poche unique en deux ou plusieurs sous-poches disjointes.\n- Implémentation d'un **parcours en profondeur (DFS - Depth-First Search)** pour explorer le sous-graphe restant et ré-isoler automatiquement les nouvelles composantes connexes.\n- Réajustement exact du score global sans incohérence d'état.\n\n---\n\n## 🏗️ Architecture & Fonctionnalités Techniques\n\n### 🎨 Moteur de Rendu Vectoriel & Caméra 2D\n- **Rendu Hexagonal Précis** : Calcul trigonométrique des sommets de polygones et découpage en facettes triangulaires avec couleurs thématiques.\n- **Relief Pseudo-3D** : Perspective isométrique sur les tranches des tuiles du plateau et sur la pile de prévisualisation (effet de profondeur et d'épaisseur).\n- **Anticrénelage Dynamique (Anti-Aliasing)** : Option activable à la volée via `RenderingHints.KEY_ANTIALIASING`.\n- **Navigation Fluide (Drag & Drop)** : Déplacement libre de la caméra sur le plateau infini par glisser-déposer à la souris et zoom à la molette.\n- **Bouton de Recentrage Intelligent** : Détecte l'éloignement du centre et propose un recentrage automatique de la vue.\n\n### 🎬 Moteur d'Animation (`Animator`)\n- Système d'interpolation temporelle pour animer les transitions d'écrans (glissement latéral de l'écran de fin de partie, animations de déplacement de tuiles).\n\n### 🎵 Moteur Audio Mixé (`MediaPlayerManager`)\n- Gestion multi-pistes avec boucle de musique d'ambiance et enchaînement automatique de morceaux (`ClipStopListener`).\n- Déclenchement d'effets sonores acoustiques contextuels lors de la pose d'une tuile, modulés selon le biome dominant.\n- Contrôle individuel des niveaux de volume (musique et effets) via l'interface des paramètres.\n\n### 🗄️ Backend MariaDB & Persistance\n- **Connexion Asynchrone (`BddConnectionTask`)** : Initialisation en tâche de fond dans un thread dédié pour ne pas bloquer l'Event Dispatch Thread (EDT) de Swing au démarrage.\n- **Gestion Hors-Ligne (Offline Fallback)** : Si la base est inaccessible, le jeu bascule automatiquement en mode hors-ligne sans interruption de l'expérience de jeu.\n- **Triggers SQL Automatisés** : Déclencheur `UpdateBestScoreAfterInsert` mettant à jour instantanément le meilleur score global de chaque série lors de l'enregistrement d'une partie.\n- **Historique & Recherche de Parties (`VuePartieJouer`)** : Tableau interactif permettant de parcourir les parties jouées, d'effectuer des recherches par joueur et d'analyser les classements.\n\n---\n\n## 🛠️ Stack Technique\n\n- **Langage** : Java (JDK 18+)\n- **Interface Graphique** : Java Swing, AWT, `Graphics2D`, `JLayeredPane`\n- **Base de Données** : MariaDB, JDBC Driver (`mariadb-java-client`)\n- **Modélisation & Assets** : Blender Cycles (Rendu 3D du menu principal), Inkscape / SVG (Diagrammes d'architecture et d'activités)\n- **Automatisation & Build** : Makefile / Script de compilation autonome\n\n---\n\n## 🚀 Lancement du Projet\n\n```bash\n# Compilation du projet et copie des ressources\nmake jar\n\n# Lancement du jeu\nmake run\n```\n\n---\n\n## 👥 Équipe & Rôles\n\nProjet développé avec passion par :\n- **Louis Tanchou**\n- **Alexis Hadjem-Brancher**\n- **Thomas Renault**\n",
-    "category": "Academic",
-    "status": "Completed",
-    "date": "2024-10",
-    "tags": [
-      "Java",
-      "Java Swing",
-      "Graphics2D",
-      "Game Development",
-      "Algorithmique",
-      "Théorie des Graphes",
-      "MariaDB",
-      "Architecture MVC"
-    ],
-    "featured": true,
-    "presentation": {
-      "type": "neutral",
-      "accent": "#9a4c32",
-      "background": "",
-      "captions": {}
-    },
-    "order": 21,
-    "cover": "assets/images/Projects/BUT2-SAE-DorfRomantik/cover.jpg",
-    "images": [
-      "assets/images/Projects/BUT2-SAE-DorfRomantik/activite_poches.svg",
-      "assets/images/Projects/BUT2-SAE-DorfRomantik/architecture_bdd.svg",
-      "assets/images/Projects/BUT2-SAE-DorfRomantik/architecture_endgame.svg",
-      "assets/images/Projects/BUT2-SAE-DorfRomantik/architecture_jeux.svg",
-      "assets/images/Projects/BUT2-SAE-DorfRomantik/architecture_menu.svg",
-      "assets/images/Projects/BUT2-SAE-DorfRomantik/logo.png",
-      "assets/images/Projects/BUT2-SAE-DorfRomantik/paysages.svg",
-      "assets/images/Projects/BUT2-SAE-DorfRomantik/terrains.svg",
-      "assets/images/Projects/BUT2-SAE-DorfRomantik/titre.png",
-      "assets/images/Projects/BUT2-SAE-DorfRomantik/tuto.png"
-    ],
-    "links": {
-      "github": "https://github.com/Tanchouteur/BUT2-SAE-DorfRomantik"
-    },
-    "repoData": {
-      "stars": 0,
-      "forks": 0,
-      "language": "Java",
-      "isPrivate": false,
-      "updatedAt": "2026-08-15T12:57:51Z",
-      "createdAt": "2024-10-29T20:12:56Z"
     }
   },
   {
@@ -197,6 +99,56 @@
     }
   },
   {
+    "id": "SpotifySort",
+    "title": "SpotiSort v4",
+    "description": "Triez automatiquement vos playlists Spotify avec Google Gemini AI. Chaque utilisateur configure ses propres clés et règles de classification.",
+    "longDescription": "# SpotiSort v4\n\n## À propos du projet\n\nSpotiSort est une application web complète qui automatise le tri des morceaux dans vos playlists Spotify. Utilisez la puissance de Google Gemini pour classifier intelligemment chaque morceau selon vos règles personnalisées.\n\n## Fonctionnalités principales\n\n### Tri Intelligent\n- Classification automatique des morceaux en utilisant Google Gemini AI\n- Traitement par lots avec délai configurable entre les requêtes\n- Schéma JSON strict pour éviter les réponses invalides\n- Support des modèles Gemini configurables par utilisateur\n\n### Sécurité & Confidentialité\n- Chiffrement end-to-end des tokens Spotify et clés API Google\n- Les secrets ne sont jamais exposés au navigateur\n- Sessions HttpOnly sans token en localStorage\n- Vérification OAuth `state` contre les attaques CSRF\n- Filtrage strict des données par utilisateur\n\n### Gestion des Comptes\n- Authentification OAuth avec Spotify\n- Chaque utilisateur configure sa propre clé Google AI Studio\n- Espace isolé par compte avec règles, modèles et secrets propres\n- Support multi-utilisateur sans liste blanche\n\n### Automatisation\n- Daemon en arrière-plan avec intervalle configurable par utilisateur\n- Tris verrouillés pour éviter les concurrences\n- Reprise idempotente des opérations\n- Historique détaillé des succès, tris ignorés et erreurs\n\n### Robustesse\n- Traitement par lots de 100 à la fois via l'API Spotify\n- Détection automatique des doublons\n- Gestion complète des erreurs Spotify\n- Logs détaillés de chaque opération\n\n## Stack Technique\n\n- **Backend** : FastAPI + Uvicorn\n- **Base de données** : SQLAlchemy ORM + PostgreSQL\n- **Frontend** : HTML/CSS/JavaScript vanilla\n- **API Externes** : Spotify API, Google Gemini API\n- **Sécurité** : Cryptography (Fernet), Python-dotenv\n- **Déploiement** : Docker + Docker Compose + Nginx\n\n### Prêt pour la production\n- Support HTTPS/HTTPS Redirect URI\n- Configuration d'environnement par profil (local/production)\n- Intégration Docker complète\n- Reverse proxy Nginx intégré\n\n## Architecture Sécurisée\n\n```\nUtilisateur → Navigateur (HTTPS) → FastAPI\n              ↓\n         Session Cookie (HttpOnly)\n         ↓\nBD Chiffrée (Tokens + API Keys)\n         ↓\n    API Externes (Spotify, Gemini)\n```\n\n Le tout complètement isolé par utilisateur.",
+    "category": "Personal",
+    "status": "In Progress",
+    "date": "2026-08",
+    "tags": [
+      "Python",
+      "FastAPI",
+      "Spotify API",
+      "Google Gemini",
+      "SQLAlchemy",
+      "PostgreSQL",
+      "Docker",
+      "Web"
+    ],
+    "featured": true,
+    "presentation": {
+      "type": "interface",
+      "accent": "#55D985",
+      "background": "#07150E",
+      "captions": {
+        "cover.png": "Écran principal de SpotiSort",
+        "Home1.png": "Accueil et connexion Spotify",
+        "Trie1.png": "Configuration du tri automatique"
+      }
+    },
+    "order": 3,
+    "cover": "assets/images/Projects/SpotifySort/cover.png",
+    "images": [
+      "assets/images/Projects/SpotifySort/Home1.png",
+      "assets/images/Projects/SpotifySort/Home2.png",
+      "assets/images/Projects/SpotifySort/Trie1.png",
+      "assets/images/Projects/SpotifySort/Trie2.png"
+    ],
+    "links": {
+      "github": "https://github.com/Tanchouteur/SpotifySort",
+      "SpotiSort": "https://spotibot.tanchou.fr"
+    },
+    "repoData": {
+      "stars": 1,
+      "forks": 0,
+      "language": "Python",
+      "isPrivate": true,
+      "updatedAt": "2026-09-19T07:45:22Z",
+      "createdAt": "2026-08-12T09:31:06Z"
+    }
+  },
+  {
     "id": "RigFarm",
     "title": "RigFarm",
     "description": "Plateforme centralisée de supervision et de pilotage d'une ferme GPU : télémétrie temps réel, orchestration Vast.ai, contrôle énergétique et tarification automatisée.",
@@ -244,58 +196,8 @@
       "forks": 0,
       "language": "Python",
       "isPrivate": true,
-      "updatedAt": "2026-09-19T06:56:57Z",
+      "updatedAt": "2026-09-19T07:45:09Z",
       "createdAt": "2026-08-25T11:24:33Z"
-    }
-  },
-  {
-    "id": "SpotifySort",
-    "title": "SpotiSort v4",
-    "description": "Triez automatiquement vos playlists Spotify avec Google Gemini AI. Chaque utilisateur configure ses propres clés et règles de classification.",
-    "longDescription": "# SpotiSort v4\n\n## À propos du projet\n\nSpotiSort est une application web complète qui automatise le tri des morceaux dans vos playlists Spotify. Utilisez la puissance de Google Gemini pour classifier intelligemment chaque morceau selon vos règles personnalisées.\n\n## Fonctionnalités principales\n\n### Tri Intelligent\n- Classification automatique des morceaux en utilisant Google Gemini AI\n- Traitement par lots avec délai configurable entre les requêtes\n- Schéma JSON strict pour éviter les réponses invalides\n- Support des modèles Gemini configurables par utilisateur\n\n### Sécurité & Confidentialité\n- Chiffrement end-to-end des tokens Spotify et clés API Google\n- Les secrets ne sont jamais exposés au navigateur\n- Sessions HttpOnly sans token en localStorage\n- Vérification OAuth `state` contre les attaques CSRF\n- Filtrage strict des données par utilisateur\n\n### Gestion des Comptes\n- Authentification OAuth avec Spotify\n- Chaque utilisateur configure sa propre clé Google AI Studio\n- Espace isolé par compte avec règles, modèles et secrets propres\n- Support multi-utilisateur sans liste blanche\n\n### Automatisation\n- Daemon en arrière-plan avec intervalle configurable par utilisateur\n- Tris verrouillés pour éviter les concurrences\n- Reprise idempotente des opérations\n- Historique détaillé des succès, tris ignorés et erreurs\n\n### Robustesse\n- Traitement par lots de 100 à la fois via l'API Spotify\n- Détection automatique des doublons\n- Gestion complète des erreurs Spotify\n- Logs détaillés de chaque opération\n\n## Stack Technique\n\n- **Backend** : FastAPI + Uvicorn\n- **Base de données** : SQLAlchemy ORM + PostgreSQL\n- **Frontend** : HTML/CSS/JavaScript vanilla\n- **API Externes** : Spotify API, Google Gemini API\n- **Sécurité** : Cryptography (Fernet), Python-dotenv\n- **Déploiement** : Docker + Docker Compose + Nginx\n\n### Prêt pour la production\n- Support HTTPS/HTTPS Redirect URI\n- Configuration d'environnement par profil (local/production)\n- Intégration Docker complète\n- Reverse proxy Nginx intégré\n\n## Architecture Sécurisée\n\n```\nUtilisateur → Navigateur (HTTPS) → FastAPI\n              ↓\n         Session Cookie (HttpOnly)\n         ↓\nBD Chiffrée (Tokens + API Keys)\n         ↓\n    API Externes (Spotify, Gemini)\n```\n\n Le tout complètement isolé par utilisateur.",
-    "category": "Personal",
-    "status": "In Progress",
-    "date": "2026-08",
-    "tags": [
-      "Python",
-      "FastAPI",
-      "Spotify API",
-      "Google Gemini",
-      "SQLAlchemy",
-      "PostgreSQL",
-      "Docker",
-      "Web"
-    ],
-    "featured": true,
-    "presentation": {
-      "type": "interface",
-      "accent": "#55D985",
-      "background": "#07150E",
-      "captions": {
-        "cover.png": "Écran principal de SpotiSort",
-        "Home1.png": "Accueil et connexion Spotify",
-        "Trie1.png": "Configuration du tri automatique"
-      }
-    },
-    "order": 3,
-    "cover": "assets/images/Projects/SpotifySort/cover.png",
-    "images": [
-      "assets/images/Projects/SpotifySort/Home1.png",
-      "assets/images/Projects/SpotifySort/Home2.png",
-      "assets/images/Projects/SpotifySort/Trie1.png",
-      "assets/images/Projects/SpotifySort/Trie2.png"
-    ],
-    "links": {
-      "github": "https://github.com/Tanchouteur/SpotifySort",
-      "SpotiSort": "https://spotibot.tanchou.fr"
-    },
-    "repoData": {
-      "stars": 1,
-      "forks": 0,
-      "language": "Python",
-      "isPrivate": true,
-      "updatedAt": "2026-09-19T06:57:16Z",
-      "createdAt": "2026-08-12T09:31:06Z"
     }
   },
   {
@@ -338,6 +240,104 @@
       "isPrivate": false,
       "updatedAt": "2026-08-15T13:07:18Z",
       "createdAt": "2025-01-27T06:21:59Z"
+    }
+  },
+  {
+    "id": "MenuD-laSemaine",
+    "title": "Menu de la Semaine",
+    "description": "Application web mobile-first de planification familiale des 14 repas hebdomadaires, génération déterministe sous contraintes et liste de courses synchronisée.",
+    "longDescription": "# Menu de la Semaine — Planification Familiale & Courses Intelligentes\n\n## Contexte & Genèse du Projet\n\nLa planification des repas au sein d'un foyer représente une charge mentale hebdomadaire récurrente : comment concevoir **14 repas équilibrés et variés** (7 déjeuners et 7 dîners) sans tourner en rond, tout en tenant compte du temps disponible selon les jours, des saisons, des goûts et du nombre de convives ?\n\nNé initialement d'un prototype personnel pour répondre aux besoins concrets de ma famille, le projet a fait l'objet d'une **refonte intégrale (V2)** en architecture web moderne, typée et autonome. L'application combine un **moteur de décision déterministe sous contraintes**, une **liste de courses dynamique** et une **synchronisation agenda en temps réel**.\n\n---\n\n## Fonctionnalités Principales\n\n- **Génération Déterministe Complète** : Création instantanée et cohérente des 14 repas de la semaine en un clic.\n- **Remplacement Intelligent Expliqué** : Pour chaque repas, proposition de trois alternatives pertinentes avec explication contextuelle (ex. *« Rapide pour un midi en semaine »*, *« Légumes de saison »*).\n- **Verrouillage & Régénération Partielle** : Possibilité de figer certains repas choisis et de recalculer uniquement les autres créneaux.\n- **Gestion des Imprévus** : Prise en charge des repas à l'extérieur, des restes, des repas libres et ajustement du nombre de personnes par repas.\n- **Liste de Courses Automatique & Persistante** : Calcul dynamique des quantités selon le nombre réel de convives, regroupement automatique par rayons de supermarché et persistance des articles cochés.\n- **Historique & Réutilisation** : Conservation d'un instantané immuable des semaines confirmées et réapplication en un clic d'anciennes semaines favorites.\n- **Abonnement iCalendar (`webcal://`)** : Synchronisation automatique des menus confirmés avec Apple Calendrier (iPhone / Mac), Google Agenda et Outlook.\n- **Catalogue Complet** : Gestion des ingrédients, recettes multi-composants, rayons de magasin et incompatibilités alimentaires.\n\n---\n\n## Moteur Algorithmique & Résolution sous Contraintes\n\nLe cœur métier repose sur un moteur pur (sans dépendance externe, validé par une suite complète de tests unitaires) capable d'arbitrer parmi de multiples règles croisées :\n\n1. **Saisonnalité** : Filtrage strict selon les saisons calendaires actives pour privilégier les produits de saison.\n2. **Moments de Consommation** : Différenciation des exigences entre déjeuners et dîners, jours de semaine (recettes rapides) et week-ends (plats mijotés ou familiaux).\n3. **Anti-Répétition & Rotation Glissante** : Pénalisation progressive des aliments consommés récemment pour garantir une variété maximale d'une semaine sur l'autre.\n4. **Matrice d'Incompatibilités** : Exclusion formelle des associations d'ingrédients proscrites par le foyer.\n5. **Génération Déterministe** : Capacité à reproduire fidèlement un état de planification à partir d'une graine (*seed*).\n\n---\n\n## Architecture Technique\n\n- **Frontend** : Interface *Mobile-First* développée en Next.js App Router (React Server & Client Components) avec Vanilla CSS moderne, optimisée pour un usage fluide à une main en cuisine ou dans les rayons.\n- **Backend & API** : Next.js Route Handlers avec typage strict TypeScript de bout en bout.\n- **Persistance & Données** : PostgreSQL 17 géré via Prisma ORM avec transactions atomiques pour la validation des semaines et l'état des courses.\n- **Sécurité** : Authentification familiale simplifiée par cookie sécurisé signé par token HMAC-SHA256 (`FAMILY_PASSWORD`).\n- **Conteneurisation & Déploiement** : Image Docker multi-stage optimisée (`node:alpine`), exécution automatique des migrations Prisma au démarrage et déploiement continu sur serveur Coolify avec sauvegardes automatiques de la base de données.\n\n---\n\n## Rétrospective & Enseignements\n\nCette version V2 concrétise les retours d'usage de la première version : suppression des blocages stochastiques grâce à un moteur déterministe prédictible, persistance intégrale de la liste de courses évitant les doubles saisies, et intégration directe dans les agendas partagés du foyer.",
+    "category": "Personal",
+    "status": "Completed",
+    "date": "2026-08",
+    "tags": [
+      "Next.js",
+      "TypeScript",
+      "React",
+      "PostgreSQL",
+      "Prisma",
+      "Docker",
+      "Coolify",
+      "iCalendar",
+      "Vitest"
+    ],
+    "featured": true,
+    "presentation": {
+      "type": "neutral",
+      "accent": "#9a4c32",
+      "background": "",
+      "captions": {}
+    },
+    "order": 20,
+    "cover": "assets/images/Projects/MenuD-laSemaine/cover.jpg",
+    "images": [
+      "assets/images/Projects/MenuD-laSemaine/historique.jpg",
+      "assets/images/Projects/MenuD-laSemaine/ingredient.jpg",
+      "assets/images/Projects/MenuD-laSemaine/liste-de-courses.jpg",
+      "assets/images/Projects/MenuD-laSemaine/recette.jpg",
+      "assets/images/Projects/MenuD-laSemaine/regle.jpg"
+    ],
+    "links": {
+      "github": "https://github.com/Tanchouteur/MenuD-laSemaine"
+    },
+    "repoData": {
+      "stars": 1,
+      "forks": 0,
+      "language": "TypeScript",
+      "isPrivate": false,
+      "updatedAt": "2026-09-19T07:45:09Z",
+      "createdAt": "2024-10-23T22:52:25Z"
+    }
+  },
+  {
+    "id": "BUT2-SAE-DorfRomantik",
+    "title": "Dorfjavatik",
+    "description": "Jeu de stratégie et de puzzle hexagonal inspiré de Dorfromantik, conçu en Java Vanilla (Swing/Graphics2D) avec génération procédurale, algorithmique de graphes et classement MariaDB.",
+    "longDescription": "# Dorfjavatik — Jeu de Stratégie Hexagonale en Java Vanilla\n\n**Dorfjavatik** est une réimplémentation complète et optimisée du célèbre jeu de réflexion et de construction de paysages *Dorfromantik*. Développé de zéro en **Java pur (Swing & Graphics2D)** sans aucun moteur de jeu tiers, ce projet met en œuvre des algorithmes avancés de théorie des graphes, un moteur de rendu vectoriel avec relief pseudo-3D, une gestion audio multi-pistes et une synchronisation en ligne avec une base de données MariaDB.\n\n---\n\n## 📌 Contexte & Enjeux du Projet\n\nRéalisé dans le cadre de la **SAE 3.1 en BUT 2 Informatique** (IUT de Fontainebleau) par une équipe de 3 développeurs sur une période de 3 semaines, ce projet avait pour objectif d'explorer les fondamentaux du développement de jeux vidéo et de l'architecture logicielle sous de fortes contraintes techniques :\n- **100% Java Vanilla** : interdiction d'utiliser des moteurs ou frameworks de haut niveau (tels que Unity, Godot, LibGDX ou JavaFX). Seul le JDK standard et le driver JDBC MariaDB étaient autorisés.\n- **Rendu graphique bas niveau** : conception de tous les éléments visuels, polygones hexagonaux, transformations matricielles et shaders de relief directement avec l'API `java.awt.Graphics2D`.\n- **Architecture logicielle pérenne** : application stricte du patron de conception **Modèle-Vue-Contrôleur (MVC)** pour découpler proprement la logique algorithmique, la restitution graphique et la gestion des événements.\n\n---\n\n## 🎮 Concept & Mécaniques de Jeu\n\nLe joueur est invité à assembler progressivement un paysage harmonieux à partir d'une pioche de tuiles hexagonales :\n\n- **5 biomes distincts** : Mer (Eau), Montagne, Champ, Pré / Plaine et Forêt. Chaque tuile est découpée en 6 secteurs triangulaires pouvant combiner jusqu'à deux biomes différents.\n- **Placement & Adjacence** : Chaque nouvelle tuile tirée doit être connectée à au moins un côté d'une tuile déjà posée sur le plateau.\n- **Système de Poches & Score Quadratique** :\n  - Lorsque deux tuiles adjacentes partagent le même biome sur leur arête commune, elles fusionnent au sein d'une même **poche** de terrain.\n  - Le score d'une poche est calculé selon une formule quadratique : **Score = N²**, où N représente le nombre total de tuiles constituant la poche.\n  - Cette mécanique encourage une planification stratégique à long terme pour bâtir d'immenses territoires continus.\n- **Génération Déterministe par Graine (Seed)** :\n  - Chaque série de 50 tuiles est générée de manière pseudo-aléatoire mais déterministe (`TuileRandomFactory`) à partir d'une graine entière.\n  - Cela garantit une équité parfaite pour comparer les scores entre joueurs sur une même série.\n\n---\n\n## 🧩 Défis Algorithmiques & Géométrie Hexagonale\n\n### 1. Détection des Composantes Connexes en Temps Réel\nÀ chaque pose de tuile, le moteur identifie ses 6 voisins immédiats (coordonnées axiales décalées) et résout la connectivité des biomes :\n- Fusion dynamique des poches distinctes devenues adjacentes.\n- Mise à jour instantanée du différentiel de points (retrait des anciens scores isolés et ajout du nouveau score combiné).\n\n### 2. Algorithme d'Annulation (Undo) et Recalcul Topologique\nPermettre l'annulation d'un coup représentait un défi algorithmique majeur : retirer une tuile peut scinder une poche unique en deux ou plusieurs sous-poches disjointes.\n- Implémentation d'un **parcours en profondeur (DFS - Depth-First Search)** pour explorer le sous-graphe restant et ré-isoler automatiquement les nouvelles composantes connexes.\n- Réajustement exact du score global sans incohérence d'état.\n\n---\n\n## 🏗️ Architecture & Fonctionnalités Techniques\n\n### 🎨 Moteur de Rendu Vectoriel & Caméra 2D\n- **Rendu Hexagonal Précis** : Calcul trigonométrique des sommets de polygones et découpage en facettes triangulaires avec couleurs thématiques.\n- **Relief Pseudo-3D** : Perspective isométrique sur les tranches des tuiles du plateau et sur la pile de prévisualisation (effet de profondeur et d'épaisseur).\n- **Anticrénelage Dynamique (Anti-Aliasing)** : Option activable à la volée via `RenderingHints.KEY_ANTIALIASING`.\n- **Navigation Fluide (Drag & Drop)** : Déplacement libre de la caméra sur le plateau infini par glisser-déposer à la souris et zoom à la molette.\n- **Bouton de Recentrage Intelligent** : Détecte l'éloignement du centre et propose un recentrage automatique de la vue.\n\n### 🎬 Moteur d'Animation (`Animator`)\n- Système d'interpolation temporelle pour animer les transitions d'écrans (glissement latéral de l'écran de fin de partie, animations de déplacement de tuiles).\n\n### 🎵 Moteur Audio Mixé (`MediaPlayerManager`)\n- Gestion multi-pistes avec boucle de musique d'ambiance et enchaînement automatique de morceaux (`ClipStopListener`).\n- Déclenchement d'effets sonores acoustiques contextuels lors de la pose d'une tuile, modulés selon le biome dominant.\n- Contrôle individuel des niveaux de volume (musique et effets) via l'interface des paramètres.\n\n### 🗄️ Backend MariaDB & Persistance\n- **Connexion Asynchrone (`BddConnectionTask`)** : Initialisation en tâche de fond dans un thread dédié pour ne pas bloquer l'Event Dispatch Thread (EDT) de Swing au démarrage.\n- **Gestion Hors-Ligne (Offline Fallback)** : Si la base est inaccessible, le jeu bascule automatiquement en mode hors-ligne sans interruption de l'expérience de jeu.\n- **Triggers SQL Automatisés** : Déclencheur `UpdateBestScoreAfterInsert` mettant à jour instantanément le meilleur score global de chaque série lors de l'enregistrement d'une partie.\n- **Historique & Recherche de Parties (`VuePartieJouer`)** : Tableau interactif permettant de parcourir les parties jouées, d'effectuer des recherches par joueur et d'analyser les classements.\n\n---\n\n## 🛠️ Stack Technique\n\n- **Langage** : Java (JDK 18+)\n- **Interface Graphique** : Java Swing, AWT, `Graphics2D`, `JLayeredPane`\n- **Base de Données** : MariaDB, JDBC Driver (`mariadb-java-client`)\n- **Modélisation & Assets** : Blender Cycles (Rendu 3D du menu principal), Inkscape / SVG (Diagrammes d'architecture et d'activités)\n- **Automatisation & Build** : Makefile / Script de compilation autonome\n\n---\n\n## 🚀 Lancement du Projet\n\n```bash\n# Compilation du projet et copie des ressources\nmake jar\n\n# Lancement du jeu\nmake run\n```\n\n---\n\n## 👥 Équipe & Rôles\n\nProjet développé avec passion par :\n- **Louis Tanchou**\n- **Alexis Hadjem-Brancher**\n- **Thomas Renault**\n",
+    "category": "Academic",
+    "status": "Completed",
+    "date": "2024-10",
+    "tags": [
+      "Java",
+      "Java Swing",
+      "Graphics2D",
+      "Game Development",
+      "Algorithmique",
+      "Théorie des Graphes",
+      "MariaDB",
+      "Architecture MVC"
+    ],
+    "featured": true,
+    "presentation": {
+      "type": "neutral",
+      "accent": "#9a4c32",
+      "background": "",
+      "captions": {}
+    },
+    "order": 21,
+    "cover": "assets/images/Projects/BUT2-SAE-DorfRomantik/cover.jpg",
+    "images": [
+      "assets/images/Projects/BUT2-SAE-DorfRomantik/activite_poches.svg",
+      "assets/images/Projects/BUT2-SAE-DorfRomantik/architecture_bdd.svg",
+      "assets/images/Projects/BUT2-SAE-DorfRomantik/architecture_endgame.svg",
+      "assets/images/Projects/BUT2-SAE-DorfRomantik/architecture_jeux.svg",
+      "assets/images/Projects/BUT2-SAE-DorfRomantik/architecture_menu.svg",
+      "assets/images/Projects/BUT2-SAE-DorfRomantik/logo.png",
+      "assets/images/Projects/BUT2-SAE-DorfRomantik/paysages.svg",
+      "assets/images/Projects/BUT2-SAE-DorfRomantik/terrains.svg",
+      "assets/images/Projects/BUT2-SAE-DorfRomantik/titre.png",
+      "assets/images/Projects/BUT2-SAE-DorfRomantik/tuto.png"
+    ],
+    "links": {
+      "github": "https://github.com/Tanchouteur/BUT2-SAE-DorfRomantik"
+    },
+    "repoData": {
+      "stars": 0,
+      "forks": 0,
+      "language": "Java",
+      "isPrivate": false,
+      "updatedAt": "2026-09-19T07:45:09Z",
+      "createdAt": "2024-10-29T20:12:56Z"
     }
   }
 ]
