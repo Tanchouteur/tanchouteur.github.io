@@ -93,3 +93,12 @@ plus doux pour que le portrait et le texte restent lisibles au début du scroll.
 L'ouverture latérale intervient ensuite. Le test unitaire couvre les positions
 avant et après un arrêt ; `npm run check` (27 tests et build) passe. L'accueil et
 la transition vers le deuxième projet ont été inspectés dans l'aperçu local.
+
+## Correction du build GitHub Actions
+
+La première exécution sur `main` a révélé une différence de casse masquée par
+macOS : les médias étaient suivis par Git sous `assets/images/projects/`, alors
+que le catalogue et le build utilisent `assets/images/Projects/`. Les fichiers
+ont été réindexés sous le chemin canonique. Le contrôle du build vérifie aussi
+leur présence exacte dans l'index Git ; le workflow place les nouveaux médias
+dans cet index avant la validation, puis les publie avec le JSON.

@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
-import { readFileSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve, join } from "node:path";
 import { gzipSync } from "node:zlib";
+import { execFileSync } from "node:child_process";
 import { JSDOM } from "jsdom";
 import { normalizeProjects } from "../lib/portfolio.mjs";
 
@@ -43,9 +44,21 @@ for (const name of [
 const projects = normalizeProjects(
   JSON.parse(readFileSync("dist/assets/data/projects.json", "utf8")),
 );
+// A case-insensitive Mac can find a local file whose Git path has the wrong case.
+// Verify the index as well, so a fresh Linux checkout gets every referenced media.
+const tracked = existsSync(".git")
+  ? new Set(
+      execFileSync("git", ["ls-files", "-z"], { encoding: "utf8" }).split("\0"),
+    )
+  : null;
 for (const project of projects)
-  for (const path of [project.cover, ...project.images].filter(Boolean))
+  for (const path of [project.cover, ...project.images].filter(Boolean)) {
     exactPath(path);
+    assert.ok(
+      !tracked || tracked.has(path.replace(/^\//, "")),
+      `Ressource non suivie avec la bonne casse dans Git : ${path}`,
+    );
+  }
 let ordinary = 0,
   scene = 0;
 for (const name of readdirSync("dist/assets").filter((name) =>

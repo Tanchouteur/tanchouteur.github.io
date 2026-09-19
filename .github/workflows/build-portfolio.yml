@@ -36,6 +36,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PORTFOLIO_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
         run: node scripts/build-projects.js
 
+      - name: Stage generated catalogue and media
+        run: git add -A -- assets/data/projects.json assets/images/Projects/
+
       - name: Install and validate generated portfolio
         run: npm ci && npm run check
 
@@ -44,7 +47,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add assets/data/projects.json assets/images/Projects/
           if git diff --cached --quiet; then
             echo "changed=false" >> $GITHUB_OUTPUT
             echo "No changes in projects data."
