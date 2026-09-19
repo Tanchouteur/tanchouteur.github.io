@@ -25,7 +25,7 @@
       "background": "",
       "captions": {}
     },
-    "order": 1,
+    "order": 20,
     "cover": "assets/images/Projects/MenuD-laSemaine/cover.jpg",
     "images": [
       "assets/images/Projects/MenuD-laSemaine/historique.jpg",
@@ -118,7 +118,7 @@
       "background": "",
       "captions": {}
     },
-    "order": 1,
+    "order": 21,
     "cover": "assets/images/Projects/BUT2-SAE-DorfRomantik/cover.jpg",
     "images": [
       "assets/images/Projects/BUT2-SAE-DorfRomantik/activite_poches.svg",
@@ -227,7 +227,7 @@
         "vue-electricite.jpg": "Suivi de la consommation électrique"
       }
     },
-    "order": 3,
+    "order": 4,
     "cover": "assets/images/Projects/RigFarm/cover.jpg",
     "images": [
       "assets/images/Projects/RigFarm/vue-electricite.jpg",
@@ -277,7 +277,7 @@
         "Trie1.png": "Configuration du tri automatique"
       }
     },
-    "order": 4,
+    "order": 3,
     "cover": "assets/images/Projects/SpotifySort/cover.png",
     "images": [
       "assets/images/Projects/SpotifySort/Home1.png",

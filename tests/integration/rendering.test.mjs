@@ -123,5 +123,27 @@ test("image de couverture cassée : repli typographique", async () => {
   image.dispatchEvent(new dom.window.Event("error"));
   assert.equal(image.hidden, true);
   assert.ok(image.parentElement.querySelector(".media-fallback"));
+  assert.equal(image.parentElement.querySelectorAll("img[hidden]").length, 2);
+  dom.window.close();
+});
+test("une couverture conserve son ratio sur un fond flouté dérivé", async () => {
+  const dom = domFor("index");
+  const doc = dom.window.document;
+  await initProjects(doc, fetchData([sample]));
+  const media = doc.querySelector(".project-media");
+  const normalizedCover = normalizeProjects([sample])[0].cover;
+  assert.equal(media.querySelectorAll("img").length, 2);
+  assert.equal(
+    media.querySelector(".media-ambient").getAttribute("src"),
+    normalizedCover,
+  );
+  assert.equal(
+    media.querySelector(".media-cover").getAttribute("src"),
+    normalizedCover,
+  );
+  assert.equal(
+    media.querySelector(".media-ambient").getAttribute("aria-hidden"),
+    "true",
+  );
   dom.window.close();
 });

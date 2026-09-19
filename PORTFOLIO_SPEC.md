@@ -73,7 +73,7 @@ Les anciens fichiers restent compatibles. Sans `presentation`, le portfolio util
 
 - `type` : `neutral` (image entière, défaut), `interface` (cadre de fenêtre), `photo` (recadrage bord à bord), `diagram` (image entière sur fond clair).
 - `accent` : couleur hexadécimale à six chiffres (`#RRGGBB`). Elle teinte les bords et lueurs du projet ; elle ne définit jamais la couleur des textes. Invalide → cuivre par défaut.
-- `background` : couleur hexadécimale à six chiffres (`#RRGGBB`) derrière la couverture et son repli typographique. Absente ou invalide → fond actuel de chaque type de média. Elle ne recolore ni le tunnel entier ni les textes.
+- `background` : couleur hexadécimale à six chiffres (`#RRGGBB`) derrière la couverture et son repli typographique. Absente ou invalide → fond actuel de chaque type de média. Elle ne recolore ni le tunnel entier ni les textes. Si le ratio de la couverture diffère de celui du cadre, l’image reste entière et une seconde occurrence floutée remplit le fond : aucun aplat blanc n’est ajouté.
 - `captions` : légendes indexées par nom de fichier exact ; facultatives.
 - Aucune branche de rendu ne dépend du nom du projet. Les catégories personnalisées sont également filtrables.
 - Les liens vers le code des dépôts privés sont masqués côté affichage. Le contenu placé dans `.portfolio/` est destiné à devenir public.
