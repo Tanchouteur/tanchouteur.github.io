@@ -64,3 +64,22 @@ La date de 2028 est marquée prévisionnelle.
 Le Dockerfile a été reconstruit avec succès après ces derniers ajustements.
 La suite `npm run check` a été relancée après ceux-ci avec succès.
 La frise a été inspectée à 390 px, sans débordement visible.
+
+## Ajustements du 19 septembre 2026
+
+Le premier média est visible à faible intensité depuis le parvis ; son texte
+n'apparaît qu'à l'approche. Les panneaux suivent la distance de la caméra au
+lieu d'avancer à vitesse fixe. En quittant une station, le texte et le cadre
+s'écartent latéralement ; aucun panneau ne traverse le point de vue. L'ancre
+« Entrer dans l'atelier » compense le décalage global de navigation de 100 px.
+
+Le contrat `.portfolio/` accepte désormais `presentation.background` en plus
+de `presentation.accent` ; les deux couleurs sont validées avant d'atteindre le
+CSS. Sans nouveau champ, l'ancien fond est conservé. Le contrat détaillé et le
+guide de déploiement parallèle avec bascule du port 8085 ont été mis à jour.
+
+`npm run check` : 15 tests unitaires, 12 tests d'intégration, build et contrôle
+des six pages réussis. Dans l'aperçu local, le premier média est perceptible
+derrière le portail et les stations suivantes restent lisibles après la sortie
+latérale. Aucun nouveau test Docker ni déploiement Coolify n'a été exécuté pour
+ces ajustements.

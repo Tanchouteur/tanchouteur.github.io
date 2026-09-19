@@ -5,8 +5,8 @@ import {
 } from "../../lib/portfolio.mjs";
 
 export function media(project, { eager = false } = {}) {
-  const { type, accent } = project.presentation;
-  return `<div class="project-media media-${type}" style="--project-accent:${accent}">
+  const { type, accent, background } = project.presentation;
+  return `<div class="project-media media-${type}" style="--project-accent:${accent}${background ? `;--project-background:${background}` : ""}">
     <div class="media-fallback" aria-hidden="true"><span>${e(project.title.slice(0, 2).toUpperCase())}</span><i></i><small>${e(project.tags[0] || "Exploration")}</small></div>
     ${project.cover ? `<img src="${e(project.cover)}" alt="Aperçu de ${e(project.title)}" loading="${eager ? "eager" : "lazy"}" decoding="async">` : ""}
     ${type === "interface" ? '<div class="window-chrome" aria-hidden="true"><i></i><i></i><i></i></div>' : ""}

@@ -34,7 +34,12 @@ test("présentation facultative validée sans injecter de CSS", () => {
       accent: "#112233",
       captions: { "a.png": "Vue", "b.png": 7 },
     }),
-    { type: "interface", accent: "#112233", captions: { "a.png": "Vue" } },
+    {
+      type: "interface",
+      accent: "#112233",
+      background: "",
+      captions: { "a.png": "Vue" },
+    },
   );
   assert.equal(
     normalizePresentation({ type: "invented", accent: "red;position:fixed" })
@@ -42,6 +47,14 @@ test("présentation facultative validée sans injecter de CSS", () => {
     COPPER,
   );
   assert.equal(normalizePresentation({ type: "invented" }).type, "neutral");
+  assert.equal(
+    normalizePresentation({ background: "#112233" }).background,
+    "#112233",
+  );
+  assert.equal(
+    normalizePresentation({ background: "red;position:fixed" }).background,
+    "",
+  );
 });
 test("ordre stable puis date, sélection limitée à trois, identifiants uniques", () => {
   const items = normalizeProjects([

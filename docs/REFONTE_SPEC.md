@@ -13,7 +13,7 @@ Archive de référence : branche GitHub `codex/archive-portfolio-2026-09-18`, co
 - Palette : ivoire `#f2efe8`, graphite `#252824`, cuivre sombre `#9a4c32` pour les textes/liens, cuivre clair `#c48663` pour les objets. Jamais de citron. Ces couleurs structurent les pages éditoriales et le catalogue. Le parcours immersif utilise un fond presque noir, du métal sombre et des lueurs ambre/cuivre.
 - En-tête commun : monogramme LT, nom, Projets, Expertise, À propos, Lab, Contact. Menu mobile avec bouton et `aria-expanded`. Lien d'évitement, focus visible, page active annoncée.
 - Accueil : une présentation personnelle entière disposée dans l’espace. Titre, actions, portrait encadré et étiquettes occupent des profondeurs distinctes, avec parallaxe au pointeur. Aucun écran de chargement obligatoire.
-- Parcours : défilement natif dans une section épinglée. La caméra part d’un parvis sombre dans la brume, rejoint rapidement le portail visible au loin, puis traverse les strates d’une architecture métallique. Les panneaux précédents grandissent et passent au-dessus ; les suivants émergent en profondeur. Pas de capture de roue.
+- Parcours : défilement natif dans une section épinglée. La caméra part d’un parvis sombre dans la brume, rejoint rapidement le portail visible au loin, puis traverse les strates d’une architecture métallique. Le premier projet se devine dès l'ouverture. Chaque panneau avance avec sa station dans le tunnel ; en quittant une station, le texte glisse à gauche et le cadre à droite pour dégager le passage. Pas de capture de roue.
 - Stations : jusqu’à trois projets `featured` suivant l’ordre du catalogue ; à défaut les trois premiers. Texte HTML accessible et médias en panneaux avec épaisseur. Aucun nom de projet codé en dur. Chaque station fournit un arrêt de lecture ; pendant le geste la caméra suit continûment le scroll sans zone morte.
 - Crans demandés par Louis : après 140 ms sans défilement (80 ms après `scrollend`), terminer le déplacement vers une station lisible dans le sens du geste. Tolérance de 8 % autour du cran pour éviter les sauts involontaires. Ne pas capturer la roue ; ne pas recaler le catalogue, les liens directs ou le mode mouvement réduit.
 - Sortie : invitation à entrer dans l’atelier, puis catalogue complet filtrable. Accès direct au catalogue toujours disponible dans le parcours. La sélection classique reste utilisée en mouvement réduit, sans duplication visuelle en mode immersif.
@@ -32,6 +32,7 @@ Nouveau champ facultatif :
   "presentation": {
     "type": "interface",
     "accent": "#9a4c32",
+    "background": "#17120e",
     "captions": { "screenshot1.png": "Planification de la semaine" }
   }
 }
@@ -39,6 +40,7 @@ Nouveau champ facultatif :
 
 - `type` : `neutral` (défaut), `interface` (cadre de fenêtre), `photo` (image bord à bord recadrée), `diagram` (surface claire avec marge et image entière). Inconnu → `neutral`. Aucun choix basé sur le nom d'un dépôt.
 - `accent` : couleur hexadécimale à six chiffres ; invalide/absente → cuivre. Usage décoratif seulement ; le contraste des textes ne dépend pas de cette valeur.
+- `background` : couleur hexadécimale à six chiffres ; invalide/absente → fond de média du type choisi. Appliquée à la surface derrière l'image et au repli, jamais au tunnel ou aux textes.
 - `captions` : dictionnaire nom de fichier → texte ; entrée invalide ignorée. Sans légende, texte alternatif descriptif générique fondé sur le titre et l'index.
 - Liens externes : seulement HTTP(S). Textes insérés comme texte ou échappés ; Markdown filtré par DOMPurify. Une image qui échoue est remplacée visuellement par une composition typographique. Les sections optionnelles vides ne laissent pas de trous.
 - Ordre : `order` croissant, puis date décroissante. Même contrat côté collecteur et affichage. Catégories inconnues conservées et filtrables. Données absentes/inexploitables : message lisible avec possibilité de réessayer.

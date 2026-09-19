@@ -38,6 +38,7 @@ export function mountJourney(projects, root = document, options = {}) {
   stops.forEach((project, index) => {
     const panel = root.createElement("article");
     panel.className = "journey-panel journey-project";
+    panel.style.setProperty("--project-accent", project.presentation.accent);
     panel.innerHTML = `<div class="journey-project-copy"><p class="eyebrow">STRATE ${String(index + 1).padStart(2, "0")} / ${e(categoryLabel(project.category))}</p><h2>${e(project.title)}</h2><p>${e(project.description)}</p><ul class="tag-list">${project.tags
       .slice(0, 4)
       .map((tag) => `<li>${e(tag)}</li>`)
@@ -62,6 +63,8 @@ export function mountJourney(projects, root = document, options = {}) {
   let lastActive = -1,
     lastCamera = 0,
     anchorTop = "";
+  const scrollPadding =
+    parseFloat(view.getComputedStyle(root.documentElement).scrollPaddingTop) || 0;
   const progressBar = shell.querySelector(".depth-track i");
   const depthLabel = shell.querySelector(".depth-label");
   let settleTimer,
@@ -148,7 +151,7 @@ export function mountJourney(projects, root = document, options = {}) {
       panels.length,
     );
     lastCamera = state.camera;
-    const nextAnchorTop = `${(shell.offsetHeight - view.innerHeight) / (panels.length - 1)}px`;
+    const nextAnchorTop = `${(shell.offsetHeight - view.innerHeight) / (panels.length - 1) + scrollPadding}px`;
     if (nextAnchorTop !== anchorTop)
       start.style.top = anchorTop = nextAnchorTop;
     shell.style.setProperty("--depth", state.darkness);
@@ -159,6 +162,8 @@ export function mountJourney(projects, root = document, options = {}) {
       const shown = pose.opacity > 0.001;
       if (!shown && panel.style.visibility === "hidden") return;
       panel.style.willChange = shown ? "transform, opacity" : "auto";
+      panel.style.setProperty("--panel-exit", pose.exit);
+      panel.style.setProperty("--panel-entry", pose.entry);
       panel.style.transform = `translate3d(0,${pose.y}px,${pose.z}px) rotateX(${pose.rotateX}deg)`;
       panel.style.opacity = pose.opacity;
       panel.style.visibility = pose.opacity > 0.001 ? "visible" : "hidden";
@@ -204,6 +209,12 @@ export function mountJourney(projects, root = document, options = {}) {
       panels.forEach((panel) => {
         panel.style.cssText = "";
         panel.inert = false;
+      });
+      stops.forEach((project, index) => {
+        panels[index + 1].style.setProperty(
+          "--project-accent",
+          project.presentation.accent,
+        );
       });
       scene?.dispose();
       scene = undefined;

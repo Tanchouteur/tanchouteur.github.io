@@ -2724,3 +2724,53 @@ dialog form {
     font-size: 11px;
   }
 }
+
+/* Project stations share the tunnel's depth. The station opens into two wings. */
+.is-immersive .journey-project-copy {
+  opacity: var(--panel-entry, 1);
+  translate: calc(var(--panel-exit, 0) * -115vw) 0;
+}
+.is-immersive .journey-project-object {
+  translate: calc(var(--panel-exit, 0) * 115vw) 0;
+}
+.is-immersive .journey-intro .hero-copy {
+  translate: calc(var(--panel-exit, 0) * -105vw) 0;
+}
+.is-immersive .journey-intro .hero-art {
+  translate: calc(var(--panel-exit, 0) * 105vw) 0;
+}
+.is-immersive .journey-project-object .project-media {
+  border-color: color-mix(in srgb, var(--project-accent, #9a4c32) 35%, #30251c);
+}
+.is-immersive .journey-project-object::before {
+  border-color: color-mix(
+    in srgb,
+    var(--project-accent, #9a4c32) 48%,
+    transparent
+  );
+  box-shadow: 0 0 30px
+    color-mix(in srgb, var(--project-accent, #9a4c32) 24%, transparent);
+}
+.project-media {
+  background: var(--project-background, var(--surface));
+}
+.project-media img {
+  background: var(--project-background, var(--surface));
+}
+.media-diagram,
+.media-diagram img {
+  background: var(--project-background, #faf9f4);
+}
+.media-interface {
+  background: var(
+    --project-background,
+    color-mix(in srgb, var(--project-accent) 12%, var(--paper))
+  );
+}
+.media-interface img {
+  background: #fff;
+}
+.journey-project-object .project-media,
+.journey-project-object .project-media img {
+  background: var(--project-background, #14100c);
+}

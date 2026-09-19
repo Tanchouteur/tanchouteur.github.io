@@ -37,6 +37,7 @@ test("collecte GitHub simulée → JSON publié → contrat front-end", async ()
             presentation: {
               type: "diagram",
               accent: "#123456",
+              background: "#101b19",
               captions: { "view.png": "Architecture" },
             },
           },
@@ -59,6 +60,7 @@ test("collecte GitHub simulée → JSON publié → contrat front-end", async ()
     assert.equal(result.length, 2);
     assert.equal(result[0].id, "new");
     assert.equal(result[0].presentation.type, "diagram");
+    assert.equal(result[0].presentation.background, "#101b19");
     assert.equal(result[1].presentation.type, "neutral");
     assert.deepEqual(result[1].tags, ["Java"]);
     assert.equal(result[1].cover, "/assets/images/Projects/old/cover.png");
