@@ -17,7 +17,7 @@ npm run preview
 
 - [Spécification de refonte et critères d’acceptation](docs/REFONTE_SPEC.md)
 - [Contrat `.portfolio/` pour ajouter un projet](PORTFOLIO_SPEC.md)
-- [Build, Coolify et retour arrière](docs/DEPLOYMENT.md)
+- [Déploiement en production Coolify et retour arrière](docs/DEPLOYMENT.md)
 - [Rapport de validation](docs/VALIDATION.md)
 
 Le catalogue est collecté chaque jour à minuit UTC. Le build public est dans `dist/` ; la 3D reste facultative. Les tests n’utilisent ni GitHub ni Coolify.

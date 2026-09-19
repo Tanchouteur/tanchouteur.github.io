@@ -1,12 +1,12 @@
 # Atelier — Spécification de refonte
 
-Statut : refonte implémentée, audit de livraison en cours. Direction consolidée après les retours de Louis du 18 septembre 2026.
+Statut : refonte implémentée et prête à être déployée depuis `main`. Direction consolidée après les retours de Louis des 18 et 19 septembre 2026.
 
 ## 1. Objectif et périmètre
 
 Un portfolio mémorable pour les recruteurs techniques, lisible rapidement, dont les projets restent alimentés automatiquement par les dossiers `.portfolio/` des dépôts GitHub. Refonte de l'accueil, du catalogue, des fiches, d'Expertise, À propos, Lab et Contact. Aucun backend supplémentaire. Aucun changement de domaine ni de tunnel.
 
-Archive de référence : branche GitHub `codex/archive-portfolio-2026-09-18`, commit `f544577a183e116a343be13a80ad9760c9ecb0a3`. Travail sur `codex/atelier-3d`. Les fichiers système `.DS_Store` ne font pas partie de l'archive.
+Archive de référence : branche GitHub `codex/archive-portfolio-2026-09-18`, commit `f544577a183e116a343be13a80ad9760c9ecb0a3`. Refonte développée sur `codex/atelier-3d`, puis fusionnée dans `main`. Les fichiers système `.DS_Store` ne font pas partie de l'archive.
 
 ## 2. Direction artistique et navigation
 
@@ -72,7 +72,7 @@ Nouveau champ facultatif :
 | Build                  | Six pages produites ; ressources référencées existantes avec casse exacte ; JSON/médias/CV copiés ; budgets JS                                                                                                                            |
 | Navigateur             | Accueil et 3D ; mobile ; liens directs ; filtres ; galerie clavier ; reduced motion ; repli WebGL ; pages secondaires ; erreurs console                                                                                                   |
 
-Livraison : spécification et contrat à jour, archive distante vérifiée, tests exécutés, build réussi, aperçu inspecté et limites restantes rapportées. Le nouveau projet au format historique doit apparaître sans modification du front-end. Aucune fusion sur `main` ni bascule de production nécessaire pour rendre la refonte reviewable.
+Livraison : spécification et contrat à jour, archive distante vérifiée, tests exécutés, build réussi, aperçu inspecté et limites restantes rapportées. Le nouveau projet au format historique doit apparaître sans modification du front-end. La fusion dans `main` publie le code source ; la bascule Coolify est une opération distincte décrite dans `DEPLOYMENT.md`.
 
 ## Évolution de l’ouverture — parvis dans la brume
 

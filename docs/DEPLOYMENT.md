@@ -1,120 +1,117 @@
-# Déployer le portfolio dans Coolify
+# Déployer le portfolio en production avec Coolify
 
-Ce guide décrit une **nouvelle ressource en parallèle de l'ancienne**, puis un
-basculement contrôlé. Il ne lance aucun déploiement. Les réglages exacts de la
-ressource actuelle doivent être relevés dans ton Coolify avant de commencer :
-Nexus documente `tanchou.fr` → Cloudflare Tunnel → VM Coolify, port hôte `8085`,
-mais ne donne ni son Build Pack ni sa branche actuelle. Garde cette page ouverte
-pendant la migration.
+Cette procédure remplace la ressource Coolify actuelle par une nouvelle application
+de production. Le code à déployer est sur `main`. Le trafic public suit le chemin
+`tanchou.fr` → Cloudflare Tunnel → VM Coolify, port hôte `8085`, tel que documenté
+dans Nexus. Les deux applications ne peuvent pas utiliser `8085` simultanément :
+prévois une courte interruption entre l'arrêt de l'ancienne et le démarrage de la
+nouvelle. Aucune ressource de préproduction ni aucun port temporaire n'est requis.
 
-## 1. Préparer et noter l'existant
+## 1. Relever la configuration actuelle
 
-Dans Coolify, ouvre la ressource **Portfolio actuelle** et note : projet et
-environnement, dépôt et branche, Build Pack, Dockerfile ou dossier publié, port
-exposé, _Ports Mappings_, domaine, déploiement automatique, Healthcheck et
-variables. Note son UUID et garde sa configuration : **Stop** conserve la ressource,
-mais retire son conteneur et ses données non persistantes. Le portfolio est statique,
-donc aucun volume applicatif n'est attendu ; vérifie tout de même le champ Storage.
-La [documentation Coolify des opérations](https://coolify.io/docs/applications/operations/overview)
-distingue Stop de la suppression de ressource.
+Dans Coolify, ouvre l'application qui sert `tanchou.fr` et note son nom, son UUID,
+son projet/environnement, son dépôt et sa branche, son Build Pack, ses ports,
+ses domaines, ses variables, son état de déploiement automatique et ses éventuels
+volumes. Ne la supprime pas : elle servira au retour arrière. Le portfolio est un
+site statique, mais vérifie quand même le stockage configuré avant de l'arrêter.
 
-Avant tout changement, ouvre `tanchou.fr`, la page d'un projet et le CV actuel.
-Garde la branche d'archive `codex/archive-portfolio-2026-09-18` comme point de
-retour, au commit `f544577a183e116a343be13a80ad9760c9ecb0a3`.
+Vérifie que `main` contient la refonte et que le workflow GitHub Actions
+**Validate portfolio** est passé. La branche
+`codex/archive-portfolio-2026-09-18` conserve l'ancienne version au commit
+`f544577a183e116a343be13a80ad9760c9ecb0a3`. Ouvre le site public, une fiche
+projet et le CV pour avoir un point de comparaison.
 
-## 2. Créer la nouvelle ressource de test
+Dans l'ancienne application, désactive le déploiement automatique depuis Git. Une
+mise à jour de `main` ne doit pas reconstruire l'ancienne ressource pendant la
+bascule. Si le secret GitHub Actions `COOLIFY_WEBHOOK_URL` pointe encore vers elle,
+évite de lancer **Build Portfolio Projects** avant d'avoir remplacé ce secret.
 
-Dans le même projet et environnement Coolify, choisis **+ New → Application →
-Git Repository** et sélectionne `Tanchouteur/tanchouteur.github.io`. Utilise
-la branche `codex/atelier-3d` pour ce test. Dans **Configuration → General** :
+## 2. Configurer la nouvelle application de production
 
-| Réglage                 | Valeur de test                                                                  |
-| ----------------------- | ------------------------------------------------------------------------------- |
-| Build Pack              | `Dockerfile` depuis le dépôt Git                                                |
-| Base Directory          | `/`                                                                             |
-| Dockerfile Location     | `/Dockerfile` (ou `Dockerfile` si ton interface attend un chemin relatif)       |
-| Ports Exposes           | `80` — port interne de Nginx                                                    |
-| Ports Mappings          | `<PORT_TEST_LIBRE>:80`, par exemple `8087:80` uniquement si 8087 est libre      |
-| Domains                 | Vide pendant le test par port hôte                                              |
-| Déploiement automatique | Désactivé pendant la validation                                                 |
-| Variables               | Aucune nécessaire pour le site statique ; ne recopie pas de secrets inutilement |
+Dans le projet et l'environnement Coolify destinés au portfolio, sélectionne
+**+ New → Application → Git Repository**, puis le dépôt
+`Tanchouteur/tanchouteur.github.io`, branche `main`. Configure :
 
-Coolify distingue [port exposé interne et mappage sur l'hôte](https://coolify.io/docs/applications/configuration/general).
-Le Dockerfile du dépôt construit les six pages avec `npm ci`, lance `npm run check`,
-puis sert `dist/` sur `0.0.0.0:80`. Ne choisis pas « Dockerfile without Git » :
-son contexte n'inclut pas les fichiers du dépôt nécessaires aux `COPY`.
-Voir la [procédure Dockerfile officielle](https://coolify.io/docs/applications/builds/dockerfile).
+| Réglage | Valeur de production |
+| --- | --- |
+| Build Pack | `Dockerfile` depuis Git |
+| Base Directory | `/` |
+| Dockerfile Location | `/Dockerfile` ou `Dockerfile` selon la forme demandée par l'interface |
+| Ports Exposes | `80` (Nginx dans le conteneur) |
+| Ports Mappings | `8085:80` (VM → conteneur) |
+| Domains | Vide si `tanchou.fr` continue d'arriver directement sur le port hôte `8085` par Cloudflare Tunnel |
+| Déploiement automatique Git | Désactivé : le workflow quotidien utilisera le webhook de cette nouvelle application |
+| Variables et stockage | Aucun secret ni volume nécessaire au conteneur statique |
 
-Vérifie que le port de test est libre sur la VM, **Deploy**, puis lis les logs de
-build et l'état de santé. Sur le LAN, ouvre `http://<IP_VM_COOLIFY>:<PORT_TEST_LIBRE>`.
-Teste l'accueil, les crans, le catalogue et les filtres, `me.html`, `skills.html`,
-`hardware.html`, `contact.html`, `project.html?id=SpotifySort`, le CV et plusieurs
-images. Contrôle aussi la vue mobile et le mode « réduire les animations ».
-L'ancienne ressource continue à servir `tanchou.fr` pendant cette étape.
+Le [Dockerfile depuis Git](https://coolify.io/docs/applications/builds/dockerfile)
+copie le dépôt, exécute `npm ci` et `npm run check`, puis sert `dist/` avec Nginx
+sur le port interne 80. **Ports Exposes** désigne ce port interne ; **Ports
+Mappings** publie `8085` sur la VM. Voir les
+[réglages généraux Coolify](https://coolify.io/docs/applications/configuration/general).
+Ne lance pas encore **Deploy** tant que l'ancienne application occupe `8085`.
 
-## 3. Préparer le basculement
+Dans Cloudflare Tunnel, confirme que l'origine de `tanchou.fr` pointe toujours
+vers `http://<IP_VM_COOLIFY>:8085`. Le domaine et la configuration du tunnel ne
+changent pas dans cette procédure.
 
-Contrôle la configuration du Cloudflare Tunnel : l'origine du hostname
-`tanchou.fr` doit toujours être `http://<IP_VM_COOLIFY>:8085`. Ne change pas
-le domaine, le DNS ou les ports de la box. Dans l'ancienne ressource Coolify,
-désactive les déploiements automatiques avant toute fusion sur `main` ; sinon
-elle pourrait reconstruire le nouveau code avec son ancien mode de service.
+## 3. Basculer le trafic public
 
-Le workflow GitHub quotidien `Build Portfolio Projects` est limité à `main` et
-committe le JSON/médias après validation. Son secret `COOLIFY_WEBHOOK_URL`, s'il
-est défini, doit pointer vers **la nouvelle ressource** à partir du basculement.
-Relève le webhook de la nouvelle ressource, puis mets ce secret à jour au moment
-du changement. Pendant le test sur `codex/atelier-3d`, le workflow quotidien
-ne déploie pas cette branche.
+1. Dans Coolify, clique **Stop** sur l'ancienne application. Attends son arrêt et
+   vérifie que le port hôte `8085` est libéré. Le site est momentanément indisponible.
+2. Dans la nouvelle application, clique **Deploy**. Suis les logs jusqu'à la fin
+   du build et vérifie que le conteneur est sain. Si le build échoue, applique
+   immédiatement la procédure de retour arrière ci-dessous.
+3. Ouvre `http://<IP_VM_COOLIFY>:8085/` depuis le réseau local, puis
+   `https://tanchou.fr/`. Vérifie l'accueil et le tunnel, le catalogue et ses
+   filtres, `me.html`, `skills.html`, `hardware.html`, `contact.html`, une fiche
+   `project.html?id=SpotifySort`, le CV, les images et
+   `/assets/data/projects.json`. Vérifie aussi le rendu mobile et le mode
+   « réduire les animations ».
+4. Dans Coolify, relève le **Deploy Webhook** de la nouvelle application. Dans
+   les secrets GitHub Actions du dépôt portfolio, remplace la valeur de
+   `COOLIFY_WEBHOOK_URL` par cette URL. Ne copie jamais cette URL dans Git ou dans
+   les logs. Garde le déploiement automatique Git désactivé pour éviter deux
+   déploiements lors du commit quotidien des données.
+5. Lance manuellement **Build Portfolio Projects** sur `main`. Si les données
+   changent, le workflow valide le build, pousse le nouveau JSON et les médias,
+   puis appelle le webhook Coolify. Vérifie le nouveau commit dans le déploiement
+   et le catalogue public. Si rien ne change, le workflow n'appelle pas le
+   webhook : c'est le comportement attendu. Les futures modifications de code
+   nécessitent un **Deploy** manuel dans Coolify, sauf si tu choisis plus tard
+   un déclenchement Git unique à la place du webhook.
 
-## 4. Transférer le port 8085
+Le [modèle de déploiement Coolify](https://coolify.io/docs/core/build-deployment-model)
+confirme qu'un mappage de port hôte impose un remplacement avec arrêt préalable,
+et non un remplacement progressif. La commande **Stop** conserve la ressource
+Coolify pour le retour arrière ; elle ne préserve pas les données non persistantes
+du conteneur. Voir les [opérations Coolify](https://coolify.io/docs/applications/operations/overview).
 
-1. Dans Coolify, clique **Stop** sur l'ancienne ressource. Vérifie qu'elle est
-   arrêtée et que `8085` n'est plus occupé. C'est le début de la courte interruption.
-2. Dans la nouvelle ressource, remplace `<PORT_TEST_LIBRE>:80` par `8085:80`.
-   Conserve **Ports Exposes = 80**, puis redéploie.
-3. Vérifie d'abord `http://<IP_VM_COOLIFY>:8085/`, ensuite `https://tanchou.fr/`.
-   Contrôle les pages, la fiche directe, les images, le CV et le catalogue JSON.
-4. Mets à jour `COOLIFY_WEBHOOK_URL` vers la nouvelle ressource si le secret existe.
-   Active ses déploiements automatiques et garde ceux de l'ancienne désactivés.
-5. Une fois le site public validé, fusionne `codex/atelier-3d` vers `main`, change
-   la branche de la nouvelle ressource vers `main` et redéploie. Vérifie le commit
-   déployé et relance une collecte manuelle **Build Portfolio Projects** sur `main`
-   pour confirmer que la chaîne JSON → commit → webhook fonctionne.
+## 4. Retour arrière
 
-Le mappage hôte est exclusif : les deux conteneurs ne peuvent pas lier `8085`
-en même temps. Coolify indique aussi qu'un mappage hôte empêche son remplacement
-progressif habituel. Voir [How Applications Work](https://coolify.io/docs/applications/how-applications-work).
-Si tu préfères éviter cette interruption, il faut modifier temporairement l'origine
-Cloudflare Tunnel vers le port de test, puis reprendre `8085` plus tard ; c'est une
-autre stratégie, qui exige la maîtrise et la validation de la configuration du tunnel.
+Si le nouveau site ne démarre pas ou ne sert pas correctement `tanchou.fr`, clique
+**Stop** sur la nouvelle application et attends que `8085` soit libre. Clique
+ensuite **Start** sur l'ancienne, sans la redéployer depuis `main`, puis revérifie
+le site public. Restaure `COOLIFY_WEBHOOK_URL` vers l'ancien webhook seulement si
+tu veux reprendre les déploiements de cette ancienne ressource. Si elle doit être
+reconstruite, utilise sa branche et sa configuration antérieures, ou la branche
+d'archive, après avoir vérifié leur compatibilité.
 
-## 5. Retour arrière
+Conserve l'ancienne application arrêtée tant que plusieurs collectes quotidiennes
+n'ont pas été validées en production. Supprime-la ensuite seulement lorsque ce
+retour arrière n'est plus utile.
 
-Si la nouvelle ressource échoue après le transfert : **Stop** sur la nouvelle,
-vérifie que `8085` est libéré, puis **Start** sur l'ancienne ressource conservée.
-Vérifie `tanchou.fr`. Restaure le webhook GitHub vers l'ancienne uniquement si le
-workflow doit encore la déployer ; désactive les déploiements automatiques de la
-ressource en échec. Si `main` a déjà été fusionnée, ne redéploie pas l'ancien
-mode de service sur le nouveau code : garde l'ancienne image/branche, ou utilise
-la branche d'archive avec ses anciens réglages.
+## Contrôles avant publication du code
 
-Ne supprime l'ancienne ressource qu'après plusieurs collectes quotidiennes réussies
-et quand le retour arrière n'est plus nécessaire. La suppression n'est pas une
-condition du basculement.
-
-## Build et contrôles locaux
-
-Node compatible avec `package.json` (`^22.22.2`, `^24.15.0` ou `>=26`) :
+Utilise une version de Node compatible avec `package.json` (`^22.22.2`,
+`^24.15.0` ou `>=26`) :
 
 ```sh
 npm ci
 npm run check
-npm run preview
 ```
 
-`check` exécute les tests unitaires, les tests d'intégration, le build Vite et la
-validation des fichiers produits. La sortie publique est `dist/`. Le test du
-collecteur emploie une API GitHub simulée ; il ne déclenche ni webhook ni
-synchronisation réelle. Le Dockerfile multistage a été construit et les six pages,
-le JSON et le CV ont été servis dans un conteneur de test sans port publié.
+`check` exécute les tests unitaires et d'intégration, le build Vite et la
+validation des six pages produites. Le build Docker répète ces contrôles avant
+de publier `dist/`. Le collecteur testé localement utilise une API GitHub simulée ;
+la vraie synchronisation des dépôts est effectuée par **Build Portfolio Projects**
+sur `main`.

@@ -38,7 +38,7 @@ la taille brute du module Three.js ; le budget compressé vérifié est respect�
   réelle, ni webhook, ni modification des dépôts sources.
 - Les réglages actuels de Coolify n'ont pas été inspectés. Le port 8085 provient de Nexus.
   Le Dockerfile et la procédure de bascule sont fournis ; leur activation relève du
-  déploiement, qui n'est pas effectué ici. `main` reste inchangé.
+  déploiement Coolify, distinct de la fusion du code dans `main`.
 
 La spécification consolidée est dans `REFONTE_SPEC.md`, le contrat dans
 `../PORTFOLIO_SPEC.md` et les commandes de livraison/retour arrière dans `DEPLOYMENT.md`.
