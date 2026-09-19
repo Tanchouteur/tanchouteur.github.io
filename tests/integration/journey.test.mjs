@@ -41,6 +41,24 @@ const projects = normalizeProjects([
   { id: "a", title: "A", featured: true },
   { id: "b", title: "B", featured: true },
 ]);
+test("le tunnel conserve les quatre premiers projets vedettes", async () => {
+  const env = setup();
+  const stops = normalizeProjects(
+    ["a", "b", "c", "d", "e"].map((id, order) => ({
+      id,
+      title: id,
+      order,
+      featured: true,
+    })),
+  );
+  const stop = mountJourney(stops, env.doc, {
+    loadScene: async () => ({ mountScene: () => ({ update() {}, dispose() {} }) }),
+  });
+  await tick();
+  assert.equal(env.doc.querySelectorAll(".journey-project").length, 4);
+  stop();
+  env.dom.window.close();
+});
 test("mouvement réduit : aucun import 3D, liens catalogue et sélection disponibles", async () => {
   const env = setup(true);
   let imports = 0;

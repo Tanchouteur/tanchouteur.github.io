@@ -56,7 +56,7 @@ test("présentation facultative validée sans injecter de CSS", () => {
     "",
   );
 });
-test("ordre stable puis date, sélection limitée à trois, identifiants uniques", () => {
+test("ordre stable puis date, sélection éditoriale limitée à trois, identifiants uniques", () => {
   const items = normalizeProjects([
     { id: "old", date: "2020", order: 1, featured: true },
     { id: "new", date: "2026", order: 1, featured: true },

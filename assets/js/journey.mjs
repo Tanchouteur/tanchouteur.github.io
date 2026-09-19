@@ -13,8 +13,8 @@ export function mountJourney(projects, root = document, options = {}) {
   const hero = root.querySelector(".hero");
   if (!hero || root.querySelector(".journey-shell")) return () => {};
   const preference = view.matchMedia("(prefers-reduced-motion: reduce)");
-  const selected = projects.filter((p) => p.featured).slice(0, 3);
-  const stops = selected.length ? selected : projects.slice(0, 3);
+  const selected = projects.filter((p) => p.featured).slice(0, 4);
+  const stops = selected.length ? selected : projects.slice(0, 4);
   const shell = root.createElement("section");
   shell.className = "journey-shell";
   shell.setAttribute("aria-label", "De la surface aux projets");

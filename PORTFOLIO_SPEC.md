@@ -49,7 +49,7 @@ mon-projet/
 | `status`          | string   | —           | `"Completed"`                     | `"In Progress"`, `"Completed"`, ou `"Archived"`                        |
 | `date`            | string   | —           | Date de création du repo          | Format `YYYY-MM` ou `YYYY`                                             |
 | `tags`            | string[] | —           | Topics GitHub + langage principal | Technologies utilisées                                                 |
-| `featured`        | boolean  | —           | `false`                           | Si `true`, éligible à la sélection de 3 projets maximum, selon `order` |
+| `featured`        | boolean  | —           | `false`                           | Si `true`, éligible à la sélection éditoriale (3) et au tunnel (4), selon `order` |
 | `order`           | number   | —           | `999`                             | Ordre d'affichage (plus petit = premier)                               |
 | `links`           | object   | —           | URL du repo GitHub                | Liens externes (`github`, `demo`, `docs`, `website`)                   |
 
