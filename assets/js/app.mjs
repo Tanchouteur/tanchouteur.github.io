@@ -1,4 +1,15 @@
 import "../css/atelier.css";
+import { currentLanguage, languageURL } from "../../lib/language.mjs";
+
+const language = currentLanguage(location.pathname);
+document.querySelectorAll("[data-language]").forEach((link) => {
+  const target = link.dataset.language;
+  link.href = languageURL(location.pathname, target) + location.search + location.hash;
+  link.setAttribute("aria-current", target === language ? "true" : "false");
+  link.addEventListener("click", () => {
+    try { localStorage.setItem("portfolio-language", target); } catch { /* private browsing */ }
+  });
+});
 
 const menu = document.querySelector(".menu-toggle");
 const navigation = document.querySelector("#navigation");

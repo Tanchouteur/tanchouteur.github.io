@@ -20,6 +20,21 @@ const domFor = (page) =>
   });
 const fetchData = (data) => async () => ({ ok: true, json: async () => data });
 
+test("English catalogue and project detail use English copy and links", async () => {
+  const home = new JSDOM(readFileSync("en/index.html", "utf8"), { url: "https://portfolio.example/en/index.html" });
+  await initProjects(home.window.document, fetchData(actual));
+  assert.equal(home.window.document.querySelector('[data-category="All"]').textContent.trim().startsWith("All"), true);
+  assert.match(home.window.document.querySelector("#project-grid").textContent, /dashboard/);
+  assert.match(home.window.document.querySelector("#project-grid .project-card a").getAttribute("href"), /^\/en\/project.html/);
+  home.window.close();
+
+  const detail = new JSDOM(readFileSync("en/project.html", "utf8"), { url: "https://portfolio.example/en/project.html?id=CliOS" });
+  await initDetail(detail.window.document, fetchData(actual), "?id=CliOS");
+  assert.match(detail.window.document.querySelector(".markdown").textContent, /modular car dashboard/i);
+  assert.equal(detail.window.document.querySelector(".detail-end a").getAttribute("href"), "/en/index.html#projects");
+  detail.window.close();
+});
+
 test("catalogue réel évolutif et filtres de toutes ses catégories", async () => {
   const dom = domFor("index");
   const doc = dom.window.document;

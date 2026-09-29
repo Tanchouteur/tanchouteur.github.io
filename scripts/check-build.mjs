@@ -7,7 +7,7 @@ import { JSDOM } from "jsdom";
 import { normalizeProjects } from "../lib/portfolio.mjs";
 
 function exactPath(path) {
-  const parts = path.split("/").filter(Boolean);
+  const parts = (path.endsWith("/") ? `${path}index.html` : path).split("/").filter(Boolean);
   let directory = resolve("dist");
   for (const part of parts) {
     assert.ok(
@@ -18,17 +18,18 @@ function exactPath(path) {
   }
   assert.ok(statSync(directory).isFile(), `Fichier attendu : ${path}`);
 }
-for (const name of [
+const pages = [
   "index",
   "project",
   "skills",
   "me",
   "hardware",
   "contact",
-]) {
+];
+for (const name of pages.flatMap((page) => [page, `en/${page}`])) {
   const dom = new JSDOM(readFileSync(`dist/${name}.html`, "utf8"));
   const doc = dom.window.document;
-  assert.equal(doc.documentElement.lang, "fr");
+  assert.equal(doc.documentElement.lang, name.startsWith("en/") ? "en" : "fr");
   assert.ok(doc.querySelector("nav"), `Navigation absente de ${name}`);
   assert.ok(doc.querySelector("main"));
   assert.equal(doc.querySelectorAll("h1").length, 1);
@@ -41,6 +42,8 @@ for (const name of [
   }
   dom.window.close();
 }
+exactPath("/assets/CV/CV_Louis_Tanchou_francais.pdf");
+exactPath("/assets/CV/CV_Louis_Tanchou-english.pdf");
 const projects = normalizeProjects(
   JSON.parse(readFileSync("dist/assets/data/projects.json", "utf8")),
 );
@@ -74,5 +77,5 @@ assert.ok(
   `Budget JavaScript hors 3D dépassé : ${ordinary}`,
 );
 console.log(
-  `Build validé : six pages, ${projects.length} projets, chemins sensibles à la casse. JS gzip : ${(ordinary / 1024).toFixed(1)} Ko + 3D différée ${(scene / 1024).toFixed(1)} Ko.`,
+  `Build validé : douze pages, ${projects.length} projets, deux CV, chemins sensibles à la casse. JS gzip : ${(ordinary / 1024).toFixed(1)} Ko + 3D différée ${(scene / 1024).toFixed(1)} Ko.`,
 );

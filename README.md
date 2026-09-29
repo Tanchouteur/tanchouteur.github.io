@@ -22,4 +22,12 @@ npm run preview
 
 Le catalogue est collecté chaque jour à minuit UTC. Le build public est dans `dist/` ; la 3D reste facultative. Les tests n’utilisent ni GitHub ni Coolify.
 
+## Français et anglais
+
+Le site publie les six pages en français à la racine et en anglais sous `/en/`. À la première visite d’une page française, la langue du navigateur choisit l’anglais si elle commence par `en`, sinon le français. Le sélecteur FR / EN conserve le choix dans `localStorage` et garde la page, les paramètres et l’ancre courants.
+
+Les pages anglaises sont générées depuis les pages françaises et les traductions de `scripts/generate-english.mjs` avant `dev` et `build`. Les textes des sept projets sont dans `lib/projects-en.mjs`, séparés de `assets/data/projects.json` régénéré depuis GitHub. Pour un nouveau projet, ajoutez sa traduction dans ce fichier avant publication ; sans elle, la version anglaise affiche un texte d’attente anglais.
+
+Le CV anglais publié est `assets/CV/CV_Louis_Tanchou-english.pdf`. Sa source éditable et son générateur restent dans `Nexus/vie-professionnelle/candidatures/anglais-general/`. Si le CV source est modifié, remplacez le PDF du portfolio par le nouvel export.
+
 Version précédente : branche [`codex/archive-portfolio-2026-09-18`](https://github.com/Tanchouteur/tanchouteur.github.io/tree/codex/archive-portfolio-2026-09-18).

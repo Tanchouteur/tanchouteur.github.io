@@ -3,7 +3,9 @@
   "version": "2.0.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/generate-english.mjs",
     "dev": "vite --host 127.0.0.1",
+    "prebuild": "node scripts/generate-english.mjs",
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1",
     "test": "node --test tests/unit/*.test.mjs",

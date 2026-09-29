@@ -12,6 +12,8 @@ export function mountJourney(projects, root = document, options = {}) {
   const loadScene = options.loadScene || (() => import("./scene.mjs"));
   const hero = root.querySelector(".hero");
   if (!hero || root.querySelector(".journey-shell")) return () => {};
+  const language = root.documentElement.lang === "en" ? "en" : "fr";
+  const en = language === "en";
   const preference = view.matchMedia("(prefers-reduced-motion: reduce)");
   const coarsePointer = view.matchMedia("(pointer: coarse)");
   const touchInput = () =>
@@ -20,17 +22,17 @@ export function mountJourney(projects, root = document, options = {}) {
   const stops = selected.length ? selected : projects.slice(0, 4);
   const shell = root.createElement("section");
   shell.className = "journey-shell";
-  shell.setAttribute("aria-label", "De la surface aux projets");
+  shell.setAttribute("aria-label", en ? "From the surface to the projects" : "De la surface aux projets");
   const originalHTML = hero.innerHTML;
   const originalClass = hero.className;
   const originalParent = hero.parentElement;
   originalParent.insertBefore(shell, hero);
-  shell.innerHTML = `<div class="journey-viewport"><div class="journey-environment" aria-hidden="true"></div><div class="journey-stage"></div><div class="journey-hud"><span class="depth-label">SURFACE / 00</span><div class="depth-track"><i></i></div><a href="#projects">Accès direct aux projets ↗</a></div></div>`;
+  shell.innerHTML = `<div class="journey-viewport"><div class="journey-environment" aria-hidden="true"></div><div class="journey-stage"></div><div class="journey-hud"><span class="depth-label">SURFACE / 00</span><div class="depth-track"><i></i></div><a href="#projects">${en ? "Jump to projects" : "Accès direct aux projets"} ↗</a></div></div>`;
   const stage = shell.querySelector(".journey-stage");
   stage.append(hero);
   hero.classList.add("journey-panel", "journey-intro");
   hero.querySelector(".hero-art").innerHTML =
-    `<div class="identity-sculpture"><div class="identity-frame"><img src="/assets/images/pp.jpeg" alt="Louis Tanchou"><span>LOUIS / TANCHOU</span></div><span class="identity-chip chip-software">DÉVELOPPEUR</span><span class="identity-chip chip-systems">SYSTÈMES & LOGICIELS</span><span class="identity-chip chip-curiosity">ENSIIE / EDF R&D</span></div>`;
+    `<div class="identity-sculpture"><div class="identity-frame"><img src="/assets/images/pp.jpeg" alt="Louis Tanchou"><span>LOUIS / TANCHOU</span></div><span class="identity-chip chip-software">${en ? "DEVELOPER" : "DÉVELOPPEUR"}</span><span class="identity-chip chip-systems">${en ? "SYSTEMS & SOFTWARE" : "SYSTÈMES & LOGICIELS"}</span><span class="identity-chip chip-curiosity">ENSIIE / EDF R&D</span></div>`;
   hero.querySelectorAll('a[href="#projects"]').forEach((link) => {
     link.href = "#journey-start";
   });
@@ -42,18 +44,19 @@ export function mountJourney(projects, root = document, options = {}) {
     const panel = root.createElement("article");
     panel.className = "journey-panel journey-project";
     panel.style.setProperty("--project-accent", project.presentation.accent);
-    panel.innerHTML = `<div class="journey-project-copy"><p class="eyebrow">STRATE ${String(index + 1).padStart(2, "0")} / ${e(categoryLabel(project.category))}</p><h2>${e(project.title)}</h2><p>${e(project.description)}</p><ul class="tag-list">${project.tags
+    panel.innerHTML = `<div class="journey-project-copy"><p class="eyebrow">${en ? "LAYER" : "STRATE"} ${String(index + 1).padStart(2, "0")} / ${e(categoryLabel(project.category, language))}</p><h2>${e(project.title)}</h2><p>${e(project.description)}</p><ul class="tag-list">${project.tags
       .slice(0, 4)
       .map((tag) => `<li>${e(tag)}</li>`)
       .join(
         "",
-      )}</ul><a class="button" href="/project.html?id=${encodeURIComponent(project.id)}">Découvrir le projet ↗</a></div><div class="journey-project-object">${media(project, { eager: index === 0 })}<div class="panel-edge" aria-hidden="true"></div><span class="object-caption">EXPLORATION / ${String(index + 1).padStart(2, "0")}</span></div>`;
+      )}</ul><a class="button" href="${en ? "/en" : ""}/project.html?id=${encodeURIComponent(project.id)}">${en ? "Explore project" : "Découvrir le projet"} ↗</a></div><div class="journey-project-object">${media(project, { eager: index === 0, language })}<div class="panel-edge" aria-hidden="true"></div><span class="object-caption">EXPLORATION / ${String(index + 1).padStart(2, "0")}</span></div>`;
     stage.append(panel);
   });
   const outro = root.createElement("div");
   outro.className = "journey-panel journey-outro";
-  outro.innerHTML =
-    '<p class="eyebrow">Sous la surface, des idées prennent forme.</p><h2>Bienvenue<br>dans <em>l’atelier.</em></h2><a class="button" href="#projects">Toutes les explorations ↓</a>';
+  outro.innerHTML = en
+    ? '<p class="eyebrow">Beneath the surface, ideas take shape.</p><h2>Welcome<br>to <em>the workshop.</em></h2><a class="button" href="#projects">All projects ↓</a>'
+    : '<p class="eyebrow">Sous la surface, des idées prennent forme.</p><h2>Bienvenue<br>dans <em>l’atelier.</em></h2><a class="button" href="#projects">Toutes les explorations ↓</a>';
   stage.append(outro);
   const panels = [...stage.children];
   const selection = root.querySelector("#selected-projects");
@@ -179,7 +182,7 @@ export function mountJourney(projects, root = document, options = {}) {
     progressBar.style.transform = `scaleY(${state.progress})`;
     if (lastActive !== state.active) {
       depthLabel.textContent = state.active
-        ? `SOUS LA SURFACE / ${String(state.active).padStart(2, "0")}`
+        ? `${en ? "BELOW THE SURFACE" : "SOUS LA SURFACE"} / ${String(state.active).padStart(2, "0")}`
         : "SURFACE / 00";
       lastActive = state.active;
     }

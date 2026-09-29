@@ -157,6 +157,18 @@ h3 {
   position: relative;
   z-index: 20;
 }
+.language-switch {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex: none;
+  font-family: Barlow, Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+.language-switch a { padding: 8px 3px; opacity: 0.55; }
+.language-switch a[aria-current="true"] { opacity: 1; color: var(--accent); font-weight: 700; }
+.language-switch a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .brand {
   display: flex;
   align-items: center;
