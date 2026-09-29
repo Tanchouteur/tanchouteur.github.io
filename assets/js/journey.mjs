@@ -13,6 +13,9 @@ export function mountJourney(projects, root = document, options = {}) {
   const hero = root.querySelector(".hero");
   if (!hero || root.querySelector(".journey-shell")) return () => {};
   const preference = view.matchMedia("(prefers-reduced-motion: reduce)");
+  const coarsePointer = view.matchMedia("(pointer: coarse)");
+  const touchInput = () =>
+    coarsePointer.matches || (view.navigator.maxTouchPoints || 0) > 0;
   const selected = projects.filter((p) => p.featured).slice(0, 4);
   const stops = selected.length ? selected : projects.slice(0, 4);
   const shell = root.createElement("section");
@@ -80,6 +83,7 @@ export function mountJourney(projects, root = document, options = {}) {
       disposed ||
       preference.matches ||
       snapping ||
+      touchInput() ||
       Date.now() < suppressUntil
     )
       return;
@@ -122,6 +126,7 @@ export function mountJourney(projects, root = document, options = {}) {
   };
 
   const scrollGesture = () => {
+    if (touchInput()) return;
     if (!snapping) {
       direction = view.scrollY >= previousScroll ? 1 : -1;
       view.clearTimeout(settleTimer);
@@ -130,6 +135,7 @@ export function mountJourney(projects, root = document, options = {}) {
     previousScroll = view.scrollY;
   };
   const scrollEnd = () => {
+    if (touchInput()) return;
     if (!snapping) {
       view.clearTimeout(settleTimer);
       settleTimer = view.setTimeout(settle, 80);
@@ -203,6 +209,10 @@ export function mountJourney(projects, root = document, options = {}) {
     shell.style.setProperty(
       "--journey-height",
       `${panels.length * 125 + 100}svh`,
+    );
+    shell.style.setProperty(
+      "--journey-height-mobile",
+      `${panels.length * 95 + 100}svh`,
     );
     if (selection) selection.hidden = !preference.matches || !selected.length;
     if (preference.matches) {

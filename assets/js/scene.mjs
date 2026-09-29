@@ -14,13 +14,13 @@ export function mountScene(container, projects = []) {
   } catch {
     return { update() {}, dispose() {} };
   }
-  renderer.setPixelRatio(
+  const pixelRatio = (width, height) =>
     Math.min(
       devicePixelRatio,
-      1.25,
-      Math.sqrt(1800000 / (innerWidth * innerHeight)),
-    ),
-  );
+      width <= 760 ? 1 : 1.25,
+      Math.sqrt(1800000 / (width * height)),
+    );
+  renderer.setPixelRatio(pixelRatio(innerWidth, innerHeight));
   renderer.setClearColor(0x000000, 0);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   const scene = new THREE.Scene();
@@ -247,13 +247,7 @@ export function mountScene(container, projects = []) {
   const resize = () => {
     const r = container.getBoundingClientRect();
     if (!r.width || !r.height) return;
-    renderer.setPixelRatio(
-      Math.min(
-        devicePixelRatio,
-        1.25,
-        Math.sqrt(1800000 / (r.width * r.height)),
-      ),
-    );
+    renderer.setPixelRatio(pixelRatio(r.width, r.height));
     renderer.setSize(r.width, r.height);
     dirty = true;
     camera.aspect = r.width / r.height;

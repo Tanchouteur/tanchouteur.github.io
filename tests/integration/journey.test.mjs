@@ -5,7 +5,7 @@ import { JSDOM } from "jsdom";
 import { mountJourney } from "../../assets/js/journey.mjs";
 import { normalizeProjects } from "../../lib/portfolio.mjs";
 const tick = () => new Promise((resolve) => setImmediate(resolve));
-function setup(reduced = false) {
+function setup(reduced = false, coarse = false) {
   const dom = new JSDOM(readFileSync("index.html", "utf8"), {
     url: "https://example.com",
     pretendToBeVisual: true,
@@ -13,7 +13,8 @@ function setup(reduced = false) {
   const view = dom.window;
   const preference = new view.EventTarget();
   preference.matches = reduced;
-  view.matchMedia = () => preference;
+  view.matchMedia = (query) =>
+    query === "(pointer: coarse)" ? { matches: coarse } : preference;
   view.IntersectionObserver = class {
     observe() {}
     disconnect() {}
@@ -93,6 +94,30 @@ test("mouvement réduit : aucun import 3D, liens catalogue et sélection disponi
   stop();
   assert.equal(env.doc.querySelector(".journey-shell"), null);
   assert.ok(env.doc.querySelector(".hero"));
+  env.dom.window.close();
+});
+test("sur écran tactile, le parcours garde le défilement natif", async () => {
+  const env = setup(false, true);
+  let snaps = 0;
+  env.view.scrollTo = () => snaps++;
+  const stop = mountJourney(projects, env.doc, {
+    loadScene: async () => ({
+      mountScene: () => ({ update() {}, dispose() {} }),
+    }),
+  });
+  await tick();
+  const shell = env.doc.querySelector(".journey-shell");
+  assert.equal(
+    shell.style.getPropertyValue("--journey-height-mobile"),
+    "480svh",
+  );
+  Object.defineProperty(shell, "offsetHeight", { value: 3000 });
+  shell.getBoundingClientRect = () => ({ top: -500 });
+  env.view.dispatchEvent(new env.view.Event("scroll"));
+  env.view.dispatchEvent(new env.view.Event("scrollend"));
+  env.flush();
+  assert.equal(snaps, 0);
+  stop();
   env.dom.window.close();
 });
 test("défilement, sortie lisible, retour au début et changement de préférence", async () => {
