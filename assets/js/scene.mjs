@@ -3,7 +3,7 @@ import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import { cameraDepth } from "../../lib/journey.mjs";
 
 // Architectural space behind the HTML planes. Camera and DOM use the same journey position.
-export function mountScene(container, stations = 5) {
+export function mountScene(container, projects = []) {
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({
@@ -87,7 +87,7 @@ export function mountScene(container, stations = 5) {
     roughness: 0.4,
   });
   const lightPools = [];
-  for (let i = 0; i < stations * 3 + 3; i++) {
+  for (let i = 0; i < (projects.length + 1) * 3 + 3; i++) {
     const z = 2 - i * 7;
     for (const [x, y, w, h] of [
       [0, 5.4, 18, 0.7],
@@ -131,6 +131,67 @@ export function mountScene(container, stations = 5) {
   entranceGlow.scale.set(36, 24, 1);
   scene.add(entranceGlow);
 
+  // Each project leaves a small, distinct illuminated trace in the architecture.
+  const stationMaterials = [];
+  projects.forEach(({ id, accent }, index) => {
+    const z = cameraDepth(index + 1) - 4;
+    const color = new THREE.Color(accent);
+    const material = new THREE.MeshStandardMaterial({
+      color: color.clone().multiplyScalar(0.45),
+      emissive: color,
+      emissiveIntensity: 0.85,
+      metalness: 0.45,
+      roughness: 0.35,
+    });
+    stationMaterials.push(material);
+    const side = index % 2 ? 1 : -1;
+    // A lit threshold connects the station to the tunnel without filling it with color.
+    beam(0, 5.05, z, 16.5, 0.045, 0.08, material);
+    beam(side * 8.1, -4.8, z, 0.05, 1.1, 0.08, material);
+    if (id === "CliOS") {
+      [-1.6, 0, 1.6].forEach((offset, i) =>
+        beam(
+          side * 8.05,
+          0.3 + i * 0.55,
+          z + offset,
+          0.06,
+          0.12,
+          0.85,
+          material,
+        ),
+      );
+    } else if (id === "Lapins-du-Gapeau") {
+      [-1.4, 0, 1.4].forEach((offset) =>
+        beam(
+          side * 8.05,
+          0.2,
+          z + offset,
+          0.06,
+          2.2 - Math.abs(offset) * 0.5,
+          0.08,
+          material,
+        ),
+      );
+    } else if (id === "SpotifySort") {
+      [0.45, 1.3, 2.1, 1.2, 0.65].forEach((height, i) =>
+        beam(
+          side * 8.05,
+          -0.5 + height / 2,
+          z + (i - 2) * 0.72,
+          0.06,
+          height,
+          0.11,
+          material,
+        ),
+      );
+    } else {
+      [-1.4, -0.45, 0.5, 1.45].forEach((offset) => {
+        beam(side * 8.05, 0.75, z + offset, 0.06, 0.08, 0.65, material);
+        beam(side * 8.05, -0.45, z + offset, 0.06, 0.08, 0.65, material);
+      });
+    }
+  });
+
   // Soft translucent layers drift across the approach without hiding the portrait.
   const mistCanvas = document.createElement("canvas");
   mistCanvas.width = mistCanvas.height = 128;
@@ -170,6 +231,8 @@ export function mountScene(container, stations = 5) {
     scene.add(pool);
     return pool;
   });
+  const stationLight = new THREE.PointLight(0xffffff, 0, 17, 2);
+  scene.add(stationLight);
   const diagnostics = new URLSearchParams(location.search).has("perf");
   let measuredFrames = 0,
     renderMilliseconds = 0,
@@ -229,6 +292,21 @@ export function mountScene(container, stations = 5) {
       localLights[i].position.copy(position);
       localLights[i].intensity = 125 * Math.max(0, 1 - distance / 35);
     });
+    const stationIndex = Math.round(state.camera) - 1;
+    const station = projects[stationIndex];
+    if (station) {
+      const proximity = Math.max(
+        0,
+        1 - Math.abs(state.camera - stationIndex - 1) / 0.75,
+      );
+      stationLight.color.set(station.accent);
+      stationLight.position.set(
+        stationIndex % 2 ? 5.8 : -5.8,
+        2.6,
+        cameraDepth(stationIndex + 1) - 4,
+      );
+      stationLight.intensity = 65 * proximity;
+    } else stationLight.intensity = 0;
     dirty = true;
     resume();
   };
@@ -277,6 +355,7 @@ export function mountScene(container, stations = 5) {
     copper.dispose();
     graphite.dispose();
     filament.dispose();
+    stationMaterials.forEach((material) => material.dispose());
     glowTexture.dispose();
     glowMaterial.dispose();
     renderer.domElement.remove();

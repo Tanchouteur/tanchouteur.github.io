@@ -64,7 +64,8 @@ export function mountJourney(projects, root = document, options = {}) {
     lastCamera = 0,
     anchorTop = "";
   const scrollPadding =
-    parseFloat(view.getComputedStyle(root.documentElement).scrollPaddingTop) || 0;
+    parseFloat(view.getComputedStyle(root.documentElement).scrollPaddingTop) ||
+    0;
   const progressBar = shell.querySelector(".depth-track i");
   const depthLabel = shell.querySelector(".depth-label");
   let settleTimer,
@@ -225,7 +226,10 @@ export function mountJourney(projects, root = document, options = {}) {
           if (disposed || preference.matches || scene) return;
           scene = mountScene(
             shell.querySelector(".journey-environment"),
-            panels.length,
+            stops.map(({ id, presentation }) => ({
+              id,
+              accent: presentation.accent,
+            })),
           );
           request();
         })

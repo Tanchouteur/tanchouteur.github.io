@@ -43,6 +43,7 @@ const projects = normalizeProjects([
 ]);
 test("le tunnel conserve les quatre premiers projets vedettes", async () => {
   const env = setup();
+  let sceneProjects;
   const stops = normalizeProjects(
     ["a", "b", "c", "d", "e"].map((id, order) => ({
       id,
@@ -52,10 +53,22 @@ test("le tunnel conserve les quatre premiers projets vedettes", async () => {
     })),
   );
   const stop = mountJourney(stops, env.doc, {
-    loadScene: async () => ({ mountScene: () => ({ update() {}, dispose() {} }) }),
+    loadScene: async () => ({
+      mountScene: (_, projects) => {
+        sceneProjects = projects;
+        return { update() {}, dispose() {} };
+      },
+    }),
   });
   await tick();
   assert.equal(env.doc.querySelectorAll(".journey-project").length, 4);
+  assert.deepEqual(
+    sceneProjects,
+    stops.slice(0, 4).map(({ id, presentation }) => ({
+      id,
+      accent: presentation.accent,
+    })),
+  );
   stop();
   env.dom.window.close();
 });
