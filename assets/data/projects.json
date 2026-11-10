@@ -99,6 +99,54 @@
     }
   },
   {
+    "id": "BatiCentra",
+    "title": "BâtiCentra",
+    "description": "Du premier appel à la facture, un dossier qui suit le chantier. Prototype de gestion connectée pour les entreprises d’électricité, présenté au Challenge Entreprendre 2026.",
+    "longDescription": "## Un dossier qui suit le chantier\n\nUn client appelle, un devis est accepté, une équipe part sur le chantier. Entre ces étapes, l’adresse, le matériel et les informations d’intervention doivent circuler entre plusieurs outils. **BâtiCentra explore une gestion où ces informations restent reliées au même dossier.**\n\nLe projet a été présenté au **Challenge Projets d’Entreprendre 2026**, du 2 au 6 novembre, par l’équipe 93 : Louis et Nell (ENSIIE), Axel et Thomas (Télécom SudParis). Une semaine pour articuler compréhension du besoin, étude de la concurrence, modèle économique, trajectoire à cinq ans et prototype démontrable devant le jury.\n\n## Trois regards sur le même chantier\n\n- **Le gérant** prépare le devis, suit le matériel, organise les rendez-vous et valide la facture depuis son espace de gestion.\n- **Le technicien** retrouve sur mobile l’adresse, le créneau et le matériel prévu, puis renseigne son retour d’intervention.\n- **Le client** consulte son devis et échange via un lien individuel, sans créer de compte.\n\nLe chantier fictif « Bureau Horizon » sert de fil conducteur : **dossier client → devis accepté → matériel → rendez-vous → intervention → facture → suivi du règlement**. Un mode présentation juxtapose les vues gérant et employé pour rendre visible la circulation des informations.\n\n## Du parcours métier au prototype fonctionnel\n\nL’interface est développée en **React et TypeScript**, avec **Node.js, Express et SQLite** côté serveur. Un modèle partagé relie les clients, devis, rendez-vous, consommations et factures. Les API employés filtrent les informations financières.\n\nLe prototype comprend :\n\n- une synchronisation bidirectionnelle avec **Google Agenda**, sur des agendas dédiés de test ;\n- des imports fournisseurs **CSV/XLSX**, avec aperçu, contrôle des anomalies et publication par lots ;\n- des réservations et consommations de matériel rattachées aux dossiers et aux interventions ;\n- la reprise du matériel réellement consommé dans la préparation de facture, avec validation du gérant ;\n- un **export ZIP** des dossiers et de données structurées pour rendre les informations récupérables.\n\n## Concevoir aussi le projet d’entreprise\n\nLe travail présenté au jury associe le prototype à une étude du besoin, un positionnement face à Esabora, Codial et Obat, une offre d’abonnement envisagée et une trajectoire commerciale et financière à cinq ans. L’accessibilité et la sobriété numérique constituent deux axes de conception dont les effets restent à mesurer.\n\nL’objectif est de limiter les reprises manuelles entre le bureau et le terrain. **Aucun gain de temps mesuré ni adoption commerciale n’est revendiqué à ce stade.** Les clients et chantiers sont fictifs ; commandes, emails, paiements, rapprochements et relances sont simulés. L’import local, l’export ZIP et le connecteur Google de test sont implémentés. Le passage à des entreprises réelles demande encore les travaux de sécurité, d’isolation des données et de validation métier.\n\n## Présentation et démonstration\n\n[Consulter le PowerPoint du jury — 15 diapositives](https://docs.google.com/presentation/d/1BJfb2ViAUe7OOZOoHn8R8QhblW42Mn0F/edit) (Drive de l’équipe ; accès selon les permissions du document).\n\n[Découvrir le prototype](https://challenge.tanchou.fr) — accès de démonstration protégé. Les captures de la galerie proviennent du support de l’oral et montrent le dossier gérant, l’intervention mobile et la facturation, avec des données fictives.\n",
+    "category": "Academic",
+    "status": "In Progress",
+    "date": "2026-11",
+    "tags": [
+      "React",
+      "TypeScript",
+      "Node.js",
+      "Express",
+      "SQLite",
+      "Google Calendar API",
+      "Entrepreneuriat"
+    ],
+    "featured": true,
+    "presentation": {
+      "type": "interface",
+      "accent": "#327A80",
+      "background": "#192F54",
+      "captions": {
+        "cover.png": "Espace gérant — dossier Bureau Horizon et étapes du chantier (données fictives).",
+        "01-intervention-mobile.png": "Espace employé — informations utiles au chantier sur mobile, capture du support jury.",
+        "02-facturation.png": "Facturation — suivi du dossier après intervention, scénario fictif présenté au jury."
+      }
+    },
+    "order": 3,
+    "cover": "assets/images/Projects/BatiCentra/cover.png",
+    "images": [
+      "assets/images/Projects/BatiCentra/01-intervention-mobile.png",
+      "assets/images/Projects/BatiCentra/02-facturation.png"
+    ],
+    "links": {
+      "github": "https://github.com/Tanchouteur/BatiCentra",
+      "demo": "https://challenge.tanchou.fr",
+      "PowerPoint du jury": "https://docs.google.com/presentation/d/1BJfb2ViAUe7OOZOoHn8R8QhblW42Mn0F/edit"
+    },
+    "repoData": {
+      "stars": 1,
+      "forks": 0,
+      "language": "TypeScript",
+      "isPrivate": true,
+      "updatedAt": "2026-11-10T08:09:59Z",
+      "createdAt": "2026-11-03T10:29:30Z"
+    }
+  },
+  {
     "id": "SpotifySort",
     "title": "SpotiSort v4",
     "description": "Triez automatiquement vos playlists Spotify avec Google Gemini AI. Chaque utilisateur configure ses propres clés et règles de classification.",
