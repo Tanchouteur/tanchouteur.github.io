@@ -10,6 +10,7 @@ export default defineConfig({
       name: "atelier-html-and-static-assets",
       transformIndexHtml(html, context) {
         const english = context.path.startsWith("/en/");
+        html = html.replace("</head>", '<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" href="/favicon.svg" type="image/svg+xml"></head>');
         let result = html.replace(/<!-- partial:(nav|footer) -->/g, (_, name) =>
           readFileSync(`assets/html/${name}${english ? ".en" : ""}.html`, "utf8"),
         );
@@ -23,6 +24,8 @@ export default defineConfig({
       },
       closeBundle() {
         mkdirSync("dist/assets", { recursive: true });
+        cpSync("favicon.ico", "dist/favicon.ico");
+        cpSync("favicon.svg", "dist/favicon.svg");
         for (const name of ["data", "images", "CV"])
           cpSync(`assets/${name}`, `dist/assets/${name}`, {
             recursive: true,

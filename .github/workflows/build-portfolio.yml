@@ -57,12 +57,6 @@ jobs:
             git push origin main
           fi
 
-      # Déclenchement direct du webhook Coolify (si configuré dans les secrets GitHub)
-      - name: Trigger Coolify Deploy Webhook
-        if: steps.git_push.outputs.changed == 'true' && env.COOLIFY_WEBHOOK_URL != ''
-        env:
-          COOLIFY_WEBHOOK_URL: ${{ secrets.COOLIFY_WEBHOOK_URL }}
-        run: |
-          echo "Pinging Coolify Deploy Webhook..."
-          curl --fail --silent --show-error --max-time 60 -X GET "$COOLIFY_WEBHOOK_URL"
-          echo "Coolify webhook triggered successfully!"
+      # Coolify reçoit déjà les événements push GitHub et déploie main.
+      # Ne pas appeler un second webhook : il peut répondre en erreur alors que
+      # le déploiement automatique du commit est déjà en cours.
