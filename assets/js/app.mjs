@@ -1,5 +1,6 @@
 import "../css/atelier.css";
 import { currentLanguage, languageURL } from "../../lib/language.mjs";
+import { reveal } from "./reveal.mjs";
 
 const language = currentLanguage(location.pathname);
 document.querySelectorAll("[data-language]").forEach((link) => {
@@ -37,6 +38,7 @@ navigation?.addEventListener("click", (event) => {
 const current = location.pathname.split("/").pop() || "index.html";
 document.querySelectorAll("#navigation a").forEach((link) => {
   if (
+    !link.getAttribute("href").includes("#") &&
     (link.getAttribute("href").split("#")[0].split("/").pop() ||
       "index.html") === current
   )
@@ -45,3 +47,9 @@ document.querySelectorAll("#navigation a").forEach((link) => {
 document.querySelectorAll("[data-year]").forEach((element) => {
   element.textContent = new Date().getFullYear();
 });
+
+const header = document.querySelector(".site-header");
+const scrolled = () => header?.classList.toggle("is-scrolled", scrollY > 8);
+addEventListener("scroll", scrolled, { passive: true });
+scrolled();
+reveal(document);
