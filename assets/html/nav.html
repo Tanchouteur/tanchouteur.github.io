@@ -1,8 +1,8 @@
 <a class="skip-link" href="#main">Aller au contenu</a>
 <header class="site-header">
   <a class="brand" href="/" aria-label="Louis Tanchou — Accueil"
-    ><span class="brand-mark">lt<span>·</span></span
-    ><span>Louis Tanchou</span></a
+    ><span class="brand-mark" aria-hidden="true">lt<i>·</i></span
+    ><span class="brand-name">Louis Tanchou</span></a
   >
   <button
     class="menu-toggle"
@@ -10,19 +10,24 @@
     aria-expanded="false"
     type="button"
   >
-    Menu <span aria-hidden="true">＋</span>
+    <span>Menu</span><i aria-hidden="true"></i>
   </button>
   <nav id="navigation" aria-label="Navigation principale">
     <a href="/index.html#projects">Projets</a
     ><a href="/skills.html">Expertise</a><a href="/me.html">À propos</a
-    ><a href="/hardware.html">Lab</a
-    ><a class="nav-contact" href="/contact.html"
-      >Parlons ensemble <span aria-hidden="true">↗</span></a
-    >
+    ><a href="/hardware.html">Lab</a><a href="/contact.html">Contact</a>
   </nav>
-  <div class="language-switch" aria-label="Langue / Language">
-    <a href="#" data-language="fr" lang="fr" hreflang="fr">FR</a>
-    <span aria-hidden="true">/</span>
-    <a href="#" data-language="en" lang="en" hreflang="en">EN</a>
+  <div class="header-tools">
+    <div class="language-switch" aria-label="Langue / Language">
+      <a href="#" data-language="fr" lang="fr" hreflang="fr">FR</a>
+      <a href="#" data-language="en" lang="en" hreflang="en">EN</a>
+    </div>
+    <a
+      class="header-cv"
+      href="/assets/CV/CV_Louis_Tanchou_francais.pdf"
+      target="_blank"
+      rel="noopener"
+      >CV <span aria-hidden="true">↗</span></a
+    >
   </div>
 </header>

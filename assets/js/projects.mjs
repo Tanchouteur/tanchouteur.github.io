@@ -5,7 +5,8 @@ import {
   categoriesFor,
   escapeHTML as e,
 } from "../../lib/portfolio.mjs";
-import { card, bindImageFallbacks } from "./ui.mjs";
+import { card, bindImageFallbacks, bindTilt } from "./ui.mjs";
+import { reveal } from "./reveal.mjs";
 import { inEnglish } from "../../lib/projects-en.mjs";
 
 export async function initProjects(root = document, fetcher = fetch) {
@@ -50,19 +51,14 @@ export async function initProjects(root = document, fetcher = fetch) {
           ),
         );
       bindImageFallbacks(root);
+      bindTilt(root);
+      reveal(root);
     }
     filters.onclick = (event) => {
       const button = event.target.closest("button[data-category]");
       if (button) render(button.dataset.category);
     };
     render("All");
-    if (root === globalThis.document && typeof matchMedia === "function") {
-      import("./journey.mjs")
-        .then(({ mountJourney }) => mountJourney(projects, root))
-        .catch((error) =>
-          console.info("Catalogue classique conservé.", error.message),
-        );
-    }
   } catch {
     selection.hidden = true;
     filters.innerHTML = "";

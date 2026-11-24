@@ -4,6 +4,15 @@ import { JSDOM } from 'jsdom';
 // The French HTML remains the source of truth for structure and styling.
 // Keep every visible sentence here so a new French paragraph cannot silently stay French.
 const text = {
+  'Élève-ingénieur ENSIIE':'ENSIIE engineering student','· Apprenti chez EDF R&D':'· Apprentice at EDF R&D',
+  'Développeur logiciel & systèmes. Du logiciel aux systèmes embarqués, j’aime comprendre les rouages — et leur donner une nouvelle forme.':'Software & systems developer. From software to embedded systems, I like to understand how things work — and shape them into something new.',
+  'Voir les projets':'View projects','Me contacter':'Contact me','Cycle ingénieur ENSIIE · 2025–2028':'ENSIIE engineering degree · 2025–2028','Alternance':'Apprenticeship',
+  'EDF R&D · logiciel & FPGA':'EDF R&D · software & FPGA','Terrain de jeu':'Playground','Web, embarqué, infrastructure':'Web, embedded, infrastructure',
+  'Expertise · vue éclatée':'Expertise · exploded view','Du signal au produit fini : chaque couche compte, et c’est en les reliant qu’un système fonctionne.':'From signal to finished product: every layer matters, and connecting them is what makes a system work.',
+  'Toute l’expertise':'Full expertise','Défiler':'Scroll','01 — Sélection':'01 — Selected work','Sélection':'Selected','de projets.':'projects.',
+  '02 — Catalogue':'02 — Catalogue','Tous les':'All','projets.':'projects.','Chargement des projets…':'Loading projects…','Toujours en train d’apprendre.':'Always learning.',
+  '03 — Parcours':'03 — Background','Depuis sept. 2025':'Since Sept. 2025','Cycle ingénieur · ENSIIE':'Engineering degree · ENSIIE','Informatique, systèmes et architectures':'Computing, systems and architectures',
+  'BUT Informatique · IUT de Fontainebleau':'Computer science degree · IUT de Fontainebleau','Contact':'Contact',
   'Aller au contenu':'Skip to content','Menu':'Menu','Projets':'Projects','Expertise':'Expertise','À propos':'About','Parlons ensemble':'Get in touch',
   'Logiciel. Systèmes. Exploration.':'Software. Systems. Exploration.','Conçu avec curiosité. Construit avec soin.':'Designed with curiosity. Built with care.',
   'PORTFOLIO / INGÉNIERIE & CRÉATION':'PORTFOLIO / ENGINEERING & CREATION','Logiciels · Systèmes · Curiosité':'Software · Systems · Curiosity',
@@ -81,10 +90,10 @@ function translateFile(source, target, page) {
     else if (href === '/') element.setAttribute('href', '/en/');
   }
   for (const [selector, value] of Object.entries({
-    '#project-filters':'Filter projects', '.round-link':'Contact me', '#gallery-dialog':'Project preview', '.dialog-close':'Close gallery', '#gallery-prev':'Previous image', '#gallery-next':'Next image', '.lab-diagram':'Simplified architecture: applications, containers and virtualization', '.brand':'Louis Tanchou — Home', '#navigation':'Main navigation'
+    '#project-filters':'Filter projects', '.round-link':'Contact me', '#gallery-dialog':'Project preview', '.dialog-close':'Close gallery', '#gallery-prev':'Previous image', '#gallery-next':'Next image', '.lab-diagram':'Simplified architecture: applications, containers and virtualization', '.brand':'Louis Tanchou — Home', '#navigation':'Main navigation', '.footer-nav':'Footer'
   })) document.querySelector(selector)?.setAttribute('aria-label', value);
   for (const [selector, value] of Object.entries({
-    '.about-portrait img':'Portrait of Louis Tanchou', '.lab-grid img':'Computer motherboard and components'
+    '.about-portrait img':'Portrait of Louis Tanchou', '.about-teaser-portrait img':'Portrait of Louis Tanchou', '.lab-grid img':'Computer motherboard and components'
   })) document.querySelector(selector)?.setAttribute('alt', value);
   if (page) {
     document.querySelector('meta[property="og:url"]')?.setAttribute('content', `https://tanchou.fr/en/${page}.html`);

@@ -1,6 +1,6 @@
 # Louis Tanchou — Portfolio Atelier
 
-Portfolio statique : entrée 3D nocturne dans la brume, lueurs ambre/cuivre et pages éditoriales ivoire/graphite, scène Three.js progressive et catalogue alimenté automatiquement depuis GitHub.
+Portfolio statique : univers nocturne ambre et cuivre, processeur 3D en vue éclatée (Three.js) qui présente l’expertise au défilement, et catalogue alimenté automatiquement depuis GitHub.
 
 ## Développer
 

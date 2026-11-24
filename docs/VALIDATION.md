@@ -1,4 +1,32 @@
-# Validation de la refonte — 18 septembre 2026
+# Validation — refonte visuelle du 24 novembre 2026
+
+## Périmètre
+
+Univers sombre unique sur les douze pages, typographie Geist / Geist Mono /
+Instrument Serif embarquée, en-tête collant avec bouton CV. Accueil : identité
+lisible dès le premier écran, processeur 3D en vue éclatée dont les couches
+portent les quatre domaines d’expertise, sélection de trois projets, catalogue
+filtrable, parcours abrégé, appel au contact. Parvis, tunnel et crans retirés.
+
+## Preuves
+
+| Exigence | Preuve |
+| --- | --- |
+| Tests | `npm run check` : 16 tests unitaires et 16 d’intégration (dont héros immersif, mouvement réduit, bascule en cours de session, échec du chargement 3D), build des douze pages, chemins sensibles à la casse. |
+| Budgets | JS gzip : 34,9 Kio hors scène ; 148,4 Kio pour la 3D différée (Three.js + bloom), sous 150 et 200 Kio. |
+| Rendu | Chromium headless (SwiftShader) dans le conteneur Playwright du runner, build `dist` : accueil 1440 × 900 au repos et en vue éclatée, sélection, catalogue, Expertise, À propos, Lab, Contact, fiche CliOS ; mobile 390 × 844 tactile au repos et en vue éclatée. Largeur du document égale au viewport partout ; aucune erreur console. |
+| Secours | Image `atelier-core.webp` générée depuis la scène réelle ; affichée en mouvement réduit et si la 3D ne se charge pas. |
+
+## Limites
+
+- SwiftShader rend sur CPU (2 images/s environ) : fluidité et coût GPU non
+  mesurés sur un vrai matériel ni sur téléphone physique. La scène s’arrête dès
+  que le héros sort de l’écran ou que l’onglet est caché.
+- Pas de mesure Lighthouse.
+
+---
+
+# Validation de la refonte précédente — 18 septembre 2026
 
 ## Périmètre livré
 

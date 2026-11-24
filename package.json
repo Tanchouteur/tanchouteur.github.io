@@ -16,6 +16,9 @@
     "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
   },
   "dependencies": {
+    "@fontsource-variable/geist": "5.3.0",
+    "@fontsource-variable/geist-mono": "5.3.0",
+    "@fontsource/instrument-serif": "5.3.0",
     "dompurify": "3.4.15",
     "marked": "18.0.13",
     "three": "0.186.0"
