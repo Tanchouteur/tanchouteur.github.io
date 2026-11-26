@@ -39,7 +39,7 @@
     },
     "repoData": {
       "stars": 37,
-      "forks": 3,
+      "forks": 4,
       "language": "Python",
       "isPrivate": false,
       "updatedAt": "2026-09-19T07:18:21Z",
@@ -94,7 +94,7 @@
       "forks": 0,
       "language": "Astro",
       "isPrivate": true,
-      "updatedAt": "2026-11-11T17:42:57Z",
+      "updatedAt": "2026-11-25T13:44:06Z",
       "createdAt": "2026-08-06T13:17:44Z"
     }
   },
@@ -148,9 +148,9 @@
   },
   {
     "id": "SpotifySort",
-    "title": "SpotiSort v4",
-    "description": "Triez automatiquement vos playlists Spotify avec Google Gemini AI. Chaque utilisateur configure ses propres clés et règles de classification.",
-    "longDescription": "# SpotiSort v4\n\n## À propos du projet\n\nSpotiSort est une application web complète qui automatise le tri des morceaux dans vos playlists Spotify. Utilisez la puissance de Google Gemini pour classifier intelligemment chaque morceau selon vos règles personnalisées.\n\n## Fonctionnalités principales\n\n### Tri Intelligent\n- Classification automatique des morceaux en utilisant Google Gemini AI\n- Traitement par lots avec délai configurable entre les requêtes\n- Schéma JSON strict pour éviter les réponses invalides\n- Support des modèles Gemini configurables par utilisateur\n\n### Sécurité & Confidentialité\n- Chiffrement end-to-end des tokens Spotify et clés API Google\n- Les secrets ne sont jamais exposés au navigateur\n- Sessions HttpOnly sans token en localStorage\n- Vérification OAuth `state` contre les attaques CSRF\n- Filtrage strict des données par utilisateur\n\n### Gestion des Comptes\n- Authentification OAuth avec Spotify\n- Chaque utilisateur configure sa propre clé Google AI Studio\n- Espace isolé par compte avec règles, modèles et secrets propres\n- Support multi-utilisateur sans liste blanche\n\n### Automatisation\n- Daemon en arrière-plan avec intervalle configurable par utilisateur\n- Tris verrouillés pour éviter les concurrences\n- Reprise idempotente des opérations\n- Historique détaillé des succès, tris ignorés et erreurs\n\n### Robustesse\n- Traitement par lots de 100 à la fois via l'API Spotify\n- Détection automatique des doublons\n- Gestion complète des erreurs Spotify\n- Logs détaillés de chaque opération\n\n## Stack Technique\n\n- **Backend** : FastAPI + Uvicorn\n- **Base de données** : SQLAlchemy ORM + PostgreSQL\n- **Frontend** : HTML/CSS/JavaScript vanilla\n- **API Externes** : Spotify API, Google Gemini API\n- **Sécurité** : Cryptography (Fernet), Python-dotenv\n- **Déploiement** : Docker + Docker Compose + Nginx\n\n### Prêt pour la production\n- Support HTTPS/HTTPS Redirect URI\n- Configuration d'environnement par profil (local/production)\n- Intégration Docker complète\n- Reverse proxy Nginx intégré\n\n## Architecture Sécurisée\n\n```\nUtilisateur → Navigateur (HTTPS) → FastAPI\n              ↓\n         Session Cookie (HttpOnly)\n         ↓\nBD Chiffrée (Tokens + API Keys)\n         ↓\n    API Externes (Spotify, Gemini)\n```\n\n Le tout complètement isolé par utilisateur.",
+    "title": "SpotiSort v5",
+    "description": "Range automatiquement ta musique Spotify avec Gemini et entretient des playlists vivantes : derniers titres, oubliés, découverte du jour. Tout est annulable.",
+    "longDescription": "# SpotiSort v5\n\n## À propos du projet\n\nSpotiSort est né d'un besoin simple : ne plus trier ses musiques à la main. On ajoute un titre à une playlist « Inbox », Google Gemini le classe dans la bonne playlist de catégorie. La v5 transforme ce trieur en un petit moteur d'automatisations qui entretient aussi des playlists vivantes.\n\n## Fonctionnalités\n\n### Tri intelligent\n- Classification par Gemini contrainte par un schéma JSON, avec justification pour chaque titre\n- Les titres sur lesquels l'IA hésite vont dans une playlist « À vérifier » : on valide ou on corrige, et la correction est mémorisée\n- Cache exact des décisions : un titre déjà classé avec les mêmes règles ne coûte plus aucun token\n\n### Playlists automatiques\n- **File des derniers titres** : les 30 derniers titres écoutés, triés ou likés, mis à jour toutes les 30 minutes\n- **Les oubliés** : des titres de ses catégories pas écoutés depuis 90 jours, équilibrés entre les genres\n- **Découverte du jour** : ~20 titres à essayer chaque matin, en un seul appel Gemini (~3 000 tokens), chaque proposition étant vérifiée sur Spotify pour écarter les titres inventés ou déjà connus\n\n### Garder le contrôle\n- **Annuler** n'importe quel tri ou mise à jour : chaque écriture Spotify est journalisée et rejouée à l'envers, avec détection des conflits\n- **Nettoyage** : doublons, titres dans plusieurs catégories, archive incomplète ; analyse en lecture seule puis corrections choisies\n- Historique de chaque opération avec les tokens IA consommés\n\n## Architecture\n\n- Moteur de jobs : registre, verrou par utilisateur, scheduler avec backoff exponentiel, heure locale pour les tâches quotidiennes\n- Journal des opérations Spotify pour l'annulation\n- Migrations Alembic avec reprise des données de la v4\n- Économie de tokens mesurée et non supposée : un outil d'évaluation compare précision et consommation avant/après sur un jeu de référence de 466 titres\n\n```\nInbox ─▶ Gemini (+ cache, corrections) ─▶ catégories + archive\n              │ doute\n              ▼\n         « À vérifier » ─▶ validation ─▶ correction mémorisée\n\nHistorique d'écoute ─▶ derniers titres · oubliés · découverte du jour\nChaque écriture ─▶ journal ─▶ Annuler\n```\n\n## Sécurité\n\n- OAuth Spotify avec vérification `state`, session par cookie HttpOnly\n- Clé Google AI propre à chaque utilisateur ; clés et tokens chiffrés en base (Fernet), jamais envoyés au navigateur\n- Données strictement isolées par compte\n- Les playlists automatiques ne peuvent jamais écraser l'Inbox, l'archive ou une catégorie\n\n## Stack technique\n\n- **Backend** : FastAPI, SQLAlchemy 2, Alembic, SQLite\n- **IA** : Google Gemini (google-genai)\n- **Spotify** : Spotipy, API post-février 2026\n- **Frontend** : JavaScript natif en modules ES, sans étape de build\n- **Tests** : 62 tests sur un faux Spotify en mémoire\n- **Déploiement** : Docker Compose (API, daemon, Nginx) sur Coolify",
     "category": "Personal",
     "status": "In Progress",
     "date": "2026-08",
@@ -160,7 +160,8 @@
       "Spotify API",
       "Google Gemini",
       "SQLAlchemy",
-      "PostgreSQL",
+      "Alembic",
+      "SQLite",
       "Docker",
       "Web"
     ],
@@ -170,9 +171,11 @@
       "accent": "#55D985",
       "background": "#07150E",
       "captions": {
-        "cover.png": "Écran principal de SpotiSort",
-        "Home1.png": "Accueil et connexion Spotify",
-        "Trie1.png": "Configuration du tri automatique"
+        "cover.png": "Accueil : état du bot, statistiques et dernières activités",
+        "Home1.png": "Playlists auto : file des derniers titres, découverte du jour, oubliés",
+        "Home2.png": "Activité : chaque opération, ses tokens IA et le bouton Annuler",
+        "Trie1.png": "Tri : Inbox, règles de classification et corrections mémorisées",
+        "Trie2.png": "Nettoyage : doublons et incohérences détectés sans rien modifier"
       }
     },
     "order": 3,
@@ -192,7 +195,7 @@
       "forks": 0,
       "language": "Python",
       "isPrivate": true,
-      "updatedAt": "2026-10-31T13:56:33Z",
+      "updatedAt": "2026-11-25T12:55:23Z",
       "createdAt": "2026-08-12T09:31:06Z"
     }
   },
